@@ -1,0 +1,45 @@
+﻿<# 
+	
+	string[] skipFields = { "Id", "Name", "CreatedById", "ModifiedById", "CreatedOn", "ModifiedOn", "IsDeleted", "OwnerId", "RowVersion", "OwnerType", "ExternalId", "ExternalLastUpdatedOn", "RecordTypeId", "AutoNumber", "CurrencyId" };
+
+	//****************************
+    // Comma separated Tables for which we want to generate POCO classes
+    //****************************
+	string strtbl = @"dp_Tenant"; //Comma separated table names
+
+	//****************************
+    // If includeChildTable as true then it will generate POCO class for all the child tables also (Lookup/ReferenceObject)
+    //****************************
+	bool includeChildTable = false; 
+
+	//****************************
+    // If lookupAsReferenceObjectProperty as true then it will add property type as ReferenceObject else it will add its as string. 
+	// Ex - For table dp_User , TenantId column it will add property type as IncentiveDO or string based on below setting
+    //****************************	
+	bool lookupAsReferenceObjectProperty = true;
+
+	//****************************
+    // Comma separated Tables for which we want to exclude POCO classes
+    //****************************
+	string strExcludeTbl = ""; //Comma separated table names
+
+	//****************************
+    // DB Connection details
+    //****************************
+	// The SQL server name or IP
+    string sqlServer = "./localhost";
+    // The SQL username
+    string sqlLogin = "digipaladmin";
+    // The SQL password
+    string sqlPassword = "admin@123";
+    // The SQL database to generate the POCOs for
+    string sqlDatabase = "DigitalPal_Dev";
+    // The namespace to apply to the generated classes
+    string classNamespace = "DigitalPal.Entities";
+
+    string[] tbl = strtbl.Replace("\n", "").Replace("\r", "").Replace("\t", "").Replace(" ","").Split(',');
+	string[] excludetbl = strExcludeTbl.Replace("\n", "").Replace("\r", "").Replace("\t", "").Replace(" ", "").Split(',');
+            
+	string connectionStr = "Server=" + sqlServer + ";Database=" + sqlDatabase + ";User Id=" + sqlLogin + ";Password=" + sqlPassword + ";";
+
+#>

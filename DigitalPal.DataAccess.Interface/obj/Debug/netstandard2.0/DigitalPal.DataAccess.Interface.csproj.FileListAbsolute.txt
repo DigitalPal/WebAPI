@@ -1,0 +1,12 @@
+C:\Snehal\Work\DigitalPalCodeBase\WebAPI\DigitalPal.WebAPI\DigitalPal.DataAccess.Interface\bin\Debug\netstandard2.0\DigitalPal.DataAccess.Interface.deps.json
+C:\Snehal\Work\DigitalPalCodeBase\WebAPI\DigitalPal.WebAPI\DigitalPal.DataAccess.Interface\bin\Debug\netstandard2.0\DigitalPal.DataAccess.Interface.dll
+C:\Snehal\Work\DigitalPalCodeBase\WebAPI\DigitalPal.WebAPI\DigitalPal.DataAccess.Interface\bin\Debug\netstandard2.0\DigitalPal.DataAccess.Interface.pdb
+C:\Snehal\Work\DigitalPalCodeBase\WebAPI\DigitalPal.WebAPI\DigitalPal.DataAccess.Interface\bin\Debug\netstandard2.0\DigitalPal.Entities.dll
+C:\Snehal\Work\DigitalPalCodeBase\WebAPI\DigitalPal.WebAPI\DigitalPal.DataAccess.Interface\bin\Debug\netstandard2.0\DigitalPal.Entities.pdb
+C:\Snehal\Work\DigitalPalCodeBase\WebAPI\DigitalPal.WebAPI\DigitalPal.DataAccess.Interface\obj\Debug\netstandard2.0\DigitalPal.DataAccess.Interface.csprojResolveAssemblyReference.cache
+C:\Snehal\Work\DigitalPalCodeBase\WebAPI\DigitalPal.WebAPI\DigitalPal.DataAccess.Interface\obj\Debug\netstandard2.0\DigitalPal.DataAccess.Interface.csproj.CoreCompileInputs.cache
+C:\Snehal\Work\DigitalPalCodeBase\WebAPI\DigitalPal.WebAPI\DigitalPal.DataAccess.Interface\obj\Debug\netstandard2.0\DigitalPal.DataAccess.Interface.AssemblyInfoInputs.cache
+C:\Snehal\Work\DigitalPalCodeBase\WebAPI\DigitalPal.WebAPI\DigitalPal.DataAccess.Interface\obj\Debug\netstandard2.0\DigitalPal.DataAccess.Interface.AssemblyInfo.cs
+C:\Snehal\Work\DigitalPalCodeBase\WebAPI\DigitalPal.WebAPI\DigitalPal.DataAccess.Interface\obj\Debug\netstandard2.0\DigitalPal.DataAccess.Interface.csproj.CopyComplete
+C:\Snehal\Work\DigitalPalCodeBase\WebAPI\DigitalPal.WebAPI\DigitalPal.DataAccess.Interface\obj\Debug\netstandard2.0\DigitalPal.DataAccess.Interface.dll
+C:\Snehal\Work\DigitalPalCodeBase\WebAPI\DigitalPal.WebAPI\DigitalPal.DataAccess.Interface\obj\Debug\netstandard2.0\DigitalPal.DataAccess.Interface.pdb

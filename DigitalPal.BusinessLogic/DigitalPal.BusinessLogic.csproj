@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Platforms>AnyCPU;x64</Platforms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="4.8.1" />
+    <PackageReference Include="Autofac.Extras.DynamicProxy" Version="4.5.0" />
+    <PackageReference Include="Dapper" Version="1.50.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DigitalPal.BusinessLogic.Interface\DigitalPal.BusinessLogic.Interface.csproj" />
+    <ProjectReference Include="..\DigitalPal.Common\DigitalPal.Common.csproj" />
+    <ProjectReference Include="..\DigitalPal.DataAccess.Interface\DigitalPal.DataAccess.Interface.csproj" />
+    <ProjectReference Include="..\DigitalPal.Entities\DigitalPal.Entities.csproj" />
+  </ItemGroup>
+
+</Project>

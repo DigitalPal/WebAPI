@@ -1,0 +1,66 @@
+﻿
+<#
+    string GetNetDataType(string sqlDataTypeName, string type = "", string referenceObject="", string suffix="", bool isLookupAsReferenceObjectProperty=true)
+    {
+        if (type == "SelectOption")
+        {
+            return "SelectOption";
+        }
+        if (type == "MultiSelectOption")
+        {
+            return "string[]";
+        }
+
+        if((type == "Lookup" || type =="Child") && isLookupAsReferenceObjectProperty)
+        {
+            string prefix = referenceObject.Split('_')[0];
+            string className = referenceObject.Replace(prefix + "_", "") + suffix;
+            return className;
+        }
+
+        switch (sqlDataTypeName.ToLower())
+        {
+            case "bigint":
+                return "Int64";
+            case "binary":
+            case "image":
+            case "varbinary":
+                return "byte[]";
+            case "bit":
+                return "bool";
+            case "char":
+                return "char";
+            case "date":
+            case "datetime":
+            case "datetime2":
+            case "smalldatetime":
+                return "DateTime";
+            case "decimal":
+            case "money":
+            case "numeric":
+                return "decimal";
+            case "float":
+                return "double";
+            case "int":
+                return "int";
+            case "nchar":
+            case "nvarchar":
+            case "text":
+            case "varchar":
+            case "xml":
+                return "string";
+            case "real":
+                return "single";
+            case "smallint":
+                return "Int16";
+            case "tinyint":
+                return "byte";
+            case "uniqueidentifier":
+                return "string";
+            default:
+                return null;
+        }
+    }
+
+
+#>

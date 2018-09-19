@@ -1,0 +1,205 @@
+﻿<#@ template debug="true" hostspecific="true" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ assembly name="System.Data" #>
+<#@ assembly name="Microsoft.SqlServer.Smo" #>
+<#@ assembly name="Microsoft.SqlServer.ConnectionInfo" #>
+<#@ assembly name="Microsoft.SqlServer.Management.Sdk.Sfc" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="Microsoft.SqlServer.Management.Smo" #>
+<#@include file="Config.tt" #>
+<#@include file="Utility.tt" #>
+<# 
+	//**********************************************************************************************
+    // This T4 generates POCOs from the specified DB and saves them to the specified folder which 
+    // is relative to the template's location. One file per table/POCO.
+	// Make sure you all setting are in place in Config.tt before running this program
+    //**********************************************************************************************
+
+	//include childTables
+    tbl = IncludeChildTables(tbl, connectionStr, excludetbl, includeChildTable);
+	
+	Server server = new Server(sqlServer);
+    server.ConnectionContext.LoginSecure = false;
+    server.ConnectionContext.Login = sqlLogin;
+    server.ConnectionContext.Password = sqlPassword;
+    server.ConnectionContext.Connect();
+
+	foreach (Table table in server.Databases[sqlDatabase].Tables)
+    {            
+        string suffix = "DO";
+        string modelname = table.Name;
+        string prefix = modelname.Split('_')[0];
+        string destinationFolder = prefix.ToUpper() + "Model";
+        string className = modelname.Replace(prefix + "_", "") + suffix;
+        // Skip sys tables
+        if (!tbl.Contains(table.Name))
+        {
+            continue; 
+        }
+        System.Data.DataTable dt;
+        using (var c = new System.Data.SqlClient.SqlConnection(connectionStr))
+        {
+            c.Open();
+            using (var a = new System.Data.SqlClient.SqlDataAdapter("select Name,Type,Description,ReferenceObjectId from mtd_Field where ObjectId = '" + modelname + "' and IsCustom=0 and IsDeprecated=0", c))
+            {
+                dt = new System.Data.DataTable();
+                a.Fill(dt);
+            }
+        }
+        System.Collections.Generic.Dictionary<string, string> listName = new System.Collections.Generic.Dictionary<string, string>();
+        System.Collections.Generic.Dictionary<string, string> listType = new System.Collections.Generic.Dictionary<string, string>();
+        System.Collections.Generic.Dictionary<string, string> listReferenceObject = new System.Collections.Generic.Dictionary<string, string>();
+
+        foreach (System.Data.DataRow row in dt.Rows)
+        {
+            listName.Add(row["Name"].ToString(), row["Description"].ToString());
+            listType.Add(row["Name"].ToString(), row["Type"].ToString());
+            listReferenceObject.Add(row["Name"].ToString(), row["ReferenceObjectId"].ToString());
+        }
+
+#>
+using Apttus.DataAccess.Common.CustomTypes;
+using Apttus.DataAccess.Common.Attributes;
+using System;
+
+namespace <#= classNamespace #>
+{
+
+	/// <summary>
+	/// Represents a <#= modelname #>
+	/// NOTE: This class is generated from a T4 template - you should not modify it manually.
+	/// </summary>
+    [DataObject(Name = "<#= modelname #>")]
+    public partial class <#= className #> : StrategyBuilderBaseDO
+    {
+<#
+        // Keep count so we don't whitespace the last property/column
+        int columnCount = table.Columns.Count;
+
+        // Iterate all columns
+        foreach (Column col in table.Columns)
+        {
+			if (!skipFields.Contains(col.Name))
+            {
+				string propertyType = "";
+				if (listName.ContainsKey(col.Name))
+				{
+					propertyType = GetNetDataType(col.DataType.Name, listType[col.Name], listReferenceObject[col.Name], suffix, lookupAsReferenceObjectProperty);  
+				}
+				// If we can't map it, skip it
+				if (!string.IsNullOrWhiteSpace(propertyType))
+				{
+					// Handle nullable columns by making the type nullable
+					if (col.Nullable && propertyType != "string" && propertyType != "SelectOption" && propertyType != "string[]" && !((listType[col.Name] == "Lookup" || listType[col.Name] == "Child") && lookupAsReferenceObjectProperty))
+					{
+						propertyType += "?";
+					}
+
+					if (listName.ContainsKey(col.Name))
+					{
+#>
+
+		/// <summary>
+		/// <#= listName[col.Name].Replace(@"\n","") #>
+		/// </summary>
+<#                        
+						if (listType[col.Name] == "AutoNumber")
+						{
+#>
+		[DataField(Computed = true)]
+<#
+						}
+#>
+        public <#= propertyType #> <#= col.Name #> { get; set; }
+<#
+					}
+					else
+					{
+#>
+		//public <#= propertyType #> <#= col.Name #> { get; set; } - Exist in Table, Not in meta data
+<#
+					}
+				}
+			}
+		}
+#>
+	}
+}
+<#	
+		// Write new POCO class to its own file
+		SaveOutput(className + ".cs", destinationFolder,true);
+	}
+
+#>
+
+<#+
+	void SaveOutput(string outputFileName, string destinationFolder, bool IsData)
+    {
+        if (IsData)
+        {
+            // Write to destination folder            
+            string templateDirectory = Path.Combine(Path.GetDirectoryName(Host.TemplateFile), destinationFolder);
+
+            System.IO.Directory.CreateDirectory(templateDirectory);
+            string outputFilePath = Path.Combine(templateDirectory, outputFileName);
+            File.Delete(outputFilePath);
+            File.WriteAllText(outputFilePath, this.GenerationEnvironment.ToString());
+        }
+        // Flush generation
+        this.GenerationEnvironment.Remove(0, this.GenerationEnvironment.Length);
+    }
+	
+	string[] IncludeChildTables(string[] tbl, string connectionStr, string[] excludetbl, bool includeChildTable =true)
+    {
+        List<string> updatedTables = tbl.ToList();
+
+        if (includeChildTable)
+        {
+            using (var c = new System.Data.SqlClient.SqlConnection(connectionStr))
+            {
+                c.Open();
+
+                foreach (string modelname in tbl)
+                {
+                    updatedTables.AddRange(GetChilds(modelname, connectionStr, updatedTables, c).Except(updatedTables));
+                }
+            }
+        }
+        updatedTables = updatedTables.Where(q=> !string.IsNullOrEmpty(q)).Distinct().ToList();
+
+        updatedTables = updatedTables.Except(excludetbl.ToList()).ToList();
+
+        bool exist = updatedTables.Any(q => q.Equals("crm_User") || q.Equals("crm_Contact"));                
+
+        return updatedTables.ToArray();
+    }
+
+	List<string> GetChilds(string tableName, string connectionStr, List<string> existingTables, System.Data.SqlClient.SqlConnection c)
+    {
+        List<string> childTables = new List<string>();
+        using (var a = new System.Data.SqlClient.SqlDataAdapter("select ReferenceObjectId from mtd_Field where ObjectId = '" + tableName + "' and Type='Lookup' and IsCustom=0 and IsDeprecated=0", c))
+        {
+            System.Data.DataTable dt = new System.Data.DataTable();
+            a.Fill(dt);
+            foreach (System.Data.DataRow row in dt.Rows)
+            {
+                if (!existingTables.Contains(row["ReferenceObjectId"].ToString()) && !childTables.Contains(row["ReferenceObjectId"].ToString()))
+                    childTables.Add(row["ReferenceObjectId"].ToString());
+            }
+
+            foreach (string table in childTables)
+            {
+                if (!existingTables.Contains(table))
+                {
+                    existingTables.Add(table);
+                    existingTables.AddRange(GetChilds(table, connectionStr, existingTables, c).Except(existingTables));
+                }
+            }
+        }
+        return childTables;
+    }
+
+#>

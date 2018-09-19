@@ -1,0 +1,12 @@
+C:\Snehal\Work\DigitalPalCodeBase\WebAPI\DigitalPal.WebAPI\DigitalPal.BusinessLogic.Interface\bin\Debug\netstandard2.0\DigitalPal.BusinessLogic.Interface.deps.json
+C:\Snehal\Work\DigitalPalCodeBase\WebAPI\DigitalPal.WebAPI\DigitalPal.BusinessLogic.Interface\bin\Debug\netstandard2.0\DigitalPal.BusinessLogic.Interface.dll
+C:\Snehal\Work\DigitalPalCodeBase\WebAPI\DigitalPal.WebAPI\DigitalPal.BusinessLogic.Interface\bin\Debug\netstandard2.0\DigitalPal.BusinessLogic.Interface.pdb
+C:\Snehal\Work\DigitalPalCodeBase\WebAPI\DigitalPal.WebAPI\DigitalPal.BusinessLogic.Interface\bin\Debug\netstandard2.0\DigitalPal.Entities.dll
+C:\Snehal\Work\DigitalPalCodeBase\WebAPI\DigitalPal.WebAPI\DigitalPal.BusinessLogic.Interface\bin\Debug\netstandard2.0\DigitalPal.Entities.pdb
+C:\Snehal\Work\DigitalPalCodeBase\WebAPI\DigitalPal.WebAPI\DigitalPal.BusinessLogic.Interface\obj\Debug\netstandard2.0\DigitalPal.BusinessLogic.Interface.csprojResolveAssemblyReference.cache
+C:\Snehal\Work\DigitalPalCodeBase\WebAPI\DigitalPal.WebAPI\DigitalPal.BusinessLogic.Interface\obj\Debug\netstandard2.0\DigitalPal.BusinessLogic.Interface.csproj.CoreCompileInputs.cache
+C:\Snehal\Work\DigitalPalCodeBase\WebAPI\DigitalPal.WebAPI\DigitalPal.BusinessLogic.Interface\obj\Debug\netstandard2.0\DigitalPal.BusinessLogic.Interface.AssemblyInfoInputs.cache
+C:\Snehal\Work\DigitalPalCodeBase\WebAPI\DigitalPal.WebAPI\DigitalPal.BusinessLogic.Interface\obj\Debug\netstandard2.0\DigitalPal.BusinessLogic.Interface.AssemblyInfo.cs
+C:\Snehal\Work\DigitalPalCodeBase\WebAPI\DigitalPal.WebAPI\DigitalPal.BusinessLogic.Interface\obj\Debug\netstandard2.0\DigitalPal.BusinessLogic.Interface.csproj.CopyComplete
+C:\Snehal\Work\DigitalPalCodeBase\WebAPI\DigitalPal.WebAPI\DigitalPal.BusinessLogic.Interface\obj\Debug\netstandard2.0\DigitalPal.BusinessLogic.Interface.dll
+C:\Snehal\Work\DigitalPalCodeBase\WebAPI\DigitalPal.WebAPI\DigitalPal.BusinessLogic.Interface\obj\Debug\netstandard2.0\DigitalPal.BusinessLogic.Interface.pdb

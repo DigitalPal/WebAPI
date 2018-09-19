@@ -1,0 +1,48 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="AutoGen\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="AutoGen\Config.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Config.cs</LastGenOutput>
+    </None>
+    <None Update="AutoGen\GenerateModels.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>GenerateModels.cs</LastGenOutput>
+    </None>
+    <None Update="AutoGen\Utility.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Utility.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="AutoGen\Config.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Config.tt</DependentUpon>
+    </Compile>
+    <Compile Update="AutoGen\GenerateModels.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>GenerateModels.tt</DependentUpon>
+    </Compile>
+    <Compile Update="AutoGen\Utility.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Utility.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+</Project>
