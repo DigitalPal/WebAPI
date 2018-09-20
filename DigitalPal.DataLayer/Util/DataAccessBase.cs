@@ -206,7 +206,7 @@ namespace DigitalPal.DataAccess.Util
             using (var dbConnection = _sqlConnection)
             {
                 dbConnection.Open();
-                items = dbConnection.Query<T>("SELECT * FROM WHERE IsActive = 1" + _tableName);
+                items = dbConnection.Query<T>("SELECT * FROM " + _tableName + " WHERE IsActive = 1");
             }
 
             return items;

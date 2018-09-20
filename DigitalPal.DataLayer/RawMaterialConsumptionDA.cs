@@ -82,7 +82,9 @@ namespace DigitalPal.DataAccess
                 item.NoOfMouldsCasted,
                 item.RawMaterialId,
                 item.Remark,
-                item.ConsumptionDate
+                item.ConsumptionDate,
+                item.CreatedBy,
+                item.ModifiedBy
             };
         }
 

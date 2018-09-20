@@ -82,7 +82,9 @@ namespace DigitalPal.DataAccess
                 item.Address,
                 item.AdminUser,
                 item.ContactNumber,
-                item.Logo
+                item.Logo,
+                item.CreatedBy,
+                item.ModifiedBy
             };
         }
 

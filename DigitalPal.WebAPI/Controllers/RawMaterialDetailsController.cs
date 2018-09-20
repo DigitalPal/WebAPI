@@ -24,6 +24,7 @@ namespace DigitalPal.WebAPI.Controllers
 
         [ResponseType(typeof(RawMaterialDetails))]
         [HttpGet]
+        [Route("")]
         public IHttpActionResult GetAll()
         {
             return Ok(RawMaterialDetailsRepository.GetAll());
@@ -31,13 +32,23 @@ namespace DigitalPal.WebAPI.Controllers
 
         [ResponseType(typeof(RawMaterialDetails))]
         [HttpPost]
+        [Route("")]
         public IHttpActionResult Save(RawMaterialDetails[] RawMaterialDetails)
         {
             return Ok(RawMaterialDetailsRepository.AddRawMaterialDetails(RawMaterialDetails));
         }
 
         [ResponseType(typeof(RawMaterialDetails))]
+        [Route("")]
+        [HttpPut]
+        public IHttpActionResult Update(RawMaterialDetails[] RawMaterialDetails)
+        {
+            return Ok(RawMaterialDetailsRepository.UpdateRawMaterialDetails(RawMaterialDetails));
+        }
+
+        [ResponseType(typeof(RawMaterialDetails))]
         [HttpDelete]
+        [Route("")]
         public IHttpActionResult Delete(RawMaterialDetails[] RawMaterialDetails)
         {
             return Ok(RawMaterialDetailsRepository.DeleteRawMaterialDetails(RawMaterialDetails));

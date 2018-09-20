@@ -83,7 +83,9 @@ namespace DigitalPal.DataAccess
                 item.ProductionDate,
                 item.Quantity,
                 item.Remark,
-                item.Size
+                item.Size,
+                item.CreatedBy,
+                item.ModifiedBy
             };
         }
 

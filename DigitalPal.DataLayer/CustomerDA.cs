@@ -84,7 +84,9 @@ namespace DigitalPal.DataAccess
                 item.CustomerNumber,
                 item.Description,
                 item.GSTNumber,
-                item.Type
+                item.Type,
+                item.CreatedBy,
+                item.ModifiedBy
             };
         }
 

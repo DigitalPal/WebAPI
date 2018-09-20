@@ -84,7 +84,9 @@ namespace DigitalPal.DataAccess
                 item.ModifiedOn,
                 item.Address,
                 item.SupplierNumber,
-                item.ContactNumber
+                item.ContactNumber,
+                item.CreatedBy,
+                item.ModifiedBy
             };
         }
 

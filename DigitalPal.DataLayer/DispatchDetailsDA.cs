@@ -84,7 +84,9 @@ namespace DigitalPal.DataAccess
                 item.DispatchDate,
                 item.Loading,
                 item.Unloading,
-                item.TransportName
+                item.TransportName,
+                item.CreatedBy,
+                item.ModifiedBy
             };
         }
 

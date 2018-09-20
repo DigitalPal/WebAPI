@@ -80,7 +80,9 @@ namespace DigitalPal.DataAccess
                 item.ModifiedOn,
                 item.Address,
                 item.ContactNumber,
-                item.IsActive
+                item.IsActive,
+                item.CreatedBy,
+                item.ModifiedBy
             };
         }
 

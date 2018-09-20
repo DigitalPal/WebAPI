@@ -82,7 +82,9 @@ namespace DigitalPal.DataAccess
                 item.Currency,
                 item.Price,
                 item.Size,
-                item.Unit
+                item.Unit,
+                item.CreatedBy,
+                item.ModifiedBy
             };
         }
 

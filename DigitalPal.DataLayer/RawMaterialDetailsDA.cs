@@ -79,7 +79,9 @@ namespace DigitalPal.DataAccess
                 item.ModifiedOn,
                 item.IsActive,
                 item.MeasureType,
-                item.Title
+                item.Title,
+                item.CreatedBy,
+                item.ModifiedBy
             };
         }
 

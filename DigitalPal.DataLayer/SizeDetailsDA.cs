@@ -80,7 +80,9 @@ namespace DigitalPal.DataAccess
                 item.ModifiedOn,
                 item.IsActive,
                 item.ConversionFactor,
-                item.Size
+                item.Size,
+                item.CreatedBy,
+                item.ModifiedBy
             };
         }
 

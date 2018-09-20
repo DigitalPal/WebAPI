@@ -24,6 +24,7 @@ namespace DigitalPal.WebAPI.Controllers
 
         [ResponseType(typeof(SizeDetails))]
         [HttpGet]
+        [Route("")]
         public IHttpActionResult GetAll()
         {
             return Ok(SizeDetailsRepository.GetAll());
@@ -31,13 +32,23 @@ namespace DigitalPal.WebAPI.Controllers
 
         [ResponseType(typeof(SizeDetails))]
         [HttpPost]
+        [Route("")]
         public IHttpActionResult Save(SizeDetails[] SizeDetails)
         {
             return Ok(SizeDetailsRepository.AddSizeDetails(SizeDetails));
         }
 
         [ResponseType(typeof(SizeDetails))]
+        [Route("")]
+        [HttpPut]
+        public IHttpActionResult Update(SizeDetails[] SizeDetails)
+        {
+            return Ok(SizeDetailsRepository.UpdateSizeDetails(SizeDetails));
+        }
+
+        [ResponseType(typeof(SizeDetails))]
         [HttpDelete]
+        [Route("")]
         public IHttpActionResult Delete(SizeDetails[] SizeDetails)
         {
             return Ok(SizeDetailsRepository.DeleteSizeDetails(SizeDetails));

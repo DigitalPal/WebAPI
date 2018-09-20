@@ -23,6 +23,7 @@ namespace DigitalPal.WebAPI.Controllers
         }
 
         [ResponseType(typeof(Tenant))]
+        [Route("")]
         [HttpGet]
         public IHttpActionResult GetAll()
         {
@@ -30,6 +31,7 @@ namespace DigitalPal.WebAPI.Controllers
         }
 
         [ResponseType(typeof(Tenant))]
+        [Route("")]
         [HttpPost]
         public IHttpActionResult Save(Tenant[] tenant)
         {
@@ -37,6 +39,15 @@ namespace DigitalPal.WebAPI.Controllers
         }
 
         [ResponseType(typeof(Tenant))]
+        [Route("")]
+        [HttpPut]
+        public IHttpActionResult Update(Tenant[] tenant)
+        {
+            return Ok(tenantRepository.Update(tenant));
+        }
+
+        [ResponseType(typeof(Tenant))]
+        [Route("")]
         [HttpDelete]
         public IHttpActionResult Delete(Tenant[] tenant)
         {
