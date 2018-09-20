@@ -80,18 +80,18 @@
     <Compile Include="WireUp\DatabaseMapper.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\DigitalPal.DataAccess.Interface\DigitalPal.DataAccess.Interface.csproj">
-      <Project>{e31edc74-70b1-477c-9efb-32e7b9d7fa79}</Project>
+      <Project>{44edabd2-04ae-436e-a804-0ad3bd967a3d}</Project>
       <Name>DigitalPal.DataAccess.Interface</Name>
     </ProjectReference>
     <ProjectReference Include="..\DigitalPal.Entities\DigitalPal.Entities.csproj">
-      <Project>{a48642b2-627c-4519-adfd-a3b5833e6927}</Project>
+      <Project>{81a4c262-3a96-4b53-bddd-7f88113e12bd}</Project>
       <Name>DigitalPal.Entities</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
-    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

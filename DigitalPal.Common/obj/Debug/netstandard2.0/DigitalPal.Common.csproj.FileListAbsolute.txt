@@ -1,9 +1,0 @@
-C:\Snehal\Work\DigitalPalCodeBase\WebAPI\DigitalPal.WebAPI\DigitalPal.Common\bin\Debug\netstandard2.0\DigitalPal.Common.deps.json
-C:\Snehal\Work\DigitalPalCodeBase\WebAPI\DigitalPal.WebAPI\DigitalPal.Common\bin\Debug\netstandard2.0\DigitalPal.Common.dll
-C:\Snehal\Work\DigitalPalCodeBase\WebAPI\DigitalPal.WebAPI\DigitalPal.Common\bin\Debug\netstandard2.0\DigitalPal.Common.pdb
-C:\Snehal\Work\DigitalPalCodeBase\WebAPI\DigitalPal.WebAPI\DigitalPal.Common\obj\Debug\netstandard2.0\DigitalPal.Common.csproj.CoreCompileInputs.cache
-C:\Snehal\Work\DigitalPalCodeBase\WebAPI\DigitalPal.WebAPI\DigitalPal.Common\obj\Debug\netstandard2.0\DigitalPal.Common.AssemblyInfoInputs.cache
-C:\Snehal\Work\DigitalPalCodeBase\WebAPI\DigitalPal.WebAPI\DigitalPal.Common\obj\Debug\netstandard2.0\DigitalPal.Common.AssemblyInfo.cs
-C:\Snehal\Work\DigitalPalCodeBase\WebAPI\DigitalPal.WebAPI\DigitalPal.Common\obj\Debug\netstandard2.0\DigitalPal.Common.dll
-C:\Snehal\Work\DigitalPalCodeBase\WebAPI\DigitalPal.WebAPI\DigitalPal.Common\obj\Debug\netstandard2.0\DigitalPal.Common.pdb
-C:\Snehal\Work\DigitalPalCodeBase\WebAPI\DigitalPal.WebAPI\DigitalPal.Common\obj\Debug\netstandard2.0\DigitalPal.Common.csprojResolveAssemblyReference.cache
