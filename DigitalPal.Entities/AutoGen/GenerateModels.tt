@@ -61,8 +61,8 @@
         }
 
 #>
-using Apttus.DataAccess.Common.CustomTypes;
-using Apttus.DataAccess.Common.Attributes;
+using DigitalPal.DataAccess;
+using DigitalPal.DataAccess;
 using System;
 
 namespace <#= classNamespace #>

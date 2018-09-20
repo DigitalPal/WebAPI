@@ -24,7 +24,7 @@ namespace DigitalPal.DataAccess.Util
 
         internal IDbConnection _sqlConnection
         {
-            get { return new SqlConnection(string.Format("Server={0};Initial Catalog={1};Persist Security Info=False;User ID={2};Password={3};MultipleActiveResultSets=False;Connection Timeout=300;", "localhost\\SQLEXPRESS", "POC", "Apttusadmin", "Apttu$admin123")); }
+            get { return new SqlConnection(string.Format("Server={0};Initial Catalog={1};Persist Security Info=False;User ID={2};Password={3};MultipleActiveResultSets=False;Connection Timeout=300;", "localhost\\SQLEXPRESS", "POC", "", "")); }
         }
 
         private string _tableName
