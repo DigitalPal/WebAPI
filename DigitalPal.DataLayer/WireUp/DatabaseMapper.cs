@@ -14,6 +14,16 @@ namespace DigitalPal.DataAccess.WireUp
         {
             RegisterConnectionString(builder);
             builder.RegisterType<TenantDA>().As<ITenantDA>().InstancePerRequest();
+            builder.RegisterType<DispatchDetailsDA>().As<IDispatchDetailsDA>().InstancePerRequest();
+            builder.RegisterType<CustomerDA>().As<ICustomerDA>().InstancePerRequest();
+            builder.RegisterType<PlantDA>().As<IPlantDA>().InstancePerRequest();
+            builder.RegisterType<PriceDetailsDA>().As<IPriceDetailsDA>().InstancePerRequest();
+            builder.RegisterType<ProductionDetailsDA>().As<IProductionDetailsDA>().InstancePerRequest();
+            builder.RegisterType<RawMaterialConsumptionDA>().As<IRawMaterialConsumptionDA>().InstancePerRequest();
+            builder.RegisterType<RawMaterialDetailsDA>().As<IRawMaterialDetailsDA>().InstancePerRequest();
+            builder.RegisterType<RawMaterialInwardDA>().As<IRawMaterialInwardDA>().InstancePerRequest();
+            builder.RegisterType<SizeDetailsDA>().As<ISizeDetailsDA>().InstancePerRequest();
+            builder.RegisterType<SupplierDA>().As<ISupplierDA>().InstancePerRequest();
         }
         private void RegisterConnectionString(ContainerBuilder builder)
         {

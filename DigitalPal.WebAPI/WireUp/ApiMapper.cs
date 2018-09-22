@@ -1,5 +1,4 @@
 ﻿using Autofac;
-using Autofac.Extras.DynamicProxy;
 using DigitalPal.BusinessLogic.Interface;
 using DigitalPal.WebAPI.Controllers;
 
@@ -17,6 +16,46 @@ namespace DigitalPal.WebAPI.WireUp
             builder.RegisterType<TenantController>().InstancePerRequest().OnActivated(e =>
             {
                 e.Instance.tenantRepository = e.Context.Resolve<ITenantRepository>();
+            });
+            builder.RegisterType<PlantController>().InstancePerRequest().OnActivated(e =>
+            {
+                e.Instance.PlantRepository = e.Context.Resolve<IPlantRepository>();
+            });
+            builder.RegisterType<DispatchDetailsController>().InstancePerRequest().OnActivated(e =>
+            {
+                e.Instance.DispatchDetailsRepository = e.Context.Resolve<IDispatchDetailsRepository>();
+            });
+            builder.RegisterType<PriceDetailsController>().InstancePerRequest().OnActivated(e =>
+            {
+                e.Instance.PriceDetailsRepository = e.Context.Resolve<IPriceDetailsRepository>();
+            });
+            builder.RegisterType<ProductionDetailsController>().InstancePerRequest().OnActivated(e =>
+            {
+                e.Instance.ProductionDetailsRepository = e.Context.Resolve<IProductionDetailsRepository>();
+            });
+            builder.RegisterType<RawMaterialConsumptionController>().InstancePerRequest().OnActivated(e =>
+            {
+                e.Instance.RawMaterialConsumptionRepository = e.Context.Resolve<IRawMaterialConsumptionRepository>();
+            });
+            builder.RegisterType<RawMaterialDetailsController>().InstancePerRequest().OnActivated(e =>
+            {
+                e.Instance.RawMaterialDetailsRepository = e.Context.Resolve<IRawMaterialDetailsRepository>();
+            });
+            builder.RegisterType<RawMaterialInwardController>().InstancePerRequest().OnActivated(e =>
+            {
+                e.Instance.RawMaterialInwardRepository = e.Context.Resolve<IRawMaterialInwardRepository>();
+            });
+            builder.RegisterType<SizeDetailsController>().InstancePerRequest().OnActivated(e =>
+            {
+                e.Instance.SizeDetailsRepository = e.Context.Resolve<ISizeDetailsRepository>();
+            });
+            builder.RegisterType<SupplierController>().InstancePerRequest().OnActivated(e =>
+            {
+                e.Instance.SupplierRepository = e.Context.Resolve<ISupplierRepository>();
+            });
+            builder.RegisterType<CustomerController>().InstancePerRequest().OnActivated(e =>
+            {
+                e.Instance.CustomerRepository = e.Context.Resolve<ICustomerRepository>();
             });
         }
     }
