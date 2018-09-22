@@ -86,7 +86,9 @@ namespace DigitalPal.DataAccess
                 item.Unloading,
                 item.TransportName,
                 item.CreatedBy,
-                item.ModifiedBy
+                item.ModifiedBy,
+                item.TenantId,
+                item.PlantId
             };
         }
 

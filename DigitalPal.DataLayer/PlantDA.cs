@@ -84,7 +84,8 @@ namespace DigitalPal.DataAccess
                 item.ContactNumber,
                 item.Logo,
                 item.CreatedBy,
-                item.ModifiedBy
+                item.ModifiedBy,
+                item.TenantId
             };
         }
 

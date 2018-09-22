@@ -75,7 +75,7 @@ namespace DigitalPal.DataAccess
             return new
             {
                 item.Id,
-                item.Name,
+                item.Breakage,
                 item.CreatedOn,
                 item.ModifiedOn,
                 item.IsActive,
@@ -85,7 +85,9 @@ namespace DigitalPal.DataAccess
                 item.Remark,
                 item.Size,
                 item.CreatedBy,
-                item.ModifiedBy
+                item.ModifiedBy,
+                item.TenantId,
+                item.PlantId
             };
         }
 

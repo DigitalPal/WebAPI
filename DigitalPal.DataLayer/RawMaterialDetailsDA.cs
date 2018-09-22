@@ -81,7 +81,9 @@ namespace DigitalPal.DataAccess
                 item.MeasureType,
                 item.Title,
                 item.CreatedBy,
-                item.ModifiedBy
+                item.ModifiedBy,
+                item.TenantId,
+                item.PlantId
             };
         }
 

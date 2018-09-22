@@ -86,7 +86,9 @@ namespace DigitalPal.DataAccess
                 item.SupplierNumber,
                 item.ContactNumber,
                 item.CreatedBy,
-                item.ModifiedBy
+                item.ModifiedBy,
+                item.TenantId,
+                item.PlantId
             };
         }
 

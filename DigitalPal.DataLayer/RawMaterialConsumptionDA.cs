@@ -84,7 +84,9 @@ namespace DigitalPal.DataAccess
                 item.Remark,
                 item.ConsumptionDate,
                 item.CreatedBy,
-                item.ModifiedBy
+                item.ModifiedBy,
+                item.TenantId,
+                item.PlantId
             };
         }
 

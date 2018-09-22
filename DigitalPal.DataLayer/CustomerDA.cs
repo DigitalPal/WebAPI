@@ -86,7 +86,9 @@ namespace DigitalPal.DataAccess
                 item.GSTNumber,
                 item.Type,
                 item.CreatedBy,
-                item.ModifiedBy
+                item.ModifiedBy,
+                item.TenantId,
+                item.PlantId
             };
         }
 
