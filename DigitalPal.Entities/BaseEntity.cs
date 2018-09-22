@@ -15,10 +15,10 @@ namespace DigitalPal.Entities
         public DateTime CreatedOn { get; set; }
         public DateTime ModifiedOn { get; set; }
 
-        public Guid CreatedBy { get; set; }
-        public Guid ModifiedBy { get; set; }
+        public Guid? CreatedBy { get; set; }
+        public Guid? ModifiedBy { get; set; }
         public bool IsActive { get; set; } = true;
-        
-        
+        public Guid? PlantId { get; set; }
+        public Guid? TenantId { get; set; }
     }
 }
