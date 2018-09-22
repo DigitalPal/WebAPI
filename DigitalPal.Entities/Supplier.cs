@@ -6,6 +6,7 @@ namespace DigitalPal.Entities
 {
     public class Supplier: BaseEntity
     {
+        public string SupplierName { get; set; } = "";
         public string GSTNumber { get; set; } = "";
         public string ContactNumber { get; set; } = "";
         public string Address { get; set; } = "";

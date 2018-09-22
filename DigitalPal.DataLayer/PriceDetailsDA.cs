@@ -75,7 +75,6 @@ namespace DigitalPal.DataAccess
             return new
             {
                 item.Id,
-                item.Name,
                 item.CreatedOn,
                 item.ModifiedOn,
                 item.IsActive,
