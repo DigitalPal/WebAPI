@@ -22,6 +22,6 @@ namespace DigitalPal.DataAccess.Interface
 
         Plant[] UpdatePlants(Plant[] Plants);
 
-        Plant[] DeletePlants(Plant[] Plants);
+        Plant[] DeletePlants(string id);
     }
 }

@@ -99,14 +99,15 @@ namespace DigitalPal.DataAccess
             return Plants;
         }
 
-        public Plant[] DeletePlants(Plant[] Plants)
+        public Plant[] DeletePlants(string id)
         {
-            if (Plants.Any())
+            if (id != null)
             {
-                base.DeleteByDbId(Plants.Select(x => x.Id.ToString()).ToArray());
+                string[] ids = { id };
+                base.DeleteByDbId(ids);
             }
 
-            return Plants;
+            return null;
         }
     }
 }

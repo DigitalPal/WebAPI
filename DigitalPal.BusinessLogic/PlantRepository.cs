@@ -56,9 +56,9 @@ namespace DigitalPal.BusinessLogic
             return _PlantDA.UpdatePlants(Plants);
         }
 
-        public Plant[] DeletePlants(Plant[] Plants)
+        public Plant[] DeletePlants(string id)
         {
-            return _PlantDA.DeletePlants(Plants);
+            return _PlantDA.DeletePlants(id);
         }
     }
 }
