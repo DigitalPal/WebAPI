@@ -21,6 +21,6 @@ namespace DigitalPal.BusinessLogic.Interface
 
         Customer[] Update(Customer[] Customers);
 
-        Customer[] Delete(Customer[] Customers);
+        Customer[] Delete(string id);
     }
 }

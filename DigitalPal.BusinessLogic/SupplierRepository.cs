@@ -56,9 +56,9 @@ namespace DigitalPal.BusinessLogic
             return _SupplierDA.UpdateSuppliers(Suppliers);
         }
 
-        public Supplier[] DeleteSuppliers(Supplier[] Suppliers)
+        public Supplier[] DeleteSuppliers(string id)
         {
-            return _SupplierDA.DeleteSuppliers(Suppliers);
+            return _SupplierDA.DeleteSuppliers(id);
         }
     }
 }

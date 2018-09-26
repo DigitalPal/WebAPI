@@ -97,14 +97,15 @@ namespace DigitalPal.DataAccess
             return SizeDetailss;
         }
 
-        public SizeDetails[] DeleteSizeDetails(SizeDetails[] SizeDetailss)
+        public SizeDetails[] DeleteSizeDetails(string id)
         {
-            if (SizeDetailss.Any())
+            if (id != null)
             {
-                base.DeleteByDbId(SizeDetailss.Select(x => x.Id.ToString()).ToArray());
+                string[] ids = { id };
+                base.DeleteByDbId(ids);
             }
 
-            return SizeDetailss;
+            return null;
         }
     }
 }

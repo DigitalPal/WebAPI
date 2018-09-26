@@ -22,6 +22,6 @@ namespace DigitalPal.BusinessLogic.Interface
 
         RawMaterialDetails[] UpdateRawMaterialDetails(RawMaterialDetails[] RawMaterialDetailss);
 
-        RawMaterialDetails[] DeleteRawMaterialDetails(RawMaterialDetails[] RawMaterialDetailss);
+        RawMaterialDetails[] DeleteRawMaterialDetails(string id);
     }
 }

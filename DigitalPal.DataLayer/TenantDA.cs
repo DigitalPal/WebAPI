@@ -96,14 +96,15 @@ namespace DigitalPal.DataAccess
             return Tenants;
         }
 
-        public Tenant[] DeleteTenants(Tenant[] Tenants)
+        public Tenant[] DeleteTenants(string id)
         {
-            if (Tenants.Any())
+            if (id != null)
             {
-                base.DeleteByDbId(Tenants.Select(x => x.Id.ToString()).ToArray());
+                string[] ids = { id };
+                base.DeleteByDbId(ids);
             }
 
-            return Tenants;
+            return null;
         }
     }
 }

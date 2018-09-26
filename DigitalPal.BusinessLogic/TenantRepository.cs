@@ -59,9 +59,9 @@ namespace DigitalPal.BusinessLogic
             return _tenantDA.UpdateTenants(tenants);
         }
 
-        public Tenant[] Delete(Tenant[] Tenants)
+        public Tenant[] Delete(string id)
         {
-            return _tenantDA.DeleteTenants(Tenants);
+            return _tenantDA.DeleteTenants(id);
         }
     }
 }

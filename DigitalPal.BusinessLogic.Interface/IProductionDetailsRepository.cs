@@ -22,6 +22,6 @@ namespace DigitalPal.BusinessLogic.Interface
 
         ProductionDetails[] UpdateProductionDetails(ProductionDetails[] ProductionDetailss);
 
-        ProductionDetails[] DeleteProductionDetails(ProductionDetails[] ProductionDetailss);
+        ProductionDetails[] DeleteProductionDetails(string id);
     }
 }

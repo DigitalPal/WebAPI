@@ -22,6 +22,6 @@ namespace DigitalPal.BusinessLogic.Interface
 
         RawMaterialConsumption[] UpdateRawMaterialConsumptions(RawMaterialConsumption[] RawMaterialConsumptions);
 
-        RawMaterialConsumption[] DeleteRawMaterialConsumptions(RawMaterialConsumption[] RawMaterialConsumptions);
+        RawMaterialConsumption[] DeleteRawMaterialConsumptions(string id);
     }
 }

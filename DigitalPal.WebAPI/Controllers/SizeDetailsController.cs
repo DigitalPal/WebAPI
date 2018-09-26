@@ -48,10 +48,10 @@ namespace DigitalPal.WebAPI.Controllers
 
         [ResponseType(typeof(SizeDetails))]
         [HttpDelete]
-        [Route("")]
-        public IHttpActionResult Delete(SizeDetails[] SizeDetails)
+        [Route("{id}")]
+        public IHttpActionResult Delete(string id)
         {
-            return Ok(SizeDetailsRepository.DeleteSizeDetails(SizeDetails));
+            return Ok(SizeDetailsRepository.DeleteSizeDetails(id));
         }
     }
 }

@@ -100,14 +100,15 @@ namespace DigitalPal.DataAccess
             return RawMaterialConsumptions;
         }
 
-        public RawMaterialConsumption[] DeleteRawMaterialConsumptions(RawMaterialConsumption[] RawMaterialConsumptions)
+        public RawMaterialConsumption[] DeleteRawMaterialConsumptions(string id)
         {
-            if (RawMaterialConsumptions.Any())
+            if (id != null)
             {
-                base.DeleteByDbId(RawMaterialConsumptions.Select(x => x.Id.ToString()).ToArray());
+                string[] ids = { id };
+                base.DeleteByDbId(ids);
             }
 
-            return RawMaterialConsumptions;
+            return null;
         }
     }
 }

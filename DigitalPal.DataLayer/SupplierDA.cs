@@ -102,14 +102,15 @@ namespace DigitalPal.DataAccess
             return Suppliers;
         }
 
-        public Supplier[] DeleteSuppliers(Supplier[] Suppliers)
+        public Supplier[] DeleteSuppliers(string id)
         {
-            if (Suppliers.Any())
+            if (id != null)
             {
-                base.DeleteByDbId(Suppliers.Select(x => x.Id.ToString()).ToArray());
+                string[] ids = { id };
+                base.DeleteByDbId(ids);
             }
 
-            return Suppliers;
+            return null;
         }
     }
 }

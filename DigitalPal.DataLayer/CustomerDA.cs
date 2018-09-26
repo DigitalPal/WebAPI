@@ -102,14 +102,15 @@ namespace DigitalPal.DataAccess
             return Customers;
         }
 
-        public Customer[] DeleteCustomers(Customer[] Customers)
+        public Customer[] DeleteCustomers(string id)
         {
-            if (Customers.Any())
+            if (id != null)
             {
-                base.DeleteByDbId(Customers.Select(x => x.Id.ToString()).ToArray());
+                string[] ids = { id };
+                base.DeleteByDbId(ids);
             }
 
-            return Customers;
+            return null;
         }
     }
 }

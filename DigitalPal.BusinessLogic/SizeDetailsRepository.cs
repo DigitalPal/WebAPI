@@ -56,9 +56,9 @@ namespace DigitalPal.BusinessLogic
             return _SizeDetailsDA.UpdateSizeDetails(SizeDetailss);
         }
 
-        public SizeDetails[] DeleteSizeDetails(SizeDetails[] SizeDetailss)
+        public SizeDetails[] DeleteSizeDetails(string id)
         {
-            return _SizeDetailsDA.DeleteSizeDetails(SizeDetailss);
+            return _SizeDetailsDA.DeleteSizeDetails(id);
         }
     }
 }

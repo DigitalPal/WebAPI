@@ -22,6 +22,6 @@ namespace DigitalPal.BusinessLogic.Interface
 
         SizeDetails[] UpdateSizeDetails(SizeDetails[] SizeDetailss);
 
-        SizeDetails[] DeleteSizeDetails(SizeDetails[] SizeDetailss);
+        SizeDetails[] DeleteSizeDetails(string id);
     }
 }

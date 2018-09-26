@@ -22,6 +22,6 @@ namespace DigitalPal.BusinessLogic.Interface
 
         RawMaterialInward[] UpdateRawMaterialInwards(RawMaterialInward[] RawMaterialInwards);
 
-        RawMaterialInward[] DeleteRawMaterialInwards(RawMaterialInward[] RawMaterialInwards);
+        RawMaterialInward[] DeleteRawMaterialInwards(string id);
     }
 }

@@ -21,6 +21,6 @@ namespace DigitalPal.BusinessLogic.Interface
 
         Tenant[] Update(Tenant[] Tenants);
 
-        Tenant[] Delete(Tenant[] Tenants);
+        Tenant[] Delete(string id);
     }
 }

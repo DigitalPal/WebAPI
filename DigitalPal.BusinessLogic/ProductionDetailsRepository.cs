@@ -56,9 +56,9 @@ namespace DigitalPal.BusinessLogic
             return _ProductionDetailsDA.UpdateProductionDetails(ProductionDetailss);
         }
 
-        public ProductionDetails[] DeleteProductionDetails(ProductionDetails[] ProductionDetailss)
+        public ProductionDetails[] DeleteProductionDetails(string id)
         {
-            return _ProductionDetailsDA.DeleteProductionDetails(ProductionDetailss);
+            return _ProductionDetailsDA.DeleteProductionDetails(id);
         }
     }
 }

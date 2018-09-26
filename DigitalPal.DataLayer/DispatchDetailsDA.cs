@@ -102,14 +102,15 @@ namespace DigitalPal.DataAccess
             return DispatchDetailss;
         }
 
-        public DispatchDetails[] DeleteDispatchDetails(DispatchDetails[] DispatchDetailss)
+        public DispatchDetails[] DeleteDispatchDetails(string id)
         {
-            if (DispatchDetailss.Any())
+            if (id != null)
             {
-                base.DeleteByDbId(DispatchDetailss.Select(x => x.Id.ToString()).ToArray());
+                string[] ids = { id };
+                base.DeleteByDbId(ids);
             }
 
-            return DispatchDetailss;
+            return null;
         }
     }
 }

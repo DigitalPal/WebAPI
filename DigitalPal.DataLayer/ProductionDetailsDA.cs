@@ -101,14 +101,15 @@ namespace DigitalPal.DataAccess
             return ProductionDetailss;
         }
 
-        public ProductionDetails[] DeleteProductionDetails(ProductionDetails[] ProductionDetailss)
+        public ProductionDetails[] DeleteProductionDetails(string id)
         {
-            if (ProductionDetailss.Any())
+            if (id != null)
             {
-                base.DeleteByDbId(ProductionDetailss.Select(x => x.Id.ToString()).ToArray());
+                string[] ids = { id };
+                base.DeleteByDbId(ids);
             }
 
-            return ProductionDetailss;
+            return null;
         }
     }
 }

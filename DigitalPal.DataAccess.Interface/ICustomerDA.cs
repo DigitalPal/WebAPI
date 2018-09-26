@@ -22,6 +22,6 @@ namespace DigitalPal.DataAccess.Interface
 
         Customer[] UpdateCustomers(Customer[] Customers);
 
-        Customer[] DeleteCustomers(Customer[] Customers);
+        Customer[] DeleteCustomers(string id);
     }
 }

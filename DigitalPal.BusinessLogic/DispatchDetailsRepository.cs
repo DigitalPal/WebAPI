@@ -56,9 +56,9 @@ namespace DigitalPal.BusinessLogic
             return _DispatchDetailsDA.UpdateDispatchDetails(DispatchDetailss);
         }
 
-        public DispatchDetails[] DeleteDispatchDetails(DispatchDetails[] DispatchDetailss)
+        public DispatchDetails[] DeleteDispatchDetails(string id)
         {
-            return _DispatchDetailsDA.DeleteDispatchDetails(DispatchDetailss);
+            return _DispatchDetailsDA.DeleteDispatchDetails(id);
         }
     }
 }

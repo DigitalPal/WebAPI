@@ -56,9 +56,9 @@ namespace DigitalPal.BusinessLogic
             return _CustomerDA.UpdateCustomers(Customers);
         }
 
-        public Customer[] Delete(Customer[] Customers)
+        public Customer[] Delete(string id)
         {
-            return _CustomerDA.DeleteCustomers(Customers);
+            return _CustomerDA.DeleteCustomers(id);
         }
     }
 }

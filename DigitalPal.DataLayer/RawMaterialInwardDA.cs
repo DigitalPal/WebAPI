@@ -103,14 +103,15 @@ namespace DigitalPal.DataAccess
             return RawMaterialInwards;
         }
 
-        public RawMaterialInward[] DeleteRawMaterialInwards(RawMaterialInward[] RawMaterialInwards)
+        public RawMaterialInward[] DeleteRawMaterialInwards(string id)
         {
-            if (RawMaterialInwards.Any())
+            if (id != null)
             {
-                base.DeleteByDbId(RawMaterialInwards.Select(x => x.Id.ToString()).ToArray());
+                string[] ids = { id };
+                base.DeleteByDbId(ids);
             }
 
-            return RawMaterialInwards;
+            return null;
         }
     }
 }

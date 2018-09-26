@@ -56,9 +56,9 @@ namespace DigitalPal.BusinessLogic
             return _RawMaterialInwardDA.UpdateRawMaterialInwards(RawMaterialInwards);
         }
 
-        public RawMaterialInward[] DeleteRawMaterialInwards(RawMaterialInward[] RawMaterialInwards)
+        public RawMaterialInward[] DeleteRawMaterialInwards(string id)
         {
-            return _RawMaterialInwardDA.DeleteRawMaterialInwards(RawMaterialInwards);
+            return _RawMaterialInwardDA.DeleteRawMaterialInwards(id);
         }
     }
 }

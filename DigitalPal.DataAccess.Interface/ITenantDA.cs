@@ -22,6 +22,6 @@ namespace DigitalPal.DataAccess.Interface
 
         Tenant[] UpdateTenants(Tenant[] Tenants);
 
-        Tenant[] DeleteTenants(Tenant[] Tenants);
+        Tenant[] DeleteTenants(string id);
     }
 }

@@ -99,14 +99,15 @@ namespace DigitalPal.DataAccess
             return PriceDetailss;
         }
 
-        public PriceDetails[] DeletePriceDetails(PriceDetails[] PriceDetailss)
+        public PriceDetails[] DeletePriceDetails(string id)
         {
-            if (PriceDetailss.Any())
+            if (id != null)
             {
-                base.DeleteByDbId(PriceDetailss.Select(x => x.Id.ToString()).ToArray());
+                string[] ids = { id };
+                base.DeleteByDbId(ids);
             }
 
-            return PriceDetailss;
+            return null;
         }
     }
 }

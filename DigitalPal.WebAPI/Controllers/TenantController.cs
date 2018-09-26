@@ -47,11 +47,11 @@ namespace DigitalPal.WebAPI.Controllers
         }
 
         [ResponseType(typeof(Tenant))]
-        [Route("")]
         [HttpDelete]
-        public IHttpActionResult Delete(Tenant[] tenant)
+        [Route("{id}")]
+        public IHttpActionResult Delete(string id)
         {
-            return Ok(tenantRepository.Delete(tenant));
+            return Ok(tenantRepository.Delete(id));
         }
     }
 }

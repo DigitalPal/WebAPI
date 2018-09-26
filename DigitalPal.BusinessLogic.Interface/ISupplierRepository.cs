@@ -22,6 +22,6 @@ namespace DigitalPal.BusinessLogic.Interface
 
         Supplier[] UpdateSuppliers(Supplier[] Suppliers);
 
-        Supplier[] DeleteSuppliers(Supplier[] Suppliers);
+        Supplier[] DeleteSuppliers(string id);
     }
 }

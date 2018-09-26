@@ -22,6 +22,6 @@ namespace DigitalPal.DataAccess.Interface
 
         SizeDetails[] UpdateSizeDetails(SizeDetails[] SizeDetailss);
 
-        SizeDetails[] DeleteSizeDetails(SizeDetails[] SizeDetailss);
+        SizeDetails[] DeleteSizeDetails(string id);
     }
 }
