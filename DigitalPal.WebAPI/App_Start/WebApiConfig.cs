@@ -1,7 +1,9 @@
-﻿using Microsoft.Owin.Security.OAuth;
+﻿using DigitalPal.WebAPI.ExLogger;
+using Microsoft.Owin.Security.OAuth;
 using Newtonsoft.Json.Serialization;
 using System.Net.Http.Formatting;
 using System.Web.Http;
+using System.Web.Http.ExceptionHandling;
 
 namespace DigitalPal.WebAPI
 {
@@ -22,7 +24,9 @@ namespace DigitalPal.WebAPI
 
             config.SuppressDefaultHostAuthentication();
             config.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));
-
+            //Register Exception Handler  
+            config.Services.Add(typeof(IExceptionLogger), new ExceptionManagerApi());
+            config.Filters.Add(new LogActionWebApiFilter());
             //var jsonFormatter = config.Formatters.OfType<JsonMediaTypeFormatter>().First();
             //jsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
         }
