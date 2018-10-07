@@ -40,11 +40,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IDispatchDA.cs" />
     <Compile Include="ICustomerDA.cs" />
     <Compile Include="IDispatchDetailsDA.cs" />
+    <Compile Include="IInvoiceDA.cs" />
+    <Compile Include="IPaymentDA.cs" />
     <Compile Include="IPlantDA.cs" />
     <Compile Include="IPriceDetailsDA.cs" />
+    <Compile Include="IProductDA.cs" />
     <Compile Include="IProductionDetailsDA.cs" />
+    <Compile Include="IOrderDA.cs" />
+    <Compile Include="IOrderDeatilsDA.cs" />
     <Compile Include="IRawMaterialConsumptionDA.cs" />
     <Compile Include="IRawMaterialDetailsDA.cs" />
     <Compile Include="IRawMaterialInwardDA.cs" />

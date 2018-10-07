@@ -1,10 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace DigitalPal.Common
+﻿namespace DigitalPal.Common
 {
     public class Enum
     {
+        public enum Status
+        {
+            Open,
+            InProgress,
+            Dispatched,
+            InvoiceDone,
+            Complete
+        }
     }
 }

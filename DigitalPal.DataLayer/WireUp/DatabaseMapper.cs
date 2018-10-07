@@ -24,6 +24,13 @@ namespace DigitalPal.DataAccess.WireUp
             builder.RegisterType<RawMaterialInwardDA>().As<IRawMaterialInwardDA>().InstancePerRequest();
             builder.RegisterType<SizeDetailsDA>().As<ISizeDetailsDA>().InstancePerRequest();
             builder.RegisterType<SupplierDA>().As<ISupplierDA>().InstancePerRequest();
+
+            builder.RegisterType<DispatchDA>().As<IDispatchDA>();
+            builder.RegisterType<InvoiceDA>().As<IInvoiceDA>();
+            builder.RegisterType<PaymentDA>().As<IPaymentDA>();
+            builder.RegisterType<ProductDA>().As<IProductDA>();
+            builder.RegisterType<OrderDA>().As<IOrderDA>();
+            builder.RegisterType<OrderDetailsDA>().As<IOrderDetailsDA>();
         }
         private void RegisterConnectionString(ContainerBuilder builder)
         {

@@ -41,10 +41,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ICustomerRepository.cs" />
-    <Compile Include="IDispatchDetailsRepository.cs" />
+    <Compile Include="IDispatchRepository.cs" />
+    <Compile Include="IInvoiceRepository.cs" />
+    <Compile Include="IPaymentRepository.cs" />
     <Compile Include="IPlantRepository.cs" />
     <Compile Include="IPriceDetailsRepository.cs" />
+    <Compile Include="IProductRepository.cs" />
     <Compile Include="IProductionDetailsRepository.cs" />
+    <Compile Include="IOrderRepository.cs" />
     <Compile Include="IRawMaterialConsumptionRepository.cs" />
     <Compile Include="IRawMaterialDetailsRepository.cs" />
     <Compile Include="IRawMaterialInwardRepository.cs" />

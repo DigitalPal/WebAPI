@@ -60,11 +60,17 @@
     </Compile>
     <Compile Include="BaseEntity.cs" />
     <Compile Include="Customer.cs" />
+    <Compile Include="Dispatch.cs" />
     <Compile Include="DispatchDetails.cs" />
+    <Compile Include="Invoice.cs" />
+    <Compile Include="Payment.cs" />
     <Compile Include="Plant.cs" />
     <Compile Include="PriceDetails.cs" />
+    <Compile Include="Product.cs" />
     <Compile Include="ProductionDetails.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Order.cs" />
+    <Compile Include="OrderDetails.cs" />
     <Compile Include="RawMaterialConsumption.cs" />
     <Compile Include="RawMaterialDetails.cs" />
     <Compile Include="RawMaterialInward.cs" />
@@ -88,6 +94,12 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DigitalPal.Common\DigitalPal.Common.csproj">
+      <Project>{035b1708-06cc-4ed7-b29a-2e853a3c03ea}</Project>
+      <Name>DigitalPal.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

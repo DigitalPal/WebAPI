@@ -21,9 +21,9 @@ namespace DigitalPal.WebAPI.WireUp
             {
                 e.Instance.PlantRepository = e.Context.Resolve<IPlantRepository>();
             });
-            builder.RegisterType<DispatchDetailsController>().InstancePerRequest().OnActivated(e =>
+            builder.RegisterType<DispatchController>().InstancePerRequest().OnActivated(e =>
             {
-                e.Instance.DispatchDetailsRepository = e.Context.Resolve<IDispatchDetailsRepository>();
+                e.Instance.DispatchRepository = e.Context.Resolve<IDispatchRepository>();
             });
             builder.RegisterType<PriceDetailsController>().InstancePerRequest().OnActivated(e =>
             {
@@ -56,6 +56,23 @@ namespace DigitalPal.WebAPI.WireUp
             builder.RegisterType<CustomerController>().InstancePerRequest().OnActivated(e =>
             {
                 e.Instance.CustomerRepository = e.Context.Resolve<ICustomerRepository>();
+            });
+
+            builder.RegisterType<InvoiceController>().InstancePerRequest().OnActivated(e =>
+            {
+                e.Instance.InvoiceRepository = e.Context.Resolve<IInvoiceRepository>();
+            });
+            builder.RegisterType<PaymentController>().InstancePerRequest().OnActivated(e =>
+            {
+                e.Instance.PaymentRepository = e.Context.Resolve<IPaymentRepository>();
+            });
+            builder.RegisterType<OrderController>().InstancePerRequest().OnActivated(e =>
+            {
+                e.Instance.OrderRepository = e.Context.Resolve<IOrderRepository>();
+            });
+            builder.RegisterType<ProductController>().InstancePerRequest().OnActivated(e =>
+            {
+                e.Instance.ProductRepository = e.Context.Resolve<IProductRepository>();
             });
         }
     }

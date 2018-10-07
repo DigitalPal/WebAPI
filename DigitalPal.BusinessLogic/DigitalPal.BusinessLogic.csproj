@@ -54,11 +54,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CustomerRepository.cs" />
-    <Compile Include="DispatchDetailsRepository.cs" />
+    <Compile Include="DispatchRepository.cs" />
+    <Compile Include="InvoiceRepository.cs" />
+    <Compile Include="PaymentRepository.cs" />
     <Compile Include="PlantRepository.cs" />
     <Compile Include="PriceDetailsRepository.cs" />
     <Compile Include="ProductionDetailsRepository.cs" />
+    <Compile Include="ProductRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="OrderRepository.cs" />
     <Compile Include="RawMaterialConsumptionRepository.cs" />
     <Compile Include="RawMaterialDetailsRepository.cs" />
     <Compile Include="RawMaterialInwardRepository.cs" />

@@ -13,7 +13,7 @@ namespace DigitalPal.BusinessLogic.WireUp
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterType<CustomerRepository>().As<ICustomerRepository>();
-            builder.RegisterType<DispatchDetailsRepository>().As<IDispatchDetailsRepository>();
+            builder.RegisterType<DispatchRepository>().As<IDispatchRepository>();
             builder.RegisterType<PlantRepository>().As<IPlantRepository>();
             builder.RegisterType<PriceDetailsRepository>().As<IPriceDetailsRepository>();
             builder.RegisterType<ProductionDetailsRepository>().As<IProductionDetailsRepository>();
@@ -23,6 +23,10 @@ namespace DigitalPal.BusinessLogic.WireUp
             builder.RegisterType<SizeDetailsRepository>().As<ISizeDetailsRepository>();
             builder.RegisterType<SupplierRepository>().As<ISupplierRepository>();
             builder.RegisterType<TenantRepository>().As<ITenantRepository>();
+            builder.RegisterType<InvoiceRepository>().As<IInvoiceRepository>();
+            builder.RegisterType<PaymentRepository>().As<IPaymentRepository>();
+            builder.RegisterType<ProductRepository>().As<IProductRepository>();
+            builder.RegisterType<OrderRepository>().As<IOrderRepository>();
         }
 
     }

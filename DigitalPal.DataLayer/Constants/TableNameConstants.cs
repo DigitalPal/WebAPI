@@ -13,5 +13,11 @@
         public const string dp_RawMaterialInward = "dbo.dp_RawMaterialInward";
         public const string dp_SizeDetails = "dbo.dp_SizeDetails";
         public const string dp_Supplier = "dbo.dp_Supplier";
+        public const string dp_Dispatch = "dbo.dp_Dispatch";
+        public const string dp_Payment = "dbo.dp_Payment";
+        public const string dp_Invoice = "dbo.dp_Invoice";
+        public const string dp_Order = "dbo.dp_Order";
+        public const string dp_OrderDetails = "dbo.dp_OrderDetails";
+        public const string dp_Product = "dbo.dp_Product";
     }
 }
