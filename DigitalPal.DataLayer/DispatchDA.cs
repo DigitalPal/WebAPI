@@ -33,7 +33,24 @@ namespace DigitalPal.DataAccess
 
         public Dispatch GetDispatch(string id)
         {
-            return FindById(Guid.Parse(id));
+            List<Dispatch> _dispatch = new List<Dispatch>();
+            var sql = String.Format("select dispatch.[Id], dispatch.[DispatchNumber], dispatch.[DispatchDate], dispatch.[OrderId], dispatch.[ChallanNumber], dispatch.[Size], dispatch.[Quantity], dispatch.[TransportName], dispatch.[Loading], dispatch.[Unloading], dispatch.[Rate], dispatch.[Remark], dispatch.[DispatchStatus], dispatch.[CreatedOn], dispatch.[CreatedBy], dispatch.[ModifiedOn], dispatch.[ModifiedBy], dispatch.[IsActive], dispatch.[TenantId], dispatch.[PlantId], dispatchdeatils.[ProductId], dispatchdeatils.[Quantity] , dispatchdeatils.[Rate], prod.[Name] as ProductName" +
+                                    " from {0} dispatch" +
+                                    " inner join {1} dispatchdeatils on dispatch.Id = dispatchdeatils.DispatchId" +
+                                    " inner join {2} Prod on Prod.Id = dispatchdeatils.ProductId" +
+                                    " Where dispatch.IsActive = 1 and dispatchdeatils.IsActive = 1 and Prod.IsActive = 1 and dispatch.Id = @id",
+                                    GetTableName(), TableNameConstants.dp_DispatchDetails, TableNameConstants.dp_Product);
+
+            var dynamicOrder = base.FindDynamic(sql, new { id });
+
+            Slapper.AutoMapper.Configuration.AddIdentifiers(typeof(Dispatch), new List<string> { "Id" });
+            Slapper.AutoMapper.Configuration.AddIdentifiers(typeof(DispatchDetails), new List<string> { "ProductId" });
+            _dispatch = (Slapper.AutoMapper.MapDynamic<Dispatch>(dynamicOrder) as IEnumerable<Dispatch>).ToList();
+            foreach (Dispatch or in _dispatch)
+            {
+                or.DispatchDetails = (Slapper.AutoMapper.MapDynamic<DispatchDetails>(dynamicOrder) as IEnumerable<DispatchDetails>).Where(i => i.Id == or.Id).ToArray();
+            }
+            return _dispatch.FirstOrDefault();
         }
 
         public Dictionary<string, Dispatch> GetDispatch(string[] ids)
@@ -44,19 +61,68 @@ namespace DigitalPal.DataAccess
 
         public Dispatch[] GetDispatch(IEnumerable<Guid?> ids)
         {
-            var sql = String.Format("SELECT * FROM {0} WHERE Id IN @ids AND IsActive = 1", GetTableName());
-            return base.Find(sql, new { ids }).ToArray();
+            List<Dispatch> _dispatch = new List<Dispatch>();
+            var sql = String.Format("select dispatch.[Id], dispatch.[DispatchNumber], dispatch.[DispatchDate], dispatch.[OrderId], dispatch.[ChallanNumber], dispatch.[Size], dispatch.[Quantity], dispatch.[TransportName], dispatch.[Loading], dispatch.[Unloading], dispatch.[Rate], dispatch.[Remark], dispatch.[DispatchStatus], dispatch.[CreatedOn], dispatch.[CreatedBy], dispatch.[ModifiedOn], dispatch.[ModifiedBy], dispatch.[IsActive], dispatch.[TenantId], dispatch.[PlantId], dispatchdeatils.[ProductId], dispatchdeatils.[Quantity] , dispatchdeatils.[Rate], prod.[Name] as ProductName" +
+                                    " from {0} dispatch" +
+                                    " inner join {1} dispatchdeatils on dispatch.Id = dispatchdeatils.DispatchId" +
+                                    " inner join {2} Prod on Prod.Id = dispatchdeatils.ProductId" +
+                                    " Where dispatch.IsActive = 1 and dispatchdeatils.IsActive = 1 and Prod.IsActive = 1 and dispatch.Id In @id",
+                                    GetTableName(), TableNameConstants.dp_DispatchDetails, TableNameConstants.dp_Product);
+
+            var dynamicOrder = base.FindDynamic(sql, new { ids });
+
+            Slapper.AutoMapper.Configuration.AddIdentifiers(typeof(Dispatch), new List<string> { "Id" });
+            Slapper.AutoMapper.Configuration.AddIdentifiers(typeof(DispatchDetails), new List<string> { "ProductId" });
+            _dispatch = (Slapper.AutoMapper.MapDynamic<Dispatch>(dynamicOrder) as IEnumerable<Dispatch>).ToList();
+            foreach (Dispatch or in _dispatch)
+            {
+                or.DispatchDetails = (Slapper.AutoMapper.MapDynamic<DispatchDetails>(dynamicOrder) as IEnumerable<DispatchDetails>).Where(i => i.Id == or.Id).ToArray();
+            }
+            return _dispatch.ToArray();
         }
 
         public Dispatch[] GetAll()
         {
-            return base.FindAll().ToArray();
+            List<Dispatch> _dispatch = new List<Dispatch>();
+            var sql = String.Format("select dispatch.[Id], dispatch.[DispatchNumber], dispatch.[DispatchDate], dispatch.[OrderId], dispatch.[ChallanNumber], dispatch.[Size], dispatch.[Quantity], dispatch.[TransportName], dispatch.[Loading], dispatch.[Unloading], dispatch.[Rate], dispatch.[Remark], dispatch.[DispatchStatus], dispatch.[CreatedOn], dispatch.[CreatedBy], dispatch.[ModifiedOn], dispatch.[ModifiedBy], dispatch.[IsActive], dispatch.[TenantId], dispatch.[PlantId], dispatchdeatils.[ProductId], dispatchdeatils.[Quantity] , dispatchdeatils.[Rate], prod.[Name] as ProductName" +
+                                    " from {0} dispatch" +
+                                    " inner join {1} dispatchdeatils on dispatch.Id = dispatchdeatils.DispatchId" +
+                                    " inner join {2} Prod on Prod.Id = dispatchdeatils.ProductId" +
+                                    " Where dispatch.IsActive = 1 and dispatchdeatils.IsActive = 1 and Prod.IsActive = 1",
+                                    GetTableName(), TableNameConstants.dp_DispatchDetails, TableNameConstants.dp_Product);
+
+            var dynamicOrder = base.FindDynamic(sql, new {  });
+
+            Slapper.AutoMapper.Configuration.AddIdentifiers(typeof(Dispatch), new List<string> { "Id" });
+            Slapper.AutoMapper.Configuration.AddIdentifiers(typeof(DispatchDetails), new List<string> { "ProductId" });
+            _dispatch = (Slapper.AutoMapper.MapDynamic<Dispatch>(dynamicOrder) as IEnumerable<Dispatch>).ToList();
+            foreach (Dispatch or in _dispatch)
+            {
+                or.DispatchDetails = (Slapper.AutoMapper.MapDynamic<DispatchDetails>(dynamicOrder) as IEnumerable<DispatchDetails>).Where(i => i.Id == or.Id).ToArray();
+            }
+            return _dispatch.ToArray();
         }
 
         public Dispatch[] GetByIds(IEnumerable<Guid> Ids)
         {
-            var sql = String.Format("SELECT * FROM {0} WHERE Id IN ( @Ids ) AND IsActive = 1", GetTableName());
-            return base.FindByTempTableIds(sql, Ids).ToArray();
+            List<Dispatch> _dispatch = new List<Dispatch>();
+            var sql = String.Format("select dispatch.[Id], dispatch.[DispatchNumber], dispatch.[DispatchDate], dispatch.[OrderId], dispatch.[ChallanNumber], dispatch.[Size], dispatch.[Quantity], dispatch.[TransportName], dispatch.[Loading], dispatch.[Unloading], dispatch.[Rate], dispatch.[Remark], dispatch.[DispatchStatus], dispatch.[CreatedOn], dispatch.[CreatedBy], dispatch.[ModifiedOn], dispatch.[ModifiedBy], dispatch.[IsActive], dispatch.[TenantId], dispatch.[PlantId], dispatchdeatils.[ProductId], dispatchdeatils.[Quantity] , dispatchdeatils.[Rate], prod.[Name] as ProductName" +
+                                    " from {0} dispatch" +
+                                    " inner join {1} dispatchdeatils on dispatch.Id = dispatchdeatils.DispatchId" +
+                                    " inner join {2} Prod on Prod.Id = dispatchdeatils.ProductId" +
+                                    " Where dispatch.IsActive = 1 and dispatchdeatils.IsActive = 1 and Prod.IsActive = 1 and dispatch.Id In @id",
+                                    GetTableName(), TableNameConstants.dp_DispatchDetails, TableNameConstants.dp_Product);
+
+            var dynamicOrder = base.FindDynamic(sql, new { Ids });
+
+            Slapper.AutoMapper.Configuration.AddIdentifiers(typeof(Dispatch), new List<string> { "Id" });
+            Slapper.AutoMapper.Configuration.AddIdentifiers(typeof(DispatchDetails), new List<string> { "ProductId" });
+            _dispatch = (Slapper.AutoMapper.MapDynamic<Dispatch>(dynamicOrder) as IEnumerable<Dispatch>).ToList();
+            foreach (Dispatch or in _dispatch)
+            {
+                or.DispatchDetails = (Slapper.AutoMapper.MapDynamic<DispatchDetails>(dynamicOrder) as IEnumerable<DispatchDetails>).Where(i => i.Id == or.Id).ToArray();
+            }
+            return _dispatch.ToArray();
         }
 
         public string GetEntityName()

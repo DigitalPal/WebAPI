@@ -10,10 +10,12 @@ namespace DigitalPal.BusinessLogic
     public class DispatchRepository : IDispatchRepository
     {
         private IDispatchDA _DispatchDA;
+        private IDispatchDetailsDA _DispatchDetailsDA;
 
-        public DispatchRepository(IDispatchDA DispatchDA)
+        public DispatchRepository(IDispatchDA DispatchDA, IDispatchDetailsDA DispatchDetailsDA)
         {
             _DispatchDA = DispatchDA;
+            _DispatchDetailsDA = DispatchDetailsDA;
         }
 
         public async Task AddDispatchAsync(Dispatch[] Dispatchs)
@@ -22,7 +24,18 @@ namespace DigitalPal.BusinessLogic
         }
         public Dispatch[] AddDispatch(Dispatch[] Dispatchs)
         {
-            return _DispatchDA.AddDispatch(Dispatchs);
+            foreach (Dispatch dispatch in Dispatchs)
+            {
+                dispatch.Id = Guid.NewGuid();
+                _DispatchDA.AddDispatch(new[] { dispatch });
+                foreach (DispatchDetails poDetails in dispatch.DispatchDetails)
+                {
+                    poDetails.DispatchId = dispatch.Id;
+                }
+                _DispatchDetailsDA.AddDispatchDetails(dispatch.DispatchDetails);
+            }
+
+            return Dispatchs;
         }
 
         public Dispatch GetDispatch(string id)
