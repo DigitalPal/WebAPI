@@ -33,7 +33,21 @@ namespace DigitalPal.DataAccess
 
         public Payment GetPayment(string id)
         {
-            return FindById(Guid.Parse(id));
+            List<Payment> _Payment = new List<Payment>();
+            var sql = String.Format("SELECT Pay.[Id], Pay.[PaymentId], Inv.PaymentNumber AS PaymentNumber ,Pay.[PaymentDate], Pay.[OrderId], Ord.OrderNumber AS OrderNumber, Pay.[CustomerId], Cust.Name AS [CustomerName], Pay.[Amount], Pay.[PaymentStatus], Pay.[CreatedOn], Pay.[CreatedBy], Pay.[ModifiedOn], Pay.[ModifiedBy], Pay.[IsActive], Pay.[TenantId], Pay.[PlantId] FROM {0} Pay" +
+                                    " INNER JOIN {1} Inv ON Pay.PaymentId = Inv.Id" +
+                                    " INNER JOIN {2} Ord ON Pay.OrderId = Ord.Id" +
+                                    " INNER JOIN {3} Cust ON Pay.CustomerId = Cust.Id" +
+                                    " WHERE Pay.IsActive = 1 AND Inv.IsActive = 1 AND Ord.IsActive = 1 AND Cust.IsActive = 1 AND Pay.Id = @id",
+                                    GetTableName(), TableNameConstants.dp_Payment, TableNameConstants.dp_Order, TableNameConstants.dp_Customer);
+
+            var dynamicPayment = base.FindDynamic(sql, new { id });
+
+            Slapper.AutoMapper.Configuration.AddIdentifiers(typeof(Payment), new List<string> { "Id" });
+
+            _Payment = (Slapper.AutoMapper.MapDynamic<Payment>(dynamicPayment) as IEnumerable<Payment>).ToList();
+
+            return _Payment.FirstOrDefault();
         }
 
         public Dictionary<string, Payment> GetPayments(string[] ids)
@@ -44,19 +58,59 @@ namespace DigitalPal.DataAccess
 
         public Payment[] GetPayments(IEnumerable<Guid?> ids)
         {
-            var sql = String.Format("SELECT * FROM {0} WHERE Id IN @ids AND IsActive = 1", GetTableName());
-            return base.Find(sql, new { ids }).ToArray();
+            List<Payment> _Payment = new List<Payment>();
+            var sql = String.Format("SELECT Pay.[Id], Pay.[PaymentId], Inv.PaymentNumber AS PaymentNumber ,Pay.[PaymentDate], Pay.[OrderId], Ord.OrderNumber AS OrderNumber, Pay.[CustomerId], Cust.Name AS [CustomerName], Pay.[Amount], Pay.[PaymentStatus], Pay.[CreatedOn], Pay.[CreatedBy], Pay.[ModifiedOn], Pay.[ModifiedBy], Pay.[IsActive], Pay.[TenantId], Pay.[PlantId] FROM {0} Pay" +
+                                    " INNER JOIN {1} Inv ON Pay.PaymentId = Inv.Id" +
+                                    " INNER JOIN {2} Ord ON Pay.OrderId = Ord.Id" +
+                                    " INNER JOIN {3} Cust ON Pay.CustomerId = Cust.Id" +
+                                    " WHERE Pay.IsActive = 1 AND Inv.IsActive = 1 AND Ord.IsActive = 1 AND Cust.IsActive = 1 AND Pay.Id In @id",
+                                    GetTableName(), TableNameConstants.dp_Payment, TableNameConstants.dp_Order, TableNameConstants.dp_Customer);
+
+            var dynamicPayment = base.FindDynamic(sql, new { ids });
+
+            Slapper.AutoMapper.Configuration.AddIdentifiers(typeof(Payment), new List<string> { "Id" });
+
+            _Payment = (Slapper.AutoMapper.MapDynamic<Payment>(dynamicPayment) as IEnumerable<Payment>).ToList();
+
+            return _Payment.ToArray();
         }
 
         public Payment[] GetAll()
         {
-            return base.FindAll().ToArray();
+            List<Payment> _Payment = new List<Payment>();
+            var sql = String.Format("SELECT Pay.[Id], Pay.[PaymentId], Inv.PaymentNumber AS PaymentNumber ,Pay.[PaymentDate], Pay.[OrderId], Ord.OrderNumber AS OrderNumber, Pay.[CustomerId], Cust.Name AS [CustomerName], Pay.[Amount], Pay.[PaymentStatus], Pay.[CreatedOn], Pay.[CreatedBy], Pay.[ModifiedOn], Pay.[ModifiedBy], Pay.[IsActive], Pay.[TenantId], Pay.[PlantId] FROM {0} Pay" +
+                                    " INNER JOIN {1} Inv ON Pay.PaymentId = Inv.Id" +
+                                    " INNER JOIN {2} Ord ON Pay.OrderId = Ord.Id" +
+                                    " INNER JOIN {3} Cust ON Pay.CustomerId = Cust.Id" +
+                                    " WHERE Pay.IsActive = 1 AND Inv.IsActive = 1 AND Ord.IsActive = 1 AND Cust.IsActive = 1",
+                                    GetTableName(), TableNameConstants.dp_Payment, TableNameConstants.dp_Order, TableNameConstants.dp_Customer);
+
+            var dynamicPayment = base.FindDynamic(sql, new {  });
+
+            Slapper.AutoMapper.Configuration.AddIdentifiers(typeof(Payment), new List<string> { "Id" });
+
+            _Payment = (Slapper.AutoMapper.MapDynamic<Payment>(dynamicPayment) as IEnumerable<Payment>).ToList();
+
+            return _Payment.ToArray();
         }
 
         public Payment[] GetByIds(IEnumerable<Guid> Ids)
         {
-            var sql = String.Format("SELECT * FROM {0} WHERE Id IN ( @Ids ) AND IsActive = 1", GetTableName());
-            return base.FindByTempTableIds(sql, Ids).ToArray();
+            List<Payment> _Payment = new List<Payment>();
+            var sql = String.Format("SELECT Pay.[Id], Pay.[PaymentId], Inv.PaymentNumber AS PaymentNumber ,Pay.[PaymentDate], Pay.[OrderId], Ord.OrderNumber AS OrderNumber, Pay.[CustomerId], Cust.Name AS [CustomerName], Pay.[Amount], Pay.[PaymentStatus], Pay.[CreatedOn], Pay.[CreatedBy], Pay.[ModifiedOn], Pay.[ModifiedBy], Pay.[IsActive], Pay.[TenantId], Pay.[PlantId] FROM {0} Pay" +
+                                    " INNER JOIN {1} Inv ON Pay.PaymentId = Inv.Id" +
+                                    " INNER JOIN {2} Ord ON Pay.OrderId = Ord.Id" +
+                                    " INNER JOIN {3} Cust ON Pay.CustomerId = Cust.Id" +
+                                    " WHERE Pay.IsActive = 1 AND Inv.IsActive = 1 AND Ord.IsActive = 1 AND Cust.IsActive = 1 AND Pay.Id In @id",
+                                    GetTableName(), TableNameConstants.dp_Payment, TableNameConstants.dp_Order, TableNameConstants.dp_Customer);
+
+            var dynamicPayment = base.FindDynamic(sql, new { Ids });
+
+            Slapper.AutoMapper.Configuration.AddIdentifiers(typeof(Payment), new List<string> { "Id" });
+
+            _Payment = (Slapper.AutoMapper.MapDynamic<Payment>(dynamicPayment) as IEnumerable<Payment>).ToList();
+
+            return _Payment.ToArray();
         }
 
         public string GetEntityName()
@@ -83,7 +137,6 @@ namespace DigitalPal.DataAccess
                 item.TenantId,
                 item.Amount,
                 item.CustomerId,
-                item.InvoiceId,
                 item.OrderId,
                 item.PaymentDate,
                 item.PaymentStatus,

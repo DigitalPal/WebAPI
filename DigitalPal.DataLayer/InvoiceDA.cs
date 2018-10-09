@@ -33,7 +33,21 @@ namespace DigitalPal.DataAccess
 
         public Invoice GetInvoice(string id)
         {
-            return FindById(Guid.Parse(id));
+            List<Invoice> _Invoice = new List<Invoice>();
+            var sql = String.Format("select Inv.[Id], Inv.[InvoiceNumber], Inv.[InvoiceDate], Inv.[OrderId], Ord.OrderNumber as OrderNumber, Inv.[DispatchId], Dispatch.DispatchNumber as DispatchNumber ,Inv.[TransportCharges], Inv.[LoadingUnloadingCharges], Inv.[Amount], Inv.[InvoiceStatus], Inv.[CreatedOn], Inv.[CreatedBy], Inv.[ModifiedOn], Inv.[ModifiedBy], Inv.[IsActive], Inv.[TenantId], Inv.[PlantId]" +
+                                    " from [dbo].[dp_Invoice] Inv" +
+                                    " inner join [dbo].[dp_Order] Ord on Inv.OrderId = Ord.Id" +
+                                    " inner join [dbo].[dp_Dispatch] Dispatch  on Inv.DispatchId = Dispatch.Id"+
+                                    " Where dispatch.IsActive = 1 and Ord.IsActive = 1 and Inv.IsActive = 1  and ord.Id = @id",
+                                    GetTableName(), TableNameConstants.dp_Order, TableNameConstants.dp_Dispatch);
+
+            var dynamicInvoice = base.FindDynamic(sql, new { id });
+
+            Slapper.AutoMapper.Configuration.AddIdentifiers(typeof(Invoice), new List<string> { "Id" });
+           
+            _Invoice = (Slapper.AutoMapper.MapDynamic<Invoice>(dynamicInvoice) as IEnumerable<Invoice>).ToList();
+            
+            return _Invoice.FirstOrDefault();
         }
 
         public Dictionary<string, Invoice> GetInvoices(string[] ids)
@@ -87,7 +101,7 @@ namespace DigitalPal.DataAccess
                 item.InvoiceNumber,
                 item.InvoiceStatus,
                 item.LaodingUnloadingCharges,
-                item.OrderId,
+                item.InvoiceId,
                 item.TransportCharges
             };
         }
