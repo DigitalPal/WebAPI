@@ -13,6 +13,7 @@ namespace DigitalPal.BusinessLogic.Interface
         Order GetOrder(string id);
 
         Order GetOrderInformation(string id);
+        Dictionary<string, string> GetMaxNumber();
 
         Dictionary<string, Order> GetOrders(string[] ids);
 

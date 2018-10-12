@@ -1,4 +1,5 @@
-﻿using DigitalPal.DataAccess.Interface;
+﻿using Dapper;
+using DigitalPal.DataAccess.Interface;
 using DigitalPal.DataAccess.Util;
 using DigitalPal.Entities;
 using System;
@@ -30,6 +31,21 @@ namespace DigitalPal.DataAccess
         public Order[] AddOrder(Order[] Orders)
         {
             return base.Add(Orders);
+        }
+        public Dictionary<string, string> GetMaxNumber()
+        {
+            using (IDbConnection dbConnection = _sqlConnection)
+            {
+                var query = string.Format(@"SELECT 'OrderNumber' AS [Key], [OrderNumber] AS [Value] FROM" +
+                                           " (SELECT TOP 1 [OrderNumber] FROM {0} ORDER BY CreatedOn DESC) a" +
+                                           " UNION" +
+                                           " SELECT 'DispatchNumber' AS [Key], [DispatchNumber] AS [Value] FROM" +
+                                            " (SELECT TOP 1 [DispatchNumber] FROM {1} ORDER BY CreatedOn DESC) b" +
+                                            " UNION" +
+                                            " SELECT 'InvoiceNumber' AS [Key],[InvoiceNumber] AS [Value] FROM" +
+                                           "  (SELECT TOP 1 [InvoiceNumber] FROM {2} ORDER BY CreatedOn DESC) c" , GetTableName(), TableNameConstants.dp_Dispatch, TableNameConstants.dp_Invoice);
+                return dbConnection.Query<KeyValuePair<string, string>>(query).ToDictionary(pair => pair.Key, pair => pair.Value);
+            }
         }
 
         public Order GetOrder(string id)

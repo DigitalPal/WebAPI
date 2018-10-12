@@ -1,5 +1,6 @@
 ﻿using DigitalPal.BusinessLogic.Interface;
 using DigitalPal.Entities;
+using System.Collections.Generic;
 using System.Web.Http;
 using System.Web.Http.Description;
 
@@ -25,6 +26,14 @@ namespace DigitalPal.WebAPI.Controllers
         public IHttpActionResult GetAll()
         {
             return Ok(OrderRepository.GetAll());
+        }
+
+        [ResponseType(typeof(Dictionary<string, string>))]
+        [HttpGet]
+        [Route("maxNumbers")]
+        public IHttpActionResult GetMaxNumber()
+        {
+            return Ok(OrderRepository.GetMaxNumber());
         }
 
         [ResponseType(typeof(Order))]

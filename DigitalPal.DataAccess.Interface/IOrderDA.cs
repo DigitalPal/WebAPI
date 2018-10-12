@@ -13,7 +13,7 @@ namespace DigitalPal.DataAccess.Interface
         Order GetOrder(string id);
 
         Order GetOrderInformation(string id);
-
+        Dictionary<string, string> GetMaxNumber();
         Dictionary<string, Order> GetOrder(string[] ids);
 
         Order[] GetOrder(IEnumerable<Guid?> ids);
