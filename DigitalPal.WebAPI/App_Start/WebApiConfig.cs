@@ -1,4 +1,5 @@
 ﻿using DigitalPal.WebAPI.ExLogger;
+using DigitalPal.WebAPI.Filters;
 using Microsoft.Owin.Security.OAuth;
 using Newtonsoft.Json.Serialization;
 using System.Net.Http.Formatting;
@@ -27,6 +28,7 @@ namespace DigitalPal.WebAPI
             //Register Exception Handler  
             config.Services.Add(typeof(IExceptionLogger), new ExceptionManagerApi());
             config.Filters.Add(new LogActionWebApiFilter());
+            config.Filters.Add(new ValidateModelStateAttribute());
             //var jsonFormatter = config.Formatters.OfType<JsonMediaTypeFormatter>().First();
             //jsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
         }
