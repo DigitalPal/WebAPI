@@ -34,12 +34,12 @@ namespace DigitalPal.DataAccess
         public Payment GetPayment(string id)
         {
             List<Payment> _Payment = new List<Payment>();
-            var sql = String.Format("SELECT Pay.[Id], Pay.[PaymentId], Inv.PaymentNumber AS PaymentNumber ,Pay.[PaymentDate], Pay.[OrderId], Ord.OrderNumber AS OrderNumber, Pay.[CustomerId], Cust.Name AS [CustomerName], Pay.[Amount], Pay.[PaymentStatus], Pay.[CreatedOn], Pay.[CreatedBy], Pay.[ModifiedOn], Pay.[ModifiedBy], Pay.[IsActive], Pay.[TenantId], Pay.[PlantId] FROM {0} Pay" +
-                                    " INNER JOIN {1} Inv ON Pay.PaymentId = Inv.Id" +
-                                    " INNER JOIN {2} Ord ON Pay.OrderId = Ord.Id" +
-                                    " INNER JOIN {3} Cust ON Pay.CustomerId = Cust.Id" +
+            var sql = String.Format("SELECT Pay.[Id], Pay.[PaymentDate],Pay.[InvoiceId] AS InvoiceId, Inv.[InvoiceNumber] AS [InvoiceNumber], Pay.[OrderId], Ord.OrderNumber AS OrderNumber, Pay.[CustomerId], Cust.Name AS [CustomerName], Pay.[Amount], Pay.[PaymentStatus], Pay.[CreatedOn], Pay.[CreatedBy], Pay.[ModifiedOn], Pay.[ModifiedBy], Pay.[IsActive], Pay.[TenantId], Pay.[PlantId] FROM {0} Pay" +
+                                    " LEFT JOIN {1} Inv ON Pay.InvoiceId = Inv.Id" +
+                                    " LEFT JOIN {2} Ord ON Pay.OrderId = Ord.Id" +
+                                    " LEFT JOIN {3} Cust ON Pay.CustomerId = Cust.Id" +
                                     " WHERE Pay.IsActive = 1 AND Inv.IsActive = 1 AND Ord.IsActive = 1 AND Cust.IsActive = 1 AND Pay.Id = @id",
-                                    GetTableName(), TableNameConstants.dp_Payment, TableNameConstants.dp_Order, TableNameConstants.dp_Customer);
+                                    GetTableName(), TableNameConstants.dp_Invoice, TableNameConstants.dp_Order, TableNameConstants.dp_Customer);
 
             var dynamicPayment = base.FindDynamic(sql, new { id });
 
@@ -59,12 +59,12 @@ namespace DigitalPal.DataAccess
         public Payment[] GetPayments(IEnumerable<Guid?> ids)
         {
             List<Payment> _Payment = new List<Payment>();
-            var sql = String.Format("SELECT Pay.[Id], Pay.[PaymentId], Inv.PaymentNumber AS PaymentNumber ,Pay.[PaymentDate], Pay.[OrderId], Ord.OrderNumber AS OrderNumber, Pay.[CustomerId], Cust.Name AS [CustomerName], Pay.[Amount], Pay.[PaymentStatus], Pay.[CreatedOn], Pay.[CreatedBy], Pay.[ModifiedOn], Pay.[ModifiedBy], Pay.[IsActive], Pay.[TenantId], Pay.[PlantId] FROM {0} Pay" +
-                                    " INNER JOIN {1} Inv ON Pay.PaymentId = Inv.Id" +
-                                    " INNER JOIN {2} Ord ON Pay.OrderId = Ord.Id" +
-                                    " INNER JOIN {3} Cust ON Pay.CustomerId = Cust.Id" +
+            var sql = String.Format("SELECT Pay.[Id], Pay.[PaymentDate],Pay.[InvoiceId] AS InvoiceId, Inv.[InvoiceNumber] AS [InvoiceNumber], Pay.[OrderId], Ord.OrderNumber AS OrderNumber, Pay.[CustomerId], Cust.Name AS [CustomerName], Pay.[Amount], Pay.[PaymentStatus], Pay.[CreatedOn], Pay.[CreatedBy], Pay.[ModifiedOn], Pay.[ModifiedBy], Pay.[IsActive], Pay.[TenantId], Pay.[PlantId] FROM {0} Pay" +
+                                    " LEFT JOIN {1} Inv ON Pay.InvoiceId = Inv.Id" +
+                                    " LEFT JOIN {2} Ord ON Pay.OrderId = Ord.Id" +
+                                    " LEFT JOIN {3} Cust ON Pay.CustomerId = Cust.Id" +
                                     " WHERE Pay.IsActive = 1 AND Inv.IsActive = 1 AND Ord.IsActive = 1 AND Cust.IsActive = 1 AND Pay.Id In @id",
-                                    GetTableName(), TableNameConstants.dp_Payment, TableNameConstants.dp_Order, TableNameConstants.dp_Customer);
+                                    GetTableName(), TableNameConstants.dp_Invoice, TableNameConstants.dp_Order, TableNameConstants.dp_Customer);
 
             var dynamicPayment = base.FindDynamic(sql, new { ids });
 
@@ -78,12 +78,12 @@ namespace DigitalPal.DataAccess
         public Payment[] GetAll()
         {
             List<Payment> _Payment = new List<Payment>();
-            var sql = String.Format("SELECT Pay.[Id], Pay.[PaymentId], Inv.PaymentNumber AS PaymentNumber ,Pay.[PaymentDate], Pay.[OrderId], Ord.OrderNumber AS OrderNumber, Pay.[CustomerId], Cust.Name AS [CustomerName], Pay.[Amount], Pay.[PaymentStatus], Pay.[CreatedOn], Pay.[CreatedBy], Pay.[ModifiedOn], Pay.[ModifiedBy], Pay.[IsActive], Pay.[TenantId], Pay.[PlantId] FROM {0} Pay" +
-                                    " INNER JOIN {1} Inv ON Pay.PaymentId = Inv.Id" +
-                                    " INNER JOIN {2} Ord ON Pay.OrderId = Ord.Id" +
-                                    " INNER JOIN {3} Cust ON Pay.CustomerId = Cust.Id" +
+            var sql = String.Format("SELECT Pay.[Id], Pay.[PaymentDate],Pay.[InvoiceId] AS InvoiceId, Inv.[InvoiceNumber] AS [InvoiceNumber], Pay.[OrderId], Ord.OrderNumber AS OrderNumber, Pay.[CustomerId], Cust.Name AS [CustomerName], Pay.[Amount], Pay.[PaymentStatus], Pay.[CreatedOn], Pay.[CreatedBy], Pay.[ModifiedOn], Pay.[ModifiedBy], Pay.[IsActive], Pay.[TenantId], Pay.[PlantId] FROM {0} Pay" +
+                                    " LEFT JOIN {1} Inv ON Pay.InvoiceId = Inv.Id" +
+                                    " LEFT JOIN {2} Ord ON Pay.OrderId = Ord.Id" +
+                                    " LEFT JOIN {3} Cust ON Pay.CustomerId = Cust.Id" +
                                     " WHERE Pay.IsActive = 1 AND Inv.IsActive = 1 AND Ord.IsActive = 1 AND Cust.IsActive = 1",
-                                    GetTableName(), TableNameConstants.dp_Payment, TableNameConstants.dp_Order, TableNameConstants.dp_Customer);
+                                    GetTableName(), TableNameConstants.dp_Invoice, TableNameConstants.dp_Order, TableNameConstants.dp_Customer);
 
             var dynamicPayment = base.FindDynamic(sql, new {  });
 
@@ -97,12 +97,12 @@ namespace DigitalPal.DataAccess
         public Payment[] GetByIds(IEnumerable<Guid> Ids)
         {
             List<Payment> _Payment = new List<Payment>();
-            var sql = String.Format("SELECT Pay.[Id], Pay.[PaymentId], Inv.PaymentNumber AS PaymentNumber ,Pay.[PaymentDate], Pay.[OrderId], Ord.OrderNumber AS OrderNumber, Pay.[CustomerId], Cust.Name AS [CustomerName], Pay.[Amount], Pay.[PaymentStatus], Pay.[CreatedOn], Pay.[CreatedBy], Pay.[ModifiedOn], Pay.[ModifiedBy], Pay.[IsActive], Pay.[TenantId], Pay.[PlantId] FROM {0} Pay" +
-                                    " INNER JOIN {1} Inv ON Pay.PaymentId = Inv.Id" +
-                                    " INNER JOIN {2} Ord ON Pay.OrderId = Ord.Id" +
-                                    " INNER JOIN {3} Cust ON Pay.CustomerId = Cust.Id" +
+            var sql = String.Format("SELECT Pay.[Id], Pay.[PaymentDate], Pay.[InvoiceId] AS InvoiceId, Inv.[InvoiceNumber] AS [InvoiceNumber], Pay.[OrderId] AS OrderId, Ord.OrderNumber AS OrderNumber, Pay.[CustomerId] AS CustomerId, Cust.Name AS [CustomerName], Pay.[Amount], Pay.[PaymentStatus], Pay.[CreatedOn], Pay.[CreatedBy], Pay.[ModifiedOn], Pay.[ModifiedBy], Pay.[IsActive], Pay.[TenantId], Pay.[PlantId] FROM {0} Pay" +
+                                    " LEFT JOIN {1} Inv ON Pay.InvoiceId = Inv.Id" +
+                                    " LEFT JOIN {2} Ord ON Pay.OrderId = Ord.Id" +
+                                    " LEFT JOIN {3} Cust ON Pay.CustomerId = Cust.Id" +
                                     " WHERE Pay.IsActive = 1 AND Inv.IsActive = 1 AND Ord.IsActive = 1 AND Cust.IsActive = 1 AND Pay.Id In @id",
-                                    GetTableName(), TableNameConstants.dp_Payment, TableNameConstants.dp_Order, TableNameConstants.dp_Customer);
+                                    GetTableName(), TableNameConstants.dp_Invoice, TableNameConstants.dp_Order, TableNameConstants.dp_Customer);
 
             var dynamicPayment = base.FindDynamic(sql, new { Ids });
 
@@ -138,6 +138,7 @@ namespace DigitalPal.DataAccess
                 item.Amount,
                 item.CustomerId,
                 item.OrderId,
+                item.InvoiceId,
                 item.PaymentDate,
                 item.PaymentStatus,
                 item.PlantId
