@@ -28,11 +28,13 @@ namespace DigitalPal.BusinessLogic
             {
                 dispatch.Id = Guid.NewGuid();
                 _DispatchDA.AddDispatch(new[] { dispatch });
-                foreach (DispatchDetails poDetails in dispatch.DispatchDetails)
+                foreach (DispatchDetails dispatchDetails in dispatch.DispatchDetails)
                 {
-                    poDetails.DispatchId = dispatch.Id;
+                    dispatchDetails.DispatchId = dispatch.Id;
+                    dispatchDetails.TenantId = dispatch.TenantId;
+                    dispatchDetails.PlantId = dispatch.PlantId;
                 }
-                _DispatchDetailsDA.AddDispatchDetails(dispatch.DispatchDetails);
+                _DispatchDetailsDA.AddDispatchDetails(dispatch.DispatchDetails.ToArray());
             }
 
             return Dispatchs;

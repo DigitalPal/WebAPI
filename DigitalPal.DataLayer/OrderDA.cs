@@ -35,10 +35,10 @@ namespace DigitalPal.DataAccess
         public Order GetOrder(string id)
         {
             List<Order> _order = new List<Order>();
-            var sql = String.Format("select ord.[Id], ord.[OrderNumber], ord.[CustomerPONumber], ord.[CustomerId], cust.[Name] as [CustomerName], ord.[OrderDate], ord.[Price], ord.[Remark], ord.[OrderStatus], ord.[CreatedOn], ord.[CreatedBy], ord.[ModifiedOn], ord.[ModifiedBy], ord.[IsActive], ord.[TenantId], ord.[PlantId], orddeatils.[ProductId], orddeatils.[Quantity] ,prod.[Name] as ProductName from {0} ord " +
-                                    " inner join {1} orddeatils on ord.Id = orddeatils.OrderId" +
-                                    " inner join {2} Prod on Prod.Id = orddeatils.ProductId" +
-                                    " inner join {3} cust on cust.Id = ord.CustomerId" +
+            var sql = String.Format("select ord.[Id], ord.[OrderNumber], ord.[CustomerPONumber], ord.[CustomerId], cust.[Name] as [CustomerName], ord.[OrderDate], ord.[Price], ord.[Remark], ord.[OrderStatus], ord.[CreatedOn], ord.[CreatedBy], ord.[ModifiedOn], ord.[ModifiedBy], ord.[IsActive], ord.[TenantId], ord.[PlantId], orddeatils.[ProductId] as Products_ProductId, orddeatils.[Quantity] as Products_Quantity ,prod.[Name] as Products_ProductName from {0} ord " +
+                                    " left join {1} orddeatils on ord.Id = orddeatils.OrderId" +
+                                    " left join {2} Prod on Prod.Id = orddeatils.ProductId" +
+                                    " left join {3} cust on cust.Id = ord.CustomerId" +
                                     " Where ord.IsActive = 1 and orddeatils.IsActive = 1 and Prod.IsActive = 1 and cust.IsActive = 1 and ord.Id = @id",
                                     GetTableName(), TableNameConstants.dp_OrderDetails, TableNameConstants.dp_Product, TableNameConstants.dp_Customer);
 
@@ -47,20 +47,16 @@ namespace DigitalPal.DataAccess
             Slapper.AutoMapper.Configuration.AddIdentifiers(typeof(Order), new List<string> { "Id" });
             Slapper.AutoMapper.Configuration.AddIdentifiers(typeof(OrderDetails), new List<string> { "ProductId" });
             _order = (Slapper.AutoMapper.MapDynamic<Order>(dynamicOrder) as IEnumerable<Order>).ToList();
-            foreach (Order or in _order)
-            {
-                or.Products = (Slapper.AutoMapper.MapDynamic<OrderDetails>(dynamicOrder) as IEnumerable<OrderDetails>).Where(i => i.Id == or.Id).ToArray();
-            }
             return _order.FirstOrDefault();
         }
 
         public Order GetOrderInformation(string id)
         {
             List<Order> _order = new List<Order>();
-            var sql = String.Format("select ord.[Id], ord.[OrderNumber], ord.[CustomerPONumber], ord.[CustomerId], cust.[Name] as [CustomerName], ord.[OrderDate], ord.[Price], ord.[Remark], ord.[OrderStatus], ord.[CreatedOn], ord.[CreatedBy], ord.[ModifiedOn], ord.[ModifiedBy], ord.[IsActive], ord.[TenantId], ord.[PlantId], orddeatils.[ProductId], orddeatils.[Quantity] ,prod.[Name] as ProductName from {0} ord " +
-                                    " inner join {1} orddeatils on ord.Id = orddeatils.OrderId"+
-                                    " inner join {2} Prod on Prod.Id = orddeatils.ProductId"+
-                                    " inner join {3} cust on cust.Id = ord.CustomerId"+
+            var sql = String.Format("select ord.[Id], ord.[OrderNumber], ord.[CustomerPONumber], ord.[CustomerId], cust.[Name] as [CustomerName], ord.[OrderDate], ord.[Price], ord.[Remark], ord.[OrderStatus], ord.[CreatedOn], ord.[CreatedBy], ord.[ModifiedOn], ord.[ModifiedBy], ord.[IsActive], ord.[TenantId], ord.[PlantId], orddeatils.[ProductId] as Products_ProductId, orddeatils.[Quantity] as Products_Quantity ,prod.[Name] as Products_ProductName from {0} ord " +
+                                    " left join {1} orddeatils on ord.Id = orddeatils.OrderId"+
+                                    " left join {2} Prod on Prod.Id = orddeatils.ProductId"+
+                                    " left join {3} cust on cust.Id = ord.CustomerId"+
                                     " Where ord.IsActive = 1 and orddeatils.IsActive = 1 and Prod.IsActive = 1 and cust.IsActive = 1 and ord.Id = @id",
                                     GetTableName(), TableNameConstants.dp_OrderDetails, TableNameConstants.dp_Product, TableNameConstants.dp_Customer);
 
@@ -69,10 +65,6 @@ namespace DigitalPal.DataAccess
             Slapper.AutoMapper.Configuration.AddIdentifiers(typeof(Order), new List<string> { "Id" });
             Slapper.AutoMapper.Configuration.AddIdentifiers(typeof(OrderDetails), new List<string> { "ProductId" });
             _order = (Slapper.AutoMapper.MapDynamic<Order>(dynamicOrder) as IEnumerable<Order>).ToList();
-            foreach (Order or in _order)
-            {
-                or.Products = (Slapper.AutoMapper.MapDynamic<OrderDetails>(dynamicOrder) as IEnumerable<OrderDetails>).Where(i => i.Id == or.Id).ToArray();
-            }
             return _order.FirstOrDefault();
         }
 
@@ -85,10 +77,10 @@ namespace DigitalPal.DataAccess
         public Order[] GetOrder(IEnumerable<Guid?> ids)
         {
             List<Order> _order = new List<Order>();
-            var sql = String.Format("select ord.[Id], ord.[OrderNumber], ord.[CustomerPONumber], ord.[CustomerId], cust.[Name] as [CustomerName], ord.[OrderDate], ord.[Price], ord.[Remark], ord.[OrderStatus], ord.[CreatedOn], ord.[CreatedBy], ord.[ModifiedOn], ord.[ModifiedBy], ord.[IsActive], ord.[TenantId], ord.[PlantId], orddeatils.[ProductId], orddeatils.[Quantity] ,prod.[Name] as ProductName from {0} ord " +
-                                    " inner join {1} orddeatils on ord.Id = orddeatils.OrderId" +
-                                    " inner join {2} Prod on Prod.Id = orddeatils.ProductId" +
-                                    " inner join {3} cust on cust.Id = ord.CustomerId" +
+            var sql = String.Format("select ord.[Id], ord.[OrderNumber], ord.[CustomerPONumber], ord.[CustomerId], cust.[Name] as [CustomerName], ord.[OrderDate], ord.[Price], ord.[Remark], ord.[OrderStatus], ord.[CreatedOn], ord.[CreatedBy], ord.[ModifiedOn], ord.[ModifiedBy], ord.[IsActive], ord.[TenantId], ord.[PlantId], orddeatils.[ProductId] as Products_ProductId, orddeatils.[Quantity] as Products_Quantity ,prod.[Name] as Products_ProductName from {0} ord " +
+                                    " left join {1} orddeatils on ord.Id = orddeatils.OrderId" +
+                                    " left join {2} Prod on Prod.Id = orddeatils.ProductId" +
+                                    " left join {3} cust on cust.Id = ord.CustomerId" +
                                     " Where ord.IsActive = 1 and orddeatils.IsActive = 1 and Prod.IsActive = 1 and cust.IsActive = 1 and ord.Id In @id",
                                     GetTableName(), TableNameConstants.dp_OrderDetails, TableNameConstants.dp_Product, TableNameConstants.dp_Customer);
 
@@ -97,20 +89,16 @@ namespace DigitalPal.DataAccess
             Slapper.AutoMapper.Configuration.AddIdentifiers(typeof(Order), new List<string> { "Id" });
             Slapper.AutoMapper.Configuration.AddIdentifiers(typeof(OrderDetails), new List<string> { "ProductId" });
             _order = (Slapper.AutoMapper.MapDynamic<Order>(dynamicOrder) as IEnumerable<Order>).ToList();
-            foreach (Order or in _order)
-            {
-                or.Products = (Slapper.AutoMapper.MapDynamic<OrderDetails>(dynamicOrder) as IEnumerable<OrderDetails>).Where(i => i.Id == or.Id).ToArray();
-            }
             return _order.ToArray();
         }
 
         public Order[] GetAll()
         {
             List<Order> _order = new List<Order>();
-            var sql = String.Format("select ord.[Id], ord.[OrderNumber], ord.[CustomerPONumber], ord.[CustomerId], cust.[Name] as [CustomerName], ord.[OrderDate], ord.[Price], ord.[Remark], ord.[OrderStatus], ord.[CreatedOn], ord.[CreatedBy], ord.[ModifiedOn], ord.[ModifiedBy], ord.[IsActive], ord.[TenantId], ord.[PlantId], orddeatils.[ProductId], orddeatils.[Quantity] ,prod.[Name] as ProductName from {0} ord " +
-                                    " inner join {1} orddeatils on ord.Id = orddeatils.OrderId" +
-                                    " inner join {2} Prod on Prod.Id = orddeatils.ProductId" +
-                                    " inner join {3} cust on cust.Id = ord.CustomerId" +
+            var sql = String.Format("select ord.[Id], ord.[OrderNumber], ord.[CustomerPONumber], ord.[CustomerId], cust.[Name] as [CustomerName], ord.[OrderDate], ord.[Price], ord.[Remark], ord.[OrderStatus], ord.[CreatedOn], ord.[CreatedBy], ord.[ModifiedOn], ord.[ModifiedBy], ord.[IsActive], ord.[TenantId], ord.[PlantId], orddeatils.[ProductId] as Products_ProductId, orddeatils.[Quantity] as Products_Quantity ,prod.[Name] as Products_ProductName from {0} ord " +
+                                    " left join {1} orddeatils on ord.Id = orddeatils.OrderId" +
+                                    " left join {2} Prod on Prod.Id = orddeatils.ProductId" +
+                                    " left join {3} cust on cust.Id = ord.CustomerId" +
                                     " Where ord.IsActive = 1 and orddeatils.IsActive = 1 and Prod.IsActive = 1 and cust.IsActive = 1",
                                     GetTableName(), TableNameConstants.dp_OrderDetails, TableNameConstants.dp_Product, TableNameConstants.dp_Customer);
 
@@ -119,20 +107,16 @@ namespace DigitalPal.DataAccess
             Slapper.AutoMapper.Configuration.AddIdentifiers(typeof(Order), new List<string> { "Id" });
             Slapper.AutoMapper.Configuration.AddIdentifiers(typeof(OrderDetails), new List<string> { "ProductId" });
             _order = (Slapper.AutoMapper.MapDynamic<Order>(dynamicOrder) as IEnumerable<Order>).ToList();
-            foreach(Order or in _order)
-            {
-                or.Products = (Slapper.AutoMapper.MapDynamic<OrderDetails>(dynamicOrder) as IEnumerable<OrderDetails>).Where(i => i.Id == or.Id).ToArray();
-            }
             return _order.ToArray();
         }
 
         public Order[] GetByIds(IEnumerable<Guid> Ids)
         {
             List<Order> _order = new List<Order>();
-            var sql = String.Format("select ord.[Id], ord.[OrderNumber], ord.[CustomerPONumber], ord.[CustomerId], cust.[Name] as [CustomerName], ord.[OrderDate], ord.[Price], ord.[Remark], ord.[OrderStatus], ord.[CreatedOn], ord.[CreatedBy], ord.[ModifiedOn], ord.[ModifiedBy], ord.[IsActive], ord.[TenantId], ord.[PlantId], orddeatils.[ProductId], orddeatils.[Quantity] ,prod.[Name] as ProductName from {0} ord " +
-                                    " inner join {1} orddeatils on ord.Id = orddeatils.OrderId" +
-                                    " inner join {2} Prod on Prod.Id = orddeatils.ProductId" +
-                                    " inner join {3} cust on cust.Id = ord.CustomerId" +
+            var sql = String.Format("select ord.[Id], ord.[OrderNumber], ord.[CustomerPONumber], ord.[CustomerId], cust.[Name] as [CustomerName], ord.[OrderDate], ord.[Price], ord.[Remark], ord.[OrderStatus], ord.[CreatedOn], ord.[CreatedBy], ord.[ModifiedOn], ord.[ModifiedBy], ord.[IsActive], ord.[TenantId], ord.[PlantId], orddeatils.[ProductId] as Products_ProductId, orddeatils.[Quantity] as Products_Quantity ,prod.[Name] as Products_ProductName from {0} ord " +
+                                    " left join {1} orddeatils on ord.Id = orddeatils.OrderId" +
+                                    " left join {2} Prod on Prod.Id = orddeatils.ProductId" +
+                                    " left join {3} cust on cust.Id = ord.CustomerId" +
                                     " Where ord.IsActive = 1 and orddeatils.IsActive = 1 and Prod.IsActive = 1 and cust.IsActive = 1 and ord.Id In @id",
                                     GetTableName(), TableNameConstants.dp_OrderDetails, TableNameConstants.dp_Product, TableNameConstants.dp_Customer);
 
@@ -141,10 +125,6 @@ namespace DigitalPal.DataAccess
             Slapper.AutoMapper.Configuration.AddIdentifiers(typeof(Order), new List<string> { "Id" });
             Slapper.AutoMapper.Configuration.AddIdentifiers(typeof(OrderDetails), new List<string> { "ProductId" });
             _order = (Slapper.AutoMapper.MapDynamic<Order>(dynamicOrder) as IEnumerable<Order>).ToList();
-            foreach (Order or in _order)
-            {
-                or.Products = (Slapper.AutoMapper.MapDynamic<OrderDetails>(dynamicOrder) as IEnumerable<OrderDetails>).Where(i => i.Id == or.Id).ToArray();
-            }
             return _order.ToArray();
         }
 
@@ -175,7 +155,8 @@ namespace DigitalPal.DataAccess
                 item.ModifiedOn,
                 item.IsActive,
                 item.CreatedBy,
-                item.ModifiedBy
+                item.ModifiedBy,
+                item.Price
             };
         }
 

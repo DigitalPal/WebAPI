@@ -34,11 +34,11 @@ namespace DigitalPal.DataAccess
         public Invoice GetInvoice(string id)
         {
             List<Invoice> _Invoice = new List<Invoice>();
-            var sql = String.Format("select Inv.[Id], Inv.[InvoiceNumber], Inv.[InvoiceDate], Inv.[OrderId], Ord.OrderNumber as OrderNumber, Inv.[DispatchId], Dispatch.DispatchNumber as DispatchNumber ,Inv.[TransportCharges], Inv.[LoadingUnloadingCharges], Inv.[Amount], Inv.[InvoiceStatus], Inv.[CreatedOn], Inv.[CreatedBy], Inv.[ModifiedOn], Inv.[ModifiedBy], Inv.[IsActive], Inv.[TenantId], Inv.[PlantId]" +
+            var sql = String.Format("select Inv.[Id], Inv.[InvoiceNumber], Inv.[InvoiceDate], Inv.[OrderId], Ord.OrderNumber as OrderNumber, Inv.[DispatchId], Dispatch.DispatchNumber as DispatchNumber ,Inv.[TransportCharges], Inv.[LoadingCharges],Inv.[UnloadingCharges], Inv.[Amount], Inv.[InvoiceStatus], Inv.[CreatedOn], Inv.[CreatedBy], Inv.[ModifiedOn], Inv.[ModifiedBy], Inv.[IsActive], Inv.[TenantId], Inv.[PlantId]" +
                                     " from [dbo].[dp_Invoice] Inv" +
                                     " inner join [dbo].[dp_Order] Ord on Inv.OrderId = Ord.Id" +
                                     " inner join [dbo].[dp_Dispatch] Dispatch  on Inv.DispatchId = Dispatch.Id"+
-                                    " Where dispatch.IsActive = 1 and Ord.IsActive = 1 and Inv.IsActive = 1  and ord.Id = @id",
+                                    " Where dispatch.IsActive = 1 and Ord.IsActive = 1 and Inv.IsActive = 1  and Inv.Id = @id",
                                     GetTableName(), TableNameConstants.dp_Order, TableNameConstants.dp_Dispatch);
 
             var dynamicInvoice = base.FindDynamic(sql, new { id });
@@ -58,19 +58,59 @@ namespace DigitalPal.DataAccess
 
         public Invoice[] GetInvoices(IEnumerable<Guid?> ids)
         {
-            var sql = String.Format("SELECT * FROM {0} WHERE Id IN @ids AND IsActive = 1", GetTableName());
-            return base.Find(sql, new { ids }).ToArray();
+            List<Invoice> _Invoice = new List<Invoice>();
+            var sql = String.Format("select Inv.[Id], Inv.[InvoiceNumber], Inv.[InvoiceDate], Inv.[OrderId], Ord.OrderNumber as OrderNumber, Inv.[DispatchId], Dispatch.DispatchNumber as DispatchNumber ,Inv.[TransportCharges], Inv.[LoadingCharges],Inv.[UnloadingCharges], Inv.[Amount], Inv.[InvoiceStatus], Inv.[CreatedOn], Inv.[CreatedBy], Inv.[ModifiedOn], Inv.[ModifiedBy], Inv.[IsActive], Inv.[TenantId], Inv.[PlantId]" +
+                                    " from [dbo].[dp_Invoice] Inv" +
+                                    " inner join [dbo].[dp_Order] Ord on Inv.OrderId = Ord.Id" +
+                                    " inner join [dbo].[dp_Dispatch] Dispatch  on Inv.DispatchId = Dispatch.Id" +
+                                    " Where dispatch.IsActive = 1 and Ord.IsActive = 1 and Inv.IsActive = 1  and Inv.Id IN @id",
+                                    GetTableName(), TableNameConstants.dp_Order, TableNameConstants.dp_Dispatch);
+
+            var dynamicInvoice = base.FindDynamic(sql, new { ids });
+
+            Slapper.AutoMapper.Configuration.AddIdentifiers(typeof(Invoice), new List<string> { "Id" });
+
+            _Invoice = (Slapper.AutoMapper.MapDynamic<Invoice>(dynamicInvoice) as IEnumerable<Invoice>).ToList();
+
+            return _Invoice.ToArray();
         }
 
         public Invoice[] GetAll()
         {
-            return base.FindAll().ToArray();
+            List<Invoice> _Invoice = new List<Invoice>();
+            var sql = String.Format("select Inv.[Id], Inv.[InvoiceNumber], Inv.[InvoiceDate], Inv.[OrderId], Ord.OrderNumber as OrderNumber, Inv.[DispatchId], Dispatch.DispatchNumber as DispatchNumber ,Inv.[TransportCharges], Inv.[LoadingCharges],Inv.[UnloadingCharges], Inv.[Amount], Inv.[InvoiceStatus], Inv.[CreatedOn], Inv.[CreatedBy], Inv.[ModifiedOn], Inv.[ModifiedBy], Inv.[IsActive], Inv.[TenantId], Inv.[PlantId]" +
+                                    " from [dbo].[dp_Invoice] Inv" +
+                                    " inner join [dbo].[dp_Order] Ord on Inv.OrderId = Ord.Id" +
+                                    " inner join [dbo].[dp_Dispatch] Dispatch  on Inv.DispatchId = Dispatch.Id" +
+                                    " Where dispatch.IsActive = 1 and Ord.IsActive = 1 and Inv.IsActive = 1",
+                                    GetTableName(), TableNameConstants.dp_Order, TableNameConstants.dp_Dispatch);
+
+            var dynamicInvoice = base.FindDynamic(sql, new {  });
+
+            Slapper.AutoMapper.Configuration.AddIdentifiers(typeof(Invoice), new List<string> { "Id" });
+
+            _Invoice = (Slapper.AutoMapper.MapDynamic<Invoice>(dynamicInvoice) as IEnumerable<Invoice>).ToList();
+
+            return _Invoice.ToArray();
         }
 
         public Invoice[] GetByIds(IEnumerable<Guid> Ids)
         {
-            var sql = String.Format("SELECT * FROM {0} WHERE Id IN ( @Ids ) AND IsActive = 1", GetTableName());
-            return base.FindByTempTableIds(sql, Ids).ToArray();
+            List<Invoice> _Invoice = new List<Invoice>();
+            var sql = String.Format("select Inv.[Id], Inv.[InvoiceNumber], Inv.[InvoiceDate], Inv.[OrderId], Ord.OrderNumber as OrderNumber, Inv.[DispatchId], Dispatch.DispatchNumber as DispatchNumber ,Inv.[TransportCharges], Inv.[LoadingCharges],Inv.[UnloadingCharges], Inv.[Amount], Inv.[InvoiceStatus], Inv.[CreatedOn], Inv.[CreatedBy], Inv.[ModifiedOn], Inv.[ModifiedBy], Inv.[IsActive], Inv.[TenantId], Inv.[PlantId]" +
+                                    " from [dbo].[dp_Invoice] Inv" +
+                                    " inner join [dbo].[dp_Order] Ord on Inv.OrderId = Ord.Id" +
+                                    " inner join [dbo].[dp_Dispatch] Dispatch  on Inv.DispatchId = Dispatch.Id" +
+                                    " Where dispatch.IsActive = 1 and Ord.IsActive = 1 and Inv.IsActive = 1  and Inv.Id IN @id",
+                                    GetTableName(), TableNameConstants.dp_Order, TableNameConstants.dp_Dispatch);
+
+            var dynamicInvoice = base.FindDynamic(sql, new { Ids });
+
+            Slapper.AutoMapper.Configuration.AddIdentifiers(typeof(Invoice), new List<string> { "Id" });
+
+            _Invoice = (Slapper.AutoMapper.MapDynamic<Invoice>(dynamicInvoice) as IEnumerable<Invoice>).ToList();
+
+            return _Invoice.ToArray();
         }
 
         public string GetEntityName()
@@ -95,13 +135,16 @@ namespace DigitalPal.DataAccess
                 item.CreatedBy,
                 item.ModifiedBy,
                 item.TenantId,
+                item.PlantId,
                 item.Amount,
                 item.DispatchId,
+                item.OrderId,
                 item.InvoiceDate,
                 item.InvoiceNumber,
                 item.InvoiceStatus,
-                item.LaodingUnloadingCharges,
-                item.InvoiceId,
+                item.LoadingCharges,
+                item.UnloadingCharges,
+                item.Remark,
                 item.TransportCharges
             };
         }

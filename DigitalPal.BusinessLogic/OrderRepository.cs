@@ -31,8 +31,10 @@ namespace DigitalPal.BusinessLogic
                 foreach(OrderDetails poDetails in order.Products)
                 {
                     poDetails.OrderId = order.Id;
+                    poDetails.TenantId = order.TenantId;
+                    poDetails.PlantId = order.PlantId;
                 }
-                _OrderDetailsDA.AddOrderDetails(order.Products);
+                _OrderDetailsDA.AddOrderDetails(order.Products.ToArray());
             }
 
             return Orders;

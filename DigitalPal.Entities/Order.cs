@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using static DigitalPal.Common.Enum;
 
 namespace DigitalPal.Entities
@@ -13,6 +14,6 @@ namespace DigitalPal.Entities
         public float Price { get; set; }
         public string Remark { get; set; }
         public Status OrderStatus { get; set; }
-        public OrderDetails[] Products { get; set; }
+        public List<OrderDetails> Products { get; set; }
     }
 }
