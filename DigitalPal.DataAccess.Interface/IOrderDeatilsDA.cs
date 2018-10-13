@@ -23,5 +23,7 @@ namespace DigitalPal.DataAccess.Interface
         OrderDetails[] UpdateOrderDetails(OrderDetails[] OrderDetails);
 
         OrderDetails[] DeleteOrderDetails(string id);
+
+        void DeleteOrderDetailsByOrderId(string id);
     }
 }

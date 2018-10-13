@@ -24,6 +24,6 @@ namespace DigitalPal.DataAccess.Interface
 
         Order[] UpdateOrder(Order[] Order);
 
-        Order[] DeleteOrder(string id);
+        Order DeleteOrder(string id);
     }
 }

@@ -25,6 +25,6 @@ namespace DigitalPal.BusinessLogic.Interface
 
         Order[] UpdateOrders(Order[] Orders);
 
-        Order[] DeleteOrders(string id);
+        Order DeleteOrders(string id);
     }
 }

@@ -172,7 +172,8 @@ namespace DigitalPal.DataAccess
                 item.IsActive,
                 item.CreatedBy,
                 item.ModifiedBy,
-                item.Price
+                item.Price,
+                item.Remark
             };
         }
 
@@ -186,7 +187,7 @@ namespace DigitalPal.DataAccess
             return Orders;
         }
 
-        public Order[] DeleteOrder(string id)
+        public Order DeleteOrder(string id)
         {
             if (id != null)
             {

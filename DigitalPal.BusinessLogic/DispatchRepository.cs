@@ -71,9 +71,11 @@ namespace DigitalPal.BusinessLogic
             return _DispatchDA.UpdateDispatch(Dispatchs);
         }
 
-        public Dispatch[] DeleteDispatch(string id)
+        public Dispatch DeleteDispatch(string id)
         {
-            return _DispatchDA.DeleteDispatch(id);
+            _DispatchDetailsDA.DeleteOrderDetailsByDispatchId(id);
+            _DispatchDA.DeleteDispatch(id);
+            return null;
         }
     }
 }

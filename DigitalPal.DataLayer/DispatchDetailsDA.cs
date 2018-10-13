@@ -109,5 +109,14 @@ namespace DigitalPal.DataAccess
 
             return null;
         }
+
+        public void DeleteOrderDetailsByDispatchId(string id)
+        {
+            if (id != null)
+            {
+                string[] ids = { id };
+                base.DeleteByMasterId(ids, "DispatchId");
+            }
+        }
     }
 }

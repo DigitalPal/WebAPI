@@ -156,15 +156,13 @@ namespace DigitalPal.DataAccess
             return Dispatchs;
         }
 
-        public Dispatch[] DeleteDispatch(string id)
+        public void DeleteDispatch(string id)
         {
             if (id != null)
             {
                 string[] ids = { id };
                 base.DeleteByDbId(ids);
             }
-
-            return null;
         }
     }
 }

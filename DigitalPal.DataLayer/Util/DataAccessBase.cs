@@ -339,6 +339,16 @@ namespace DigitalPal.DataAccess.Util
             }
         }
 
+        public virtual void DeleteByMasterId(string[] dbIds, string masterTableColumnName)
+        {
+            using (var dbConnection = _sqlConnection)
+            {
+                dbConnection.Open();
+                var items = dbIds.Select(x => new { ID = x });
+                dbConnection.Execute("UPDATE " + _tableName + " SET IsActive = 0 WHERE "+ masterTableColumnName +" = @ID", items);
+            }
+        }
+
         public virtual IEnumerable<T> GetPaging(int pageNumber, int pageSize, string sortProperty, bool sortDescending, string searchText)
         {
             IEnumerable<T> items = null;

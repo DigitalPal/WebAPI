@@ -22,6 +22,6 @@ namespace DigitalPal.BusinessLogic.Interface
 
         Dispatch[] UpdateDispatch(Dispatch[] Dispatchs);
 
-        Dispatch[] DeleteDispatch(string id);
+        Dispatch DeleteDispatch(string id);
     }
 }

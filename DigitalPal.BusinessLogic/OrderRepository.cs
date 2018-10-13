@@ -54,20 +54,6 @@ namespace DigitalPal.BusinessLogic
         public Order GetOrderInformation(string id)
         {
             return _OrderDA.GetOrderInformation(id);
-            //order.OrderDate = or.OrderDate;
-            //order.CustomerPONumber = or.CustomerPONumber;
-            //order.CustomerName = or.CustomerName;
-            //order.CustomerId = or.CustomerId;
-            //order.OrderNumber = or.OrderNumber;
-            //order.OrderStatus = or.OrderStatus;
-            //order.Price = or.Price;
-            //order.Remark = or.Remark;
-
-            //foreach (var period in or)
-            //{
-            //}
-
-               // return order;
         }
 
         public Dictionary<string, Order> GetOrders(string[] ids)
@@ -96,9 +82,11 @@ namespace DigitalPal.BusinessLogic
             return _OrderDA.UpdateOrder(Orders);
         }
 
-        public Order[] DeleteOrders(string id)
+        public Order DeleteOrders(string id)
         {
-            return _OrderDA.DeleteOrder(id);
+            _OrderDetailsDA.DeleteOrderDetailsByOrderId(id);
+            _OrderDA.DeleteOrder(id);
+            return null;
         }
     }
 }
