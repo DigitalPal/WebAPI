@@ -33,7 +33,20 @@ namespace DigitalPal.DataAccess
 
         public RawMaterialInward GetRawMaterialInward(string id)
         {
-            return FindById(Guid.Parse(id));
+            List<RawMaterialInward> _RawMaterialInward = new List<RawMaterialInward>();
+            var sql = String.Format("SELECT RMI.[Id], RMI.[InwardDate], RMI.[RawMaterialId], RMD.Title AS RawMaterial, RMI.[SupplierId], SUP.SupplierName AS SupplierName, RMI.[VechicalNumber], RMI.[ChallanNumber], RMI.[Quantity], RMI.[UnloadingDetails], RMI.[Remark], RMI.[CreatedOn], RMI.[CreatedBy], RMI.[ModifiedOn], RMI.[ModifiedBy], RMI.[IsActive], RMI.[TenantId], RMI.[PlantId] FROM {0}" +
+                                    " RMI LEFT JOIN {1} RMD ON RMD.Id = RMI.[RawMaterialId]" +
+                                    " LEFT JOIN {2} SUP ON SUP.Id = RMI.SupplierId" +
+                                    " WHERE RMI.IsActive = 1 AND RMD.IsActive = 1 AND SUP.IsActive = 1 AND RMI.Id = @Id",
+                                    GetTableName(), TableNameConstants.dp_RawMaterialDetails, TableNameConstants.dp_Supplier);
+
+            var dynamicInvoice = base.FindDynamic(sql, new { id });
+
+            Slapper.AutoMapper.Configuration.AddIdentifiers(typeof(RawMaterialInward), new List<string> { "Id" });
+
+            _RawMaterialInward = (Slapper.AutoMapper.MapDynamic<RawMaterialInward>(dynamicInvoice) as IEnumerable<RawMaterialInward>).ToList();
+
+            return _RawMaterialInward.FirstOrDefault();
         }
 
         public Dictionary<string, RawMaterialInward> GetRawMaterialInwards(string[] ids)
@@ -50,7 +63,20 @@ namespace DigitalPal.DataAccess
 
         public RawMaterialInward[] GetAll()
         {
-            return base.FindAll().ToArray();
+            List<RawMaterialInward> _RawMaterialInward = new List<RawMaterialInward>();
+            var sql = String.Format("SELECT RMI.[Id], RMI.[InwardDate], RMI.[RawMaterialId], RMD.Title AS RawMaterial, RMI.[SupplierId], SUP.SupplierName AS SupplierName, RMI.[VechicalNumber], RMI.[ChallanNumber], RMI.[Quantity], RMI.[UnloadingDetails], RMI.[Remark], RMI.[CreatedOn], RMI.[CreatedBy], RMI.[ModifiedOn], RMI.[ModifiedBy], RMI.[IsActive], RMI.[TenantId], RMI.[PlantId] FROM {0}" +
+                                    " RMI LEFT JOIN {1} RMD ON RMD.Id = RMI.[RawMaterialId]"+
+                                    " LEFT JOIN {2} SUP ON SUP.Id = RMI.SupplierId" +
+                                    " WHERE RMI.IsActive = 1 AND RMD.IsActive = 1 AND SUP.IsActive = 1",
+                                    GetTableName(), TableNameConstants.dp_RawMaterialDetails, TableNameConstants.dp_Supplier);
+
+            var dynamicInvoice = base.FindDynamic(sql, new {  });
+
+            Slapper.AutoMapper.Configuration.AddIdentifiers(typeof(RawMaterialInward), new List<string> { "Id" });
+
+            _RawMaterialInward = (Slapper.AutoMapper.MapDynamic<RawMaterialInward>(dynamicInvoice) as IEnumerable<RawMaterialInward>).ToList();
+
+            return _RawMaterialInward.ToArray();
         }
 
         public RawMaterialInward[] GetByIds(IEnumerable<Guid> Ids)
@@ -75,17 +101,17 @@ namespace DigitalPal.DataAccess
             return new
             {
                 item.Id,
-                item.Name,
                 item.CreatedOn,
                 item.ModifiedOn,
                 item.IsActive,
                 item.InwardDate,
                 item.Quantity,
                 item.RawMaterialId,
-                item.Remarks,
+                item.Remark,
                 item.SupplierId,
                 item.UnloadingDetails,
                 item.VechicalNumber,
+                item.ChallanNumber,
                 item.CreatedBy,
                 item.ModifiedBy,
                 item.TenantId,
