@@ -28,6 +28,11 @@ namespace DigitalPal.DataAccess
 
         public Product[] AddProducts(Product[] Products)
         {
+            for (int i = 0; i < Products.Length; i++)
+            {
+                Products[i].Id = Guid.NewGuid();
+            }
+
             return base.Add(Products);
         }
 
@@ -82,11 +87,14 @@ namespace DigitalPal.DataAccess
                 item.CreatedBy,
                 item.ModifiedBy,
                 item.TenantId,
-                item.Currency,
+                //item.Currency,
                 item.PlantId,
                 item.Price,
                 item.Size,
-                item.Unit
+                //item.Unit,
+                item.Length,
+                item.Width,
+                item.Height
             };
         }
 
