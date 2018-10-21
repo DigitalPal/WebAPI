@@ -34,7 +34,7 @@ namespace DigitalPal.DataAccess
         public InvoiceDetailInfo GetInvoiceDetailInformationByInvoiceId(string invoiceId)
         {
             List<InvoiceDetailInfo> _InvoiceDetailInfo = new List<InvoiceDetailInfo>();
-            var sql = String.Format("SELECT Inv.Id AS Id, Ord.[CustomerId], Cust.[Name] AS [CustomerName], Cust.[Address] AS [Addres], Cust.[GSTNumber] AS [GST], Ord.[CustomerPONumber], Inv.[InvoiceNumber] AS [InvoiceNumber], " +
+            var sql = String.Format("SELECT Inv.Id AS Id, Ord.[CustomerId], Cust.[Name] AS [CustomerName], Cust.[Address] AS [Address], Cust.[GSTNumber] AS [CustomerGST], Ord.[CustomerPONumber], Inv.[InvoiceNumber] AS [InvoiceNumber], " +
                                     " Dispatch.[DispatchDate], Dispatch.[Id] AS DispatchId, Dispatch.[DispatchNumber], DispatchDetails.[Quantity] AS Products_Quantity, Dispatch.[Remark]," +
                                     " Ord.[Id] AS OrderId, Ord.[OrderNumber], Ord.[OrderDate], Inv.[Amount] AS Price, DispatchDetails.ProductId AS Products_ProductId, Prod.[Name] AS Products_ProductName, Prod.[Size] AS Products_Size, Prod.[Height] AS Products_Height , Prod.[Width] AS Products_Width , Prod.[Length] AS Products_Length , Inv.TenantId, Inv.PlantId, Inv.IsActive FROM {0} Inv" +
                                     " LEFT JOIN {1} Ord ON Inv.OrderId = Ord.Id" +
@@ -55,7 +55,7 @@ namespace DigitalPal.DataAccess
         public Invoice GetInvoice(string id)
         {
             List<Invoice> _Invoice = new List<Invoice>();
-            var sql = String.Format("select Inv.[Id], Inv.[InvoiceNumber], Inv.[InvoiceDate], Inv.[OrderId], Ord.OrderNumber as OrderNumber, Inv.[DispatchId], Dispatch.DispatchNumber as DispatchNumber ,Inv.[TransportCharges], Inv.[LoadingCharges],Inv.[UnloadingCharges], Inv.[Amount], Inv.[InvoiceStatus], Inv.[CreatedOn], Inv.[CreatedBy], Inv.[ModifiedOn], Inv.[ModifiedBy], Inv.[IsActive], Inv.[TenantId], Inv.[PlantId]" +
+            var sql = String.Format("select Inv.[Id], Inv.[InvoiceNumber], Inv.[InvoiceDate], Inv.[OrderId], Ord.OrderNumber as OrderNumber, Inv.[DispatchId], Dispatch.DispatchNumber as DispatchNumber ,Inv.[TransportCharges], Inv.[LoadingCharges],Inv.[UnloadingCharges], Inv.[Amount], Inv.[InvoiceStatus], Inv.[CreatedOn], Inv.[CreatedBy], Inv.[ModifiedOn], Inv.[ModifiedBy], Inv.[IsActive], Inv.[TenantId], Inv.[PlantId], Inv.[Remark]" +
                                     " from {0} Inv" +
                                     " inner join {1} Ord on Inv.OrderId = Ord.Id" +
                                     " inner join {2} Dispatch  on Inv.DispatchId = Dispatch.Id"+
