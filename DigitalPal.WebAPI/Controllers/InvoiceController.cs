@@ -19,6 +19,14 @@ namespace DigitalPal.WebAPI.Controllers
             return Ok(InvoiceRepository.GetInvoice(id));
         }
 
+        [Route("InvoiceDetailInformation/{invoiceId}")]
+        [ResponseType(typeof(InvoiceDetailInfo))]
+        [HttpGet]
+        public IHttpActionResult GetInvoiceDetailInformationByInvoiceId(string invoiceId)
+        {
+            return Ok(InvoiceRepository.GetInvoiceDetailInformationByInvoiceId(invoiceId));
+        }
+
         [ResponseType(typeof(Invoice))]
         [HttpGet]
         [Route("")]

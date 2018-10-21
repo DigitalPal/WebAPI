@@ -30,6 +30,11 @@ namespace DigitalPal.BusinessLogic
             return _InvoiceDA.GetInvoice(id);
         }
 
+        public InvoiceDetailInfo GetInvoiceDetailInformationByInvoiceId(string invoiceId)
+        {
+            return _InvoiceDA.GetInvoiceDetailInformationByInvoiceId(invoiceId);
+        }
+
         public Dictionary<string, Invoice> GetInvoices(string[] ids)
         {
             return _InvoiceDA.GetInvoices(ids);
