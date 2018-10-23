@@ -23,6 +23,6 @@ namespace DigitalPal.Entities
         public float UnloadingCharges { get; set; }
         public string Remark { get; set; }
         public float Amount { get; set; }
-        public Status InvoiceStatus { get; set; }
+        public string InvoiceStatus { get; set; }
     }
 }

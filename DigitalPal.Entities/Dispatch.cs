@@ -21,7 +21,7 @@ namespace DigitalPal.Entities
         public string Unloading { get; set; }
         public float Rate { get; set; }
         public string Remark { get; set; }
-        public Status DispatchStatus { get; set; }
+        public string DispatchStatus { get; set; }
         public List<DispatchDetails> DispatchDetails { get; set; }
     }
 }
