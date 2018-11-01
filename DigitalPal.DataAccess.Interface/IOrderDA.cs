@@ -9,7 +9,7 @@ namespace DigitalPal.DataAccess.Interface
     {
         Task AddOrderAsync(Order[] Order);
         Order[] AddOrder(Order[] Order);
-
+        Order[] Search(Order Order);
         Order GetOrder(string id);
 
         Order GetOrderInformation(string id);

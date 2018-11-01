@@ -31,6 +31,24 @@ namespace DigitalPal.DataAccess
             return base.Add(RawMaterialInwards);
         }
 
+        public RawMaterialInward[] Search(RawMaterialInward RawMaterialInward)
+        {
+            List<RawMaterialInward> _RawMaterialInward = new List<RawMaterialInward>();
+            var sql = String.Format("SELECT ROW_NUMBER() Over (Order by RMI.Id) As [SrNum], RMI.[InwardDate], RMD.Title AS RawMaterial, SUP.SupplierName AS SupplierName, RMI.[VechicalNumber], RMI.[ChallanNumber], RMI.[Quantity], RMI.[UnloadingDetails], RMI.[Remark], RMI.[CreatedOn], RMI.[CreatedBy], RMI.[ModifiedOn], RMI.[ModifiedBy], RMI.[IsActive], RMI.[TenantId], RMI.[PlantId] FROM {0}" +
+                                    " RMI LEFT JOIN {1} RMD ON RMD.Id = RMI.[RawMaterialId]" +
+                                    " LEFT JOIN {2} SUP ON SUP.Id = RMI.SupplierId" +
+                                    " WHERE RMI.IsActive = 1 AND RMD.IsActive = 1 AND SUP.IsActive = 1 AND SUP.SupplierName like '%{3}%' AND RMI.[ChallanNumber] = '{4}' AND RMD.Title like '%{5}%' AND RMI.[InwardDate] >= '{6}' AND RMI.[InwardDate] <= '{7}'",
+                                    GetTableName(), TableNameConstants.dp_RawMaterialDetails, TableNameConstants.dp_Supplier, RawMaterialInward.SupplierName, RawMaterialInward.ChallanNumber, RawMaterialInward.RawMaterial, RawMaterialInward.StartDate,  RawMaterialInward.EndDate);
+
+            var dynamicInvoice = base.FindDynamic(sql, new {  });
+
+            Slapper.AutoMapper.Configuration.AddIdentifiers(typeof(RawMaterialInward), new List<string> { "Id" });
+
+            _RawMaterialInward = (Slapper.AutoMapper.MapDynamic<RawMaterialInward>(dynamicInvoice) as IEnumerable<RawMaterialInward>).ToList();
+
+            return _RawMaterialInward.ToArray();
+        }
+
         public RawMaterialInward GetRawMaterialInward(string id)
         {
             List<RawMaterialInward> _RawMaterialInward = new List<RawMaterialInward>();

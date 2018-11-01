@@ -15,6 +15,10 @@ namespace DigitalPal.BusinessLogic
         {
             _PaymentDA = PaymentDA;
         }
+        public Payment[] Search(Payment Payment)
+        {
+            return _PaymentDA.Search(Payment);
+        }
 
         public async Task AddPaymentAsync(Payment[] Payments)
         {

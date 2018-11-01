@@ -22,6 +22,14 @@ namespace DigitalPal.WebAPI.Controllers
             return Ok(DispatchRepository.GetDispatch(id));
         }
 
+        [Route("Search")]
+        [ResponseType(typeof(Dispatch))]
+        [HttpGet]
+        public IHttpActionResult Search(DispatchReport Dispatch)
+        {
+            return Ok(DispatchRepository.Search(Dispatch));
+        }
+
         [ResponseType(typeof(Dispatch))]
         [HttpGet]
         [Route("")]

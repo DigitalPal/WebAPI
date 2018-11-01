@@ -78,6 +78,23 @@ namespace DigitalPal.DataAccess
             return _RawMaterialInward.ToArray();
         }
 
+        public RawMaterialConsumption[] Search(RawMaterialConsumption RawMaterialConsumption)
+        {
+            List<RawMaterialConsumption> _RawMaterialInward = new List<RawMaterialConsumption>();
+            var sql = String.Format("SELECT ROW_NUMBER() Over (Order by RMD.Id) As [SrNum], RMC.[ConsumptionDate], RMD.[Title] AS [RawMaterial], RMC.[Quantity] FROM {0} RMC" +
+                                    " LEFT JOIN {1} RMD ON RMC.RawMaterialId = RMD.Id" +
+                                    " WHERE RMC.IsActive = 1 AND RMD.IsActive = 1 AND RMD.[Title] like '%{2}%' AND RMC.[ConsumptionDate] >= '{3}' AND RMC.[ConsumptionDate] <= '{4}'",
+                                    GetTableName(), TableNameConstants.dp_RawMaterialDetails, RawMaterialConsumption.RawMaterial, RawMaterialConsumption.StartDate, RawMaterialConsumption.EndDate);
+
+            var dynamicInvoice = base.FindDynamic(sql, new { });
+
+            Slapper.AutoMapper.Configuration.AddIdentifiers(typeof(RawMaterialConsumption), new List<string> { "Id" });
+
+            _RawMaterialInward = (Slapper.AutoMapper.MapDynamic<RawMaterialConsumption>(dynamicInvoice) as IEnumerable<RawMaterialConsumption>).ToList();
+
+            return _RawMaterialInward.ToArray();
+        }
+
         public RawMaterialConsumption[] GetByIds(IEnumerable<Guid> Ids)
         {
             var sql = String.Format("SELECT * FROM {0} WHERE Id IN ( @Ids ) AND IsActive = 1", GetTableName());

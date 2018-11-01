@@ -19,6 +19,15 @@ namespace DigitalPal.WebAPI.Controllers
             return Ok(PaymentRepository.GetPayment(id));
         }
 
+
+        [Route("Search")]
+        [ResponseType(typeof(Payment))]
+        [HttpGet]
+        public IHttpActionResult Search(Payment Payment)
+        {
+            return Ok(PaymentRepository.Search(Payment));
+        }
+
         [ResponseType(typeof(Payment))]
         [HttpGet]
         [Route("")]

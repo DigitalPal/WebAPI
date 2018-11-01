@@ -9,7 +9,7 @@ namespace DigitalPal.BusinessLogic.Interface
     {
         Task AddOrderAsync(Order[] Orders);
         Order[] AddOrders(Order[] Orders);
-
+        Order[] Search(Order Order);
         Order GetOrder(string id);
 
         Order GetOrderInformation(string id);

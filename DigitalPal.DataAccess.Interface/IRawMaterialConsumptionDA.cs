@@ -23,5 +23,7 @@ namespace DigitalPal.DataAccess.Interface
         RawMaterialConsumption[] UpdateRawMaterialConsumptions(RawMaterialConsumption[] RawMaterialConsumptions);
 
         RawMaterialConsumption[] DeleteRawMaterialConsumptions(string id);
+
+        RawMaterialConsumption[] Search(RawMaterialConsumption RawMaterialConsumption);
     }
 }

@@ -10,6 +10,8 @@ namespace DigitalPal.DataAccess.Interface
         Task AddRawMaterialInwardAsync(RawMaterialInward[] RawMaterialInwards);
         RawMaterialInward[] AddRawMaterialInwards(RawMaterialInward[] RawMaterialInwards);
 
+        RawMaterialInward[] Search(RawMaterialInward RawMaterialInward);
+
         RawMaterialInward GetRawMaterialInward(string id);
 
         Dictionary<string, RawMaterialInward> GetRawMaterialInwards(string[] ids);

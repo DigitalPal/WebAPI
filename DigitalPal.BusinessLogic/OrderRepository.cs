@@ -22,6 +22,10 @@ namespace DigitalPal.BusinessLogic
         {
             await _OrderDA.AddOrderAsync(Orders);
         }
+        public Order[] Search(Order Order)
+        {
+            return _OrderDA.Search(Order);
+        }
 
         public Dictionary<string, string> GetMaxNumber()
         {

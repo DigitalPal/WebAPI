@@ -92,6 +92,25 @@ namespace DigitalPal.DataAccess
             return _dispatch.ToArray();
         }
 
+        public DispatchReport[] Search(DispatchReport Dispatch)
+        {
+            List<DispatchReport> _dispatch = new List<DispatchReport>();
+            var sql = String.Format("SELECT ROW_NUMBER() Over (Order by dispatch.Id) As [SrNum], Ord.[OrderNumber], Cust.[CustomerName] , dispatch.[DispatchDate], prod.[Name] AS ProductName, dispatch.[Quantity], dispatch.[TransportName], dispatch.[Loading], dispatch.[Unloading] " +
+                                    " FROM {0} dispatch" +
+                                    " LEFT JOIN {1} dispatchdeatils ON dispatch.Id = dispatchdeatils.DispatchId" +
+                                    " LEFT JOIN {2} Prod ON Prod.Id = dispatchdeatils.ProductId" +
+                                    " LEFT JOIN {3} Ord ON Ord.Id = dispatch.OrderId" +
+                                    " LEFT JOIN {4} Cust ON Cust.Id = Ord.CustomerId" +
+                                    " WHERE dispatch.IsActive = 1 AND dispatchdeatils.IsActive = 1 AND Prod.IsActive = 1 AND Cust.[CustomerName] like '%{5}%' AND Ord.[OrderNumber] like '%{6}%' AND dispatch.[DispatchDate] >= '{7}' AND dispatch.[DispatchDate] <= '{8}'",
+                                    GetTableName(), TableNameConstants.dp_DispatchDetails, TableNameConstants.dp_Product, TableNameConstants.dp_Order, TableNameConstants.dp_Customer, Dispatch.CustomerName, Dispatch.OrderNumber, Dispatch.StartDate, Dispatch.EndDate);
+
+            var dynamicDispatch = base.FindDynamic(sql, new { });
+
+            Slapper.AutoMapper.Configuration.AddIdentifiers(typeof(DispatchReport), new List<string> { "Id" });
+            _dispatch = (Slapper.AutoMapper.MapDynamic<Dispatch>(dynamicDispatch) as IEnumerable<DispatchReport>).ToList();
+            return _dispatch.ToArray();
+        }
+
         public Dispatch[] GetByIds(IEnumerable<Guid> Ids)
         {
             List<Dispatch> _dispatch = new List<Dispatch>();

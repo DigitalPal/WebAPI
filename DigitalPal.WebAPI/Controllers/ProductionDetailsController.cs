@@ -22,6 +22,14 @@ namespace DigitalPal.WebAPI.Controllers
             return Ok(ProductionDetailsRepository.GetProductionDetails(id));
         }
 
+        [Route("Search")]
+        [ResponseType(typeof(ProductionDetails))]
+        [HttpGet]
+        public IHttpActionResult Search(ProductionDetails ProductionDetails)
+        {
+            return Ok(ProductionDetailsRepository.Search(ProductionDetails));
+        }
+
         [ResponseType(typeof(ProductionDetails))]
         [HttpGet]
         [Route("")]

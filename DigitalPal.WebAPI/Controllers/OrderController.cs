@@ -20,6 +20,14 @@ namespace DigitalPal.WebAPI.Controllers
             return Ok(OrderRepository.GetOrderInformation(id));
         }
 
+        [Route("Search")]
+        [ResponseType(typeof(Order))]
+        [HttpGet]
+        public IHttpActionResult Search(Order Order)
+        {
+            return Ok(OrderRepository.Search(Order));
+        }
+
         [ResponseType(typeof(Order))]
         [HttpGet]
         [Route("")]

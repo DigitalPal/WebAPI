@@ -126,6 +126,22 @@ namespace DigitalPal.DataAccess
             return _order.ToArray();
         }
 
+        public Order[] Search(Order Order)
+        {
+            List<Order> _order = new List<Order>();
+            var sql = String.Format("SELECT ROW_NUMBER() Over (Order by ord.Id) As [SrNum], ord.[OrderNumber], cust.[Name] as [CustomerName], ord.[OrderDate], orddeatils.[Quantity] ,prod.[Name] as ProductName {0} ord " +
+                                    " LEFT JOIN {1} orddeatils ON ord.Id = orddeatils.OrderId" +
+                                    " LEFT JOIN {2} Prod ON Prod.Id = orddeatils.ProductId" +
+                                    " LEFT JOIN {3} cust ON cust.Id = ord.CustomerId" +
+                                    " WHERE ord.IsActive = 1 AND orddeatils.IsActive = 1 AND Prod.IsActive = 1 AND cust.IsActive = 1 AND cust.[Name] like '%{4}%' AND ord.[OrderNumber] = '{5}' AND ord.[OrderDate] >= '{6}' AND ord.[OrderDate] <= '{7}'",
+                                    GetTableName(), TableNameConstants.dp_OrderDetails, TableNameConstants.dp_Product, TableNameConstants.dp_Customer, Order.CustomerName, Order.OrderNumber, Order.StartDate, Order.EndDate);
+
+            var dynamicOrder = base.FindDynamic(sql, new { });
+
+            Slapper.AutoMapper.Configuration.AddIdentifiers(typeof(Order), new List<string> { "Id" });
+            _order = (Slapper.AutoMapper.MapDynamic<Order>(dynamicOrder) as IEnumerable<Order>).ToList();
+            return _order.ToArray();
+        }
         public Order[] GetByIds(IEnumerable<Guid> Ids)
         {
             List<Order> _order = new List<Order>();

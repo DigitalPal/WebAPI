@@ -9,7 +9,7 @@ namespace DigitalPal.Entities
             CreatedOn = DateTime.Now;
             ModifiedOn = DateTime.Now;
         }
-
+        public int SrNum  { get; set; }
         public Guid? Id { get; set; }
         public string Name { get; set; } = "";
         public DateTime CreatedOn { get; set; }
@@ -20,5 +20,8 @@ namespace DigitalPal.Entities
         public bool IsActive { get; set; } = true;
         public Guid? PlantId { get; set; }
         public Guid? TenantId { get; set; }
+
+        public DateTime? StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
     }
 }

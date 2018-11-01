@@ -25,6 +25,11 @@ namespace DigitalPal.BusinessLogic
             return _RawMaterialInwardDA.AddRawMaterialInwards(RawMaterialInwards);
         }
 
+        public RawMaterialInward[] Search(RawMaterialInward RawMaterialInward)
+        {
+            return _RawMaterialInwardDA.Search(RawMaterialInward);
+        }
+
         public RawMaterialInward GetRawMaterialInward(string id)
         {
             return _RawMaterialInwardDA.GetRawMaterialInward(id);

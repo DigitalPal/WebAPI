@@ -9,6 +9,7 @@ namespace DigitalPal.BusinessLogic.Interface
     {
         Task AddRawMaterialInwardAsync(RawMaterialInward[] RawMaterialInwards);
         RawMaterialInward[] AddRawMaterialInwards(RawMaterialInward[] RawMaterialInwards);
+        RawMaterialInward[] Search(RawMaterialInward RawMaterialInward);
 
         RawMaterialInward GetRawMaterialInward(string id);
 

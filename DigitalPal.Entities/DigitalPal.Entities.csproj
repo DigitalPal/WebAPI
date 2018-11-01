@@ -61,6 +61,7 @@
     </Compile>
     <Compile Include="BaseEntity.cs" />
     <Compile Include="Customer.cs" />
+    <Compile Include="DispatchReport.cs" />
     <Compile Include="Dispatch.cs" />
     <Compile Include="DispatchDetails.cs" />
     <Compile Include="Invoice.cs" />

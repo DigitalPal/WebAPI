@@ -52,6 +52,11 @@ namespace DigitalPal.DataAccess
         {
             return base.FindAll().ToArray();
         }
+        public ProductionDetails[] Search(ProductionDetails ProductionDetails)
+        {
+            return base.FindAll().ToArray();
+        }
+
 
         public ProductionDetails[] GetByIds(IEnumerable<Guid> Ids)
         {
