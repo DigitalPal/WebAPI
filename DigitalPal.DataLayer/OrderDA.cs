@@ -1,4 +1,5 @@
-﻿using DigitalPal.DataAccess.Interface;
+﻿using Dapper;
+using DigitalPal.DataAccess.Interface;
 using DigitalPal.DataAccess.Util;
 using DigitalPal.Entities;
 using System;
@@ -31,11 +32,26 @@ namespace DigitalPal.DataAccess
         {
             return base.Add(Orders);
         }
+        public Dictionary<string, string> GetMaxNumber()
+        {
+            using (IDbConnection dbConnection = _sqlConnection)
+            {
+                var query = string.Format(@"SELECT 'OrderNumber' AS [Key], [OrderNumber] AS [Value] FROM" +
+                                           " (SELECT TOP 1 [OrderNumber] FROM {0} ORDER BY CreatedOn DESC) a" +
+                                           " UNION" +
+                                           " SELECT 'DispatchNumber' AS [Key], [DispatchNumber] AS [Value] FROM" +
+                                            " (SELECT TOP 1 [DispatchNumber] FROM {1} ORDER BY CreatedOn DESC) b" +
+                                            " UNION" +
+                                            " SELECT 'InvoiceNumber' AS [Key],[InvoiceNumber] AS [Value] FROM" +
+                                           "  (SELECT TOP 1 [InvoiceNumber] FROM {2} ORDER BY CreatedOn DESC) c" , GetTableName(), TableNameConstants.dp_Dispatch, TableNameConstants.dp_Invoice);
+                return dbConnection.Query<KeyValuePair<string, string>>(query).ToDictionary(pair => pair.Key, pair => pair.Value);
+            }
+        }
 
         public Order GetOrder(string id)
         {
             List<Order> _order = new List<Order>();
-            var sql = String.Format("select ord.[Id], ord.[OrderNumber], ord.[CustomerPONumber], ord.[CustomerId], cust.[Name] as [CustomerName], ord.[OrderDate], ord.[Price], ord.[Remark], ord.[OrderStatus], ord.[CreatedOn], ord.[CreatedBy], ord.[ModifiedOn], ord.[ModifiedBy], ord.[IsActive], ord.[TenantId], ord.[PlantId], orddeatils.[ProductId] as Products_ProductId, orddeatils.[Quantity] as Products_Quantity ,prod.[Name] as Products_ProductName from {0} ord " +
+            var sql = String.Format("select ord.[Id], ord.[OrderNumber], ord.[CustomerPONumber], ord.[CustomerId], cust.[Name] as [CustomerName], ord.[OrderDate], ord.[Price], ord.[Remark], ord.[OrderStatus], ord.[CreatedOn], ord.[CreatedBy], ord.[ModifiedOn], ord.[ModifiedBy], ord.[IsActive], ord.[TenantId], ord.[PlantId], orddeatils.[ProductId] as Products_ProductId, orddeatils.[Quantity] as Products_Quantity, prod.[Name] as Products_ProductName, Prod.[Size] AS Products_Size, Prod.[Height] AS Products_Height , Prod.[Width] AS Products_Width , Prod.[Length] AS Products_Length from {0} ord " +
                                     " left join {1} orddeatils on ord.Id = orddeatils.OrderId" +
                                     " left join {2} Prod on Prod.Id = orddeatils.ProductId" +
                                     " left join {3} cust on cust.Id = ord.CustomerId" +
@@ -53,7 +69,7 @@ namespace DigitalPal.DataAccess
         public Order GetOrderInformation(string id)
         {
             List<Order> _order = new List<Order>();
-            var sql = String.Format("select ord.[Id], ord.[OrderNumber], ord.[CustomerPONumber], ord.[CustomerId], cust.[Name] as [CustomerName], ord.[OrderDate], ord.[Price], ord.[Remark], ord.[OrderStatus], ord.[CreatedOn], ord.[CreatedBy], ord.[ModifiedOn], ord.[ModifiedBy], ord.[IsActive], ord.[TenantId], ord.[PlantId], orddeatils.[ProductId] as Products_ProductId, orddeatils.[Quantity] as Products_Quantity ,prod.[Name] as Products_ProductName from {0} ord " +
+            var sql = String.Format("select ord.[Id], ord.[OrderNumber], ord.[CustomerPONumber], ord.[CustomerId], cust.[Name] as [CustomerName], ord.[OrderDate], ord.[Price], ord.[Remark], ord.[OrderStatus], ord.[CreatedOn], ord.[CreatedBy], ord.[ModifiedOn], ord.[ModifiedBy], ord.[IsActive], ord.[TenantId], ord.[PlantId], orddeatils.[ProductId] as Products_ProductId, orddeatils.[Quantity] as Products_Quantity ,prod.[Name] as Products_ProductName, Prod.[Size] AS Products_Size, Prod.[Height] AS Products_Height , Prod.[Width] AS Products_Width , Prod.[Length] AS Products_Length from {0} ord " +
                                     " left join {1} orddeatils on ord.Id = orddeatils.OrderId"+
                                     " left join {2} Prod on Prod.Id = orddeatils.ProductId"+
                                     " left join {3} cust on cust.Id = ord.CustomerId"+
@@ -77,7 +93,7 @@ namespace DigitalPal.DataAccess
         public Order[] GetOrder(IEnumerable<Guid?> ids)
         {
             List<Order> _order = new List<Order>();
-            var sql = String.Format("select ord.[Id], ord.[OrderNumber], ord.[CustomerPONumber], ord.[CustomerId], cust.[Name] as [CustomerName], ord.[OrderDate], ord.[Price], ord.[Remark], ord.[OrderStatus], ord.[CreatedOn], ord.[CreatedBy], ord.[ModifiedOn], ord.[ModifiedBy], ord.[IsActive], ord.[TenantId], ord.[PlantId], orddeatils.[ProductId] as Products_ProductId, orddeatils.[Quantity] as Products_Quantity ,prod.[Name] as Products_ProductName from {0} ord " +
+            var sql = String.Format("select ord.[Id], ord.[OrderNumber], ord.[CustomerPONumber], ord.[CustomerId], cust.[Name] as [CustomerName], ord.[OrderDate], ord.[Price], ord.[Remark], ord.[OrderStatus], ord.[CreatedOn], ord.[CreatedBy], ord.[ModifiedOn], ord.[ModifiedBy], ord.[IsActive], ord.[TenantId], ord.[PlantId], orddeatils.[ProductId] as Products_ProductId, orddeatils.[Quantity] as Products_Quantity ,prod.[Name] as Products_ProductName, Prod.[Size] AS Products_Size, Prod.[Height] AS Products_Height , Prod.[Width] AS Products_Width , Prod.[Length] AS Products_Length from {0} ord " +
                                     " left join {1} orddeatils on ord.Id = orddeatils.OrderId" +
                                     " left join {2} Prod on Prod.Id = orddeatils.ProductId" +
                                     " left join {3} cust on cust.Id = ord.CustomerId" +
@@ -95,7 +111,7 @@ namespace DigitalPal.DataAccess
         public Order[] GetAll()
         {
             List<Order> _order = new List<Order>();
-            var sql = String.Format("select ord.[Id], ord.[OrderNumber], ord.[CustomerPONumber], ord.[CustomerId], cust.[Name] as [CustomerName], ord.[OrderDate], ord.[Price], ord.[Remark], ord.[OrderStatus], ord.[CreatedOn], ord.[CreatedBy], ord.[ModifiedOn], ord.[ModifiedBy], ord.[IsActive], ord.[TenantId], ord.[PlantId], orddeatils.[ProductId] as Products_ProductId, orddeatils.[Quantity] as Products_Quantity ,prod.[Name] as Products_ProductName from {0} ord " +
+            var sql = String.Format("select ord.[Id], ord.[OrderNumber], ord.[CustomerPONumber], ord.[CustomerId], cust.[Name] as [CustomerName], ord.[OrderDate], ord.[Price], ord.[Remark], ord.[OrderStatus], ord.[CreatedOn], ord.[CreatedBy], ord.[ModifiedOn], ord.[ModifiedBy], ord.[IsActive], ord.[TenantId], ord.[PlantId], orddeatils.[ProductId] as Products_ProductId, orddeatils.[Quantity] as Products_Quantity ,prod.[Name] as Products_ProductName, Prod.[Size] AS Products_Size, Prod.[Height] AS Products_Height , Prod.[Width] AS Products_Width , Prod.[Length] AS Products_Length from {0} ord " +
                                     " left join {1} orddeatils on ord.Id = orddeatils.OrderId" +
                                     " left join {2} Prod on Prod.Id = orddeatils.ProductId" +
                                     " left join {3} cust on cust.Id = ord.CustomerId" +
@@ -110,10 +126,50 @@ namespace DigitalPal.DataAccess
             return _order.ToArray();
         }
 
+        public Order[] Search(Order Order)
+        {
+            List<Order> _order = new List<Order>();
+            var sql = String.Format("SELECT ROW_NUMBER() Over (Order by ord.Id) As [SrNum], ord.[OrderNumber], cust.[Name] as [CustomerName], ord.[OrderDate], orddeatils.[Quantity] ,prod.[Name] as ProductName FROM {0} ord " +
+                                    " LEFT JOIN {1} orddeatils ON ord.Id = orddeatils.OrderId" +
+                                    " LEFT JOIN {2} Prod ON Prod.Id = orddeatils.ProductId" +
+                                    " LEFT JOIN {3} cust ON cust.Id = ord.CustomerId" +
+                                    " WHERE ord.IsActive = 1 AND orddeatils.IsActive = 1 AND Prod.IsActive = 1 AND cust.IsActive = 1 ",
+                                    GetTableName(), TableNameConstants.dp_OrderDetails, TableNameConstants.dp_Product, TableNameConstants.dp_Customer);
+           
+            #region Filters
+
+            if (!string.IsNullOrEmpty(Order.CustomerName))
+            {
+                sql += " AND cust.[Name] like '%" + Order.CustomerName + "%'";
+            }
+
+            if (!string.IsNullOrEmpty(Order.OrderNumber))
+            {
+                sql += " AND ord.[OrderNumber] = '" + Order.OrderNumber + "'";
+            }
+
+            if (Order.StartDate != null)
+            {
+                sql += " AND ord.[OrderDate] >= '" + Order.StartDate + "'";
+            }
+
+            if (Order.EndDate != null)
+            {
+                sql += " AND ord.[OrderDate] <= '" + Order.EndDate + "'";
+            }
+
+            #endregion Filters
+
+            var dynamicOrder = base.FindDynamic(sql, new { });
+
+            Slapper.AutoMapper.Configuration.AddIdentifiers(typeof(Order), new List<string> { "Id" });
+            _order = (Slapper.AutoMapper.MapDynamic<Order>(dynamicOrder) as IEnumerable<Order>).ToList();
+            return _order.ToArray();
+        }
         public Order[] GetByIds(IEnumerable<Guid> Ids)
         {
             List<Order> _order = new List<Order>();
-            var sql = String.Format("select ord.[Id], ord.[OrderNumber], ord.[CustomerPONumber], ord.[CustomerId], cust.[Name] as [CustomerName], ord.[OrderDate], ord.[Price], ord.[Remark], ord.[OrderStatus], ord.[CreatedOn], ord.[CreatedBy], ord.[ModifiedOn], ord.[ModifiedBy], ord.[IsActive], ord.[TenantId], ord.[PlantId], orddeatils.[ProductId] as Products_ProductId, orddeatils.[Quantity] as Products_Quantity ,prod.[Name] as Products_ProductName from {0} ord " +
+            var sql = String.Format("select ord.[Id], ord.[OrderNumber], ord.[CustomerPONumber], ord.[CustomerId], cust.[Name] as [CustomerName], ord.[OrderDate], ord.[Price], ord.[Remark], ord.[OrderStatus], ord.[CreatedOn], ord.[CreatedBy], ord.[ModifiedOn], ord.[ModifiedBy], ord.[IsActive], ord.[TenantId], ord.[PlantId], orddeatils.[ProductId] as Products_ProductId, orddeatils.[Quantity] as Products_Quantity ,prod.[Name] as Products_ProductName, Prod.[Size] AS Products_Size, Prod.[Height] AS Products_Height , Prod.[Width] AS Products_Width , Prod.[Length] AS Products_Length from {0} ord " +
                                     " left join {1} orddeatils on ord.Id = orddeatils.OrderId" +
                                     " left join {2} Prod on Prod.Id = orddeatils.ProductId" +
                                     " left join {3} cust on cust.Id = ord.CustomerId" +
@@ -156,7 +212,8 @@ namespace DigitalPal.DataAccess
                 item.IsActive,
                 item.CreatedBy,
                 item.ModifiedBy,
-                item.Price
+                item.Price,
+                item.Remark
             };
         }
 
@@ -170,7 +227,7 @@ namespace DigitalPal.DataAccess
             return Orders;
         }
 
-        public Order[] DeleteOrder(string id)
+        public Order DeleteOrder(string id)
         {
             if (id != null)
             {

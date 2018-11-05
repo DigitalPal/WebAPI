@@ -13,6 +13,6 @@ namespace DigitalPal.Entities
         public string CustomerName { get; set; }
         public Guid? CustomerId { get; set; }
         public float Amount { get; set; }
-        public Status PaymentStatus { get; set; }
+        public string PaymentStatus { get; set; }
     }
 }

@@ -22,6 +22,12 @@ namespace DigitalPal.BusinessLogic
         {
             await _DispatchDA.AddDispatchAsync(Dispatchs);
         }
+
+        public DispatchReport[] Search(DispatchReport Dispatch)
+        {
+            return _DispatchDA.Search(Dispatch);
+        }
+
         public Dispatch[] AddDispatch(Dispatch[] Dispatchs)
         {
             foreach (Dispatch dispatch in Dispatchs)
@@ -71,9 +77,11 @@ namespace DigitalPal.BusinessLogic
             return _DispatchDA.UpdateDispatch(Dispatchs);
         }
 
-        public Dispatch[] DeleteDispatch(string id)
+        public Dispatch DeleteDispatch(string id)
         {
-            return _DispatchDA.DeleteDispatch(id);
+            _DispatchDetailsDA.DeleteOrderDetailsByDispatchId(id);
+            _DispatchDA.DeleteDispatch(id);
+            return null;
         }
     }
 }

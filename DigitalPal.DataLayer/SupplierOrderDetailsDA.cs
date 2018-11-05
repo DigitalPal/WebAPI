@@ -9,51 +9,51 @@ using System.Threading.Tasks;
 
 namespace DigitalPal.DataAccess
 {
-    public class OrderDetailsDA : DataAccessBase<OrderDetails>, IOrderDetailsDA
+    public class SupplierOrderDetailsDA : DataAccessBase<SupplierOrderDetails>, ISupplierOrderDetailsDA
     {
 
-        public OrderDetailsDA(ISqlDatabaseSettings sqlDataBaseSettings) : base(sqlDataBaseSettings)
+        public SupplierOrderDetailsDA(ISqlDatabaseSettings sqlDataBaseSettings) : base(sqlDataBaseSettings)
         {
         }
 
         internal override string GetTableName()
         {
-            return TableNameConstants.dp_OrderDetails;
+            return TableNameConstants.dp_SupplierOrderDetails;
         }
 
-        public async Task AddOrderDetailsAsync(OrderDetails[] OrderDetails)
+        public async Task AddSupplierOrderDetailsAsync(SupplierOrderDetails[] SupplierOrderDetails)
         {
-            await base.AddAsync(OrderDetails);
+            await base.AddAsync(SupplierOrderDetails);
         }
 
-        public OrderDetails[] AddOrderDetails(OrderDetails[] OrderDetails)
+        public SupplierOrderDetails[] AddSupplierOrderDetails(SupplierOrderDetails[] SupplierOrderDetails)
         {
-            return base.Add(OrderDetails);
+            return base.Add(SupplierOrderDetails);
         }
 
-        public OrderDetails GetOrderDetails(string id)
+        public SupplierOrderDetails GetSupplierOrderDetails(string id)
         {
             return FindById(Guid.Parse(id));
         }
 
-        public Dictionary<string, OrderDetails> GetOrderDetails(string[] ids)
+        public Dictionary<string, SupplierOrderDetails> GetSupplierOrderDetails(string[] ids)
         {
             var result = Find(x => ids.Any(e => e == x.Id.ToString()));
             return result.ToDictionary(x => x.Id.ToString(), y => y);
         }
 
-        public OrderDetails[] GetOrderDetails(IEnumerable<Guid?> ids)
+        public SupplierOrderDetails[] GetSupplierOrderDetails(IEnumerable<Guid?> ids)
         {
             var sql = String.Format("SELECT * FROM {0} WHERE Id IN @ids AND IsActive = 1", GetTableName());
             return base.Find(sql, new { ids }).ToArray();
         }
 
-        public OrderDetails[] GetAll()
+        public SupplierOrderDetails[] GetAll()
         {
             return base.FindAll().ToArray();
         }
 
-        public OrderDetails[] GetByIds(IEnumerable<Guid> Ids)
+        public SupplierOrderDetails[] GetByIds(IEnumerable<Guid> Ids)
         {
             var sql = String.Format("SELECT * FROM {0} WHERE Id IN ( @Ids ) AND IsActive = 1", GetTableName());
             return base.FindByTempTableIds(sql, Ids).ToArray();
@@ -66,11 +66,11 @@ namespace DigitalPal.DataAccess
 
         public string[] GetColumns()
         {
-            PropertyInfo[] props = Mapping(new OrderDetails()).GetType().GetProperties();
+            PropertyInfo[] props = Mapping(new SupplierOrderDetails()).GetType().GetProperties();
             return props.Select(x => x.Name).ToArray();
         }
 
-        internal override dynamic Mapping(OrderDetails item)
+        internal override dynamic Mapping(SupplierOrderDetails item)
         {
             return new
             {
@@ -81,25 +81,25 @@ namespace DigitalPal.DataAccess
                 item.CreatedBy,
                 item.ModifiedBy,
                 item.TenantId,
-                item.OrderId,
+                item.SupplierOrderId,
                 item.PlantId,
                 item.Price,
-                item.ProductId,
+                item.RawMaterialId,
                 item.Quantity
             };
         }
 
-        public OrderDetails[] UpdateOrderDetails(OrderDetails[] OrderDetails)
+        public SupplierOrderDetails[] UpdateSupplierOrderDetails(SupplierOrderDetails[] SupplierOrderDetails)
         {
-            if (OrderDetails.Any())
+            if (SupplierOrderDetails.Any())
             {
-                base.Update(OrderDetails);
+                base.Update(SupplierOrderDetails);
             }
 
-            return OrderDetails;
+            return SupplierOrderDetails;
         }
 
-        public OrderDetails[] DeleteOrderDetails(string id)
+        public SupplierOrderDetails[] DeleteSupplierOrderDetails(string id)
         {
             if (id != null)
             {
@@ -110,12 +110,12 @@ namespace DigitalPal.DataAccess
             return null;
         }
 
-        public void DeleteOrderDetailsByOrderId(string id)
+        public void DeleteSupplierOrderDetailsBySupplierOrderId(string id)
         {
             if (id != null)
             {
                 string[] ids = { id };
-                base.DeleteByMasterId(ids, "OrderId");
+                base.DeleteByMasterId(ids, "SupplierOrderId");
             }
         }
     }

@@ -9,11 +9,11 @@ namespace DigitalPal.DataAccess.Interface
     {
         Task AddOrderAsync(Order[] Order);
         Order[] AddOrder(Order[] Order);
-
+        Order[] Search(Order Order);
         Order GetOrder(string id);
 
         Order GetOrderInformation(string id);
-
+        Dictionary<string, string> GetMaxNumber();
         Dictionary<string, Order> GetOrder(string[] ids);
 
         Order[] GetOrder(IEnumerable<Guid?> ids);
@@ -24,6 +24,6 @@ namespace DigitalPal.DataAccess.Interface
 
         Order[] UpdateOrder(Order[] Order);
 
-        Order[] DeleteOrder(string id);
+        Order DeleteOrder(string id);
     }
 }

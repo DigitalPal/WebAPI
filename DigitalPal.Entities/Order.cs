@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using static DigitalPal.Common.Enum;
 
 namespace DigitalPal.Entities
 {
@@ -13,7 +12,7 @@ namespace DigitalPal.Entities
         public DateTime OrderDate { get; set; }
         public float Price { get; set; }
         public string Remark { get; set; }
-        public Status OrderStatus { get; set; }
+        public string OrderStatus { get; set; }
         public List<OrderDetails> Products { get; set; }
     }
 }

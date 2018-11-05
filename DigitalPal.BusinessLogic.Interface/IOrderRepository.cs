@@ -9,10 +9,11 @@ namespace DigitalPal.BusinessLogic.Interface
     {
         Task AddOrderAsync(Order[] Orders);
         Order[] AddOrders(Order[] Orders);
-
+        Order[] Search(Order Order);
         Order GetOrder(string id);
 
         Order GetOrderInformation(string id);
+        Dictionary<string, string> GetMaxNumber();
 
         Dictionary<string, Order> GetOrders(string[] ids);
 
@@ -24,6 +25,6 @@ namespace DigitalPal.BusinessLogic.Interface
 
         Order[] UpdateOrders(Order[] Orders);
 
-        Order[] DeleteOrders(string id);
+        Order DeleteOrders(string id);
     }
 }

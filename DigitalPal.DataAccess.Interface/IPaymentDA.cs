@@ -9,7 +9,7 @@ namespace DigitalPal.DataAccess.Interface
     {
         Task AddPaymentAsync(Payment[] Payments);
         Payment[] AddPayments(Payment[] Payments);
-
+        Payment[] Search(Payment Payment);
         Payment GetPayment(string id);
 
         Dictionary<string, Payment> GetPayments(string[] ids);

@@ -31,6 +31,8 @@ namespace DigitalPal.DataAccess.WireUp
             builder.RegisterType<ProductDA>().As<IProductDA>();
             builder.RegisterType<OrderDA>().As<IOrderDA>();
             builder.RegisterType<OrderDetailsDA>().As<IOrderDetailsDA>();
+            builder.RegisterType<SupplierOrderDA>().As<ISupplierOrderDA>();
+            builder.RegisterType<SupplierOrderDetailsDA>().As<ISupplierOrderDetailsDA>();
         }
         private void RegisterConnectionString(ContainerBuilder builder)
         {

@@ -70,6 +70,10 @@ namespace DigitalPal.WebAPI.WireUp
             {
                 e.Instance.OrderRepository = e.Context.Resolve<IOrderRepository>();
             });
+            builder.RegisterType<SupplierOrderController>().InstancePerRequest().OnActivated(e =>
+            {
+                e.Instance.SupplierOrderRepository = e.Context.Resolve<ISupplierOrderRepository>();
+            });
             builder.RegisterType<ProductController>().InstancePerRequest().OnActivated(e =>
             {
                 e.Instance.ProductRepository = e.Context.Resolve<IProductRepository>();

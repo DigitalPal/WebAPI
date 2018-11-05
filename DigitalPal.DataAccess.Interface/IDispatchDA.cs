@@ -9,7 +9,7 @@ namespace DigitalPal.DataAccess.Interface
     {
         Task AddDispatchAsync(Dispatch[] Dispatchs);
         Dispatch[] AddDispatch(Dispatch[] Dispatchs);
-
+        DispatchReport[] Search(DispatchReport Dispatch);
         Dispatch GetDispatch(string id);
 
         Dictionary<string, Dispatch> GetDispatch(string[] ids);
@@ -22,6 +22,6 @@ namespace DigitalPal.DataAccess.Interface
 
         Dispatch[] UpdateDispatch(Dispatch[] Dispatchs);
 
-        Dispatch[] DeleteDispatch(string id);
+        void DeleteDispatch(string id);
     }
 }

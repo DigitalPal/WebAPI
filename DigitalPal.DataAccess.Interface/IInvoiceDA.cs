@@ -12,6 +12,8 @@ namespace DigitalPal.DataAccess.Interface
 
         Invoice GetInvoice(string id);
 
+        InvoiceDetailInfo GetInvoiceDetailInformationByInvoiceId(string invoiceId);
+
         Dictionary<string, Invoice> GetInvoices(string[] ids);
 
         Invoice[] GetInvoices(IEnumerable<Guid?> ids);

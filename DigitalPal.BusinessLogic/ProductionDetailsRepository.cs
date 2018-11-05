@@ -16,6 +16,11 @@ namespace DigitalPal.BusinessLogic
             _ProductionDetailsDA = ProductionDetailsDA;
         }
 
+        public ProductionDetails[] Search(ProductionDetails ProductionDetails)
+        {
+            return _ProductionDetailsDA.Search(ProductionDetails);
+        }
+
         public async Task AddProductionDetailsAsync(ProductionDetails[] ProductionDetailss)
         {
             await _ProductionDetailsDA.AddProductionDetailsAsync(ProductionDetailss);

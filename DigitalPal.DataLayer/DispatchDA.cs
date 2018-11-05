@@ -34,7 +34,7 @@ namespace DigitalPal.DataAccess
         public Dispatch GetDispatch(string id)
         {
             List<Dispatch> _dispatch = new List<Dispatch>();
-            var sql = String.Format("select dispatch.[Id], dispatch.[DispatchNumber], dispatch.[DispatchDate], dispatch.[OrderId], dispatch.[ChallanNumber], dispatch.[Size], dispatch.[Quantity], dispatch.[TransportName], dispatch.[Loading], dispatch.[Unloading], dispatch.[Rate], dispatch.[Remark], dispatch.[DispatchStatus], dispatch.[CreatedOn], dispatch.[CreatedBy], dispatch.[ModifiedOn], dispatch.[ModifiedBy], dispatch.[IsActive], dispatch.[TenantId], dispatch.[PlantId], dispatchdeatils.[ProductId] AS DispatchDetails_ProductId, dispatchdeatils.[Quantity] AS DispatchDetails_Quantity, dispatchdeatils.[Rate] AS DispatchDetails_Rate, prod.[Name] AS DispatchDetails_ProductName" +
+            var sql = String.Format("select dispatch.[Id], dispatch.[DispatchNumber], dispatch.[DispatchDate], dispatch.[OrderId], dispatch.[ChallanNumber], dispatch.[Size], dispatch.[Quantity], dispatch.[TransportName], dispatch.[Loading], dispatch.[Unloading], dispatch.[Rate], dispatch.[Remark], dispatch.[DispatchStatus], dispatch.[CreatedOn], dispatch.[CreatedBy], dispatch.[ModifiedOn], dispatch.[ModifiedBy], dispatch.[IsActive], dispatch.[TenantId], dispatch.[PlantId], dispatchdeatils.[ProductId] AS DispatchDetails_ProductId, Prod.[Size] AS DispatchDetails_Size, Prod.[Height] AS DispatchDetails_Height , Prod.[Width] AS DispatchDetails_Width , Prod.[Length] AS DispatchDetails_Length, dispatchdeatils.[Quantity] AS DispatchDetails_Quantity, dispatchdeatils.[Rate] AS DispatchDetails_Rate, prod.[Name] AS DispatchDetails_ProductName" +
                                     " from {0} dispatch" +
                                     " left join {1} dispatchdeatils on dispatch.Id = dispatchdeatils.DispatchId" +
                                     " left join {2} Prod on Prod.Id = dispatchdeatils.ProductId" +
@@ -58,7 +58,7 @@ namespace DigitalPal.DataAccess
         public Dispatch[] GetDispatch(IEnumerable<Guid?> ids)
         {
             List<Dispatch> _dispatch = new List<Dispatch>();
-            var sql = String.Format("select dispatch.[Id], dispatch.[DispatchNumber], dispatch.[DispatchDate], dispatch.[OrderId], dispatch.[ChallanNumber], dispatch.[Size], dispatch.[Quantity], dispatch.[TransportName], dispatch.[Loading], dispatch.[Unloading], dispatch.[Rate], dispatch.[Remark], dispatch.[DispatchStatus], dispatch.[CreatedOn], dispatch.[CreatedBy], dispatch.[ModifiedOn], dispatch.[ModifiedBy], dispatch.[IsActive], dispatch.[TenantId], dispatch.[PlantId], dispatchdeatils.[ProductId] AS DispatchDetails_ProductId, dispatchdeatils.[Quantity] AS DispatchDetails_Quantity, dispatchdeatils.[Rate] AS DispatchDetails_Rate, prod.[Name] AS DispatchDetails_ProductName" +
+            var sql = String.Format("select dispatch.[Id], dispatch.[DispatchNumber], dispatch.[DispatchDate], dispatch.[OrderId], dispatch.[ChallanNumber], dispatch.[Size], dispatch.[Quantity], dispatch.[TransportName], dispatch.[Loading], dispatch.[Unloading], dispatch.[Rate], dispatch.[Remark], dispatch.[DispatchStatus], dispatch.[CreatedOn], dispatch.[CreatedBy], dispatch.[ModifiedOn], dispatch.[ModifiedBy], dispatch.[IsActive], dispatch.[TenantId], dispatch.[PlantId], dispatchdeatils.[ProductId] AS DispatchDetails_ProductId, dispatchdeatils.[Quantity] AS DispatchDetails_Quantity, dispatchdeatils.[Rate] AS DispatchDetails_Rate, prod.[Name] AS DispatchDetails_ProductName, Prod.[Size] AS DispatchDetails_Size, Prod.[Height] AS DispatchDetails_Height , Prod.[Width] AS DispatchDetails_Width , Prod.[Length] AS DispatchDetails_Length" +
                                     " from {0} dispatch" +
                                     " left join {1} dispatchdeatils on dispatch.Id = dispatchdeatils.DispatchId" +
                                     " left join {2} Prod on Prod.Id = dispatchdeatils.ProductId" +
@@ -76,12 +76,13 @@ namespace DigitalPal.DataAccess
         public Dispatch[] GetAll()
         {
             List<Dispatch> _dispatch = new List<Dispatch>();
-            var sql = String.Format("select dispatch.[Id], dispatch.[DispatchNumber], dispatch.[DispatchDate], dispatch.[OrderId], dispatch.[ChallanNumber], dispatch.[Size], dispatch.[Quantity], dispatch.[TransportName], dispatch.[Loading], dispatch.[Unloading], dispatch.[Rate], dispatch.[Remark], dispatch.[DispatchStatus], dispatch.[CreatedOn], dispatch.[CreatedBy], dispatch.[ModifiedOn], dispatch.[ModifiedBy], dispatch.[IsActive], dispatch.[TenantId], dispatch.[PlantId], dispatchdeatils.[ProductId] AS DispatchDetails_ProductId, dispatchdeatils.[Quantity] AS DispatchDetails_Quantity, dispatchdeatils.[Rate] AS DispatchDetails_Rate, prod.[Name] AS DispatchDetails_ProductName" +
+            var sql = String.Format("select dispatch.[Id], Ord.[OrderNumber], dispatch.[DispatchNumber], dispatch.[DispatchDate], dispatch.[OrderId], dispatch.[ChallanNumber], dispatch.[Size], dispatch.[Quantity], dispatch.[TransportName], dispatch.[Loading], dispatch.[Unloading], dispatch.[Rate], dispatch.[Remark], dispatch.[DispatchStatus], dispatch.[CreatedOn], dispatch.[CreatedBy], dispatch.[ModifiedOn], dispatch.[ModifiedBy], dispatch.[IsActive], dispatch.[TenantId], dispatch.[PlantId], dispatchdeatils.[ProductId] AS DispatchDetails_ProductId, dispatchdeatils.[Quantity] AS DispatchDetails_Quantity, dispatchdeatils.[Rate] AS DispatchDetails_Rate, prod.[Name] AS DispatchDetails_ProductName, Prod.[Size] AS DispatchDetails_Size, Prod.[Height] AS DispatchDetails_Height , Prod.[Width] AS DispatchDetails_Width , Prod.[Length] AS DispatchDetails_Length" +
                                     " from {0} dispatch" +
                                     " left join {1} dispatchdeatils on dispatch.Id = dispatchdeatils.DispatchId" +
                                     " left join {2} Prod on Prod.Id = dispatchdeatils.ProductId" +
+                                    " left join {3} Ord on Ord.Id = dispatch.OrderId" +
                                     " Where dispatch.IsActive = 1 and dispatchdeatils.IsActive = 1 and Prod.IsActive = 1",
-                                    GetTableName(), TableNameConstants.dp_DispatchDetails, TableNameConstants.dp_Product);
+                                    GetTableName(), TableNameConstants.dp_DispatchDetails, TableNameConstants.dp_Product, TableNameConstants.dp_Order);
 
             var dynamicDispatch = base.FindDynamic(sql, new {  });
 
@@ -91,10 +92,53 @@ namespace DigitalPal.DataAccess
             return _dispatch.ToArray();
         }
 
+        public DispatchReport[] Search(DispatchReport Dispatch)
+        {
+            List<DispatchReport> _dispatch = new List<DispatchReport>();
+            var sql = String.Format("SELECT ROW_NUMBER() Over (Order by dispatch.Id) As [SrNum], Ord.[OrderNumber], Cust.[Name] AS CustomerName, dispatch.[DispatchDate], prod.[Name] AS ProductName, dispatch.[Quantity], dispatch.[TransportName], dispatch.[Loading], dispatch.[Unloading] " +
+                                    " FROM {0} dispatch" +
+                                    " LEFT JOIN {1} dispatchdeatils ON dispatch.Id = dispatchdeatils.DispatchId" +
+                                    " LEFT JOIN {2} Prod ON Prod.Id = dispatchdeatils.ProductId" +
+                                    " LEFT JOIN {3} Ord ON Ord.Id = dispatch.OrderId" +
+                                    " LEFT JOIN {4} Cust ON Cust.Id = Ord.CustomerId" +
+                                    " WHERE dispatch.IsActive = 1 AND dispatchdeatils.IsActive = 1 AND Prod.IsActive = 1 AND Cust.IsActive = 1 ",
+                                    GetTableName(), TableNameConstants.dp_DispatchDetails, TableNameConstants.dp_Product, TableNameConstants.dp_Order, TableNameConstants.dp_Customer);
+
+            #region Filters
+
+            if (!string.IsNullOrEmpty(Dispatch.CustomerName))
+            {
+                sql += " AND Cust.[Name] like '%" + Dispatch.CustomerName + "%'";
+            }
+
+            if (!string.IsNullOrEmpty(Dispatch.OrderNumber))
+            {
+                sql += " AND Ord.[OrderNumber] = '" + Dispatch.OrderNumber + "'";
+            }
+
+            if (Dispatch.StartDate != null)
+            {
+                sql += " AND dispatch.[DispatchDate] >= '" + Dispatch.StartDate + "'";
+            }
+
+            if (Dispatch.EndDate != null)
+            {
+                sql += " AND dispatch.[DispatchDate] <= '" + Dispatch.EndDate + "'";
+            }
+
+            #endregion Filters
+
+            var dynamicDispatch = base.FindDynamic(sql, new { });
+
+            Slapper.AutoMapper.Configuration.AddIdentifiers(typeof(DispatchReport), new List<string> { "Id" });
+            _dispatch = (Slapper.AutoMapper.MapDynamic<DispatchReport>(dynamicDispatch) as IEnumerable<DispatchReport>).ToList();
+            return _dispatch.ToArray();
+        }
+
         public Dispatch[] GetByIds(IEnumerable<Guid> Ids)
         {
             List<Dispatch> _dispatch = new List<Dispatch>();
-            var sql = String.Format("select dispatch.[Id], dispatch.[DispatchNumber], dispatch.[DispatchDate], dispatch.[OrderId], dispatch.[ChallanNumber], dispatch.[Size], dispatch.[Quantity], dispatch.[TransportName], dispatch.[Loading], dispatch.[Unloading], dispatch.[Rate], dispatch.[Remark], dispatch.[DispatchStatus], dispatch.[CreatedOn], dispatch.[CreatedBy], dispatch.[ModifiedOn], dispatch.[ModifiedBy], dispatch.[IsActive], dispatch.[TenantId], dispatch.[PlantId], dispatchdeatils.[ProductId] AS DispatchDetails_ProductId, dispatchdeatils.[Quantity] AS DispatchDetails_Quantity, dispatchdeatils.[Rate] AS DispatchDetails_Rate, prod.[Name] AS DispatchDetails_ProductName" +
+            var sql = String.Format("select dispatch.[Id], dispatch.[DispatchNumber], dispatch.[DispatchDate], dispatch.[OrderId], dispatch.[ChallanNumber], dispatch.[Size], dispatch.[Quantity], dispatch.[TransportName], dispatch.[Loading], dispatch.[Unloading], dispatch.[Rate], dispatch.[Remark], dispatch.[DispatchStatus], dispatch.[CreatedOn], dispatch.[CreatedBy], dispatch.[ModifiedOn], dispatch.[ModifiedBy], dispatch.[IsActive], dispatch.[TenantId], dispatch.[PlantId], dispatchdeatils.[ProductId] AS DispatchDetails_ProductId, dispatchdeatils.[Quantity] AS DispatchDetails_Quantity, dispatchdeatils.[Rate] AS DispatchDetails_Rate, prod.[Name] AS DispatchDetails_ProductName, Prod.[Size] AS DispatchDetails_Size, Prod.[Height] AS DispatchDetails_Height , Prod.[Width] AS DispatchDetails_Width , Prod.[Length] AS DispatchDetails_Length" +
                                     " from {0} dispatch" +
                                     " left join {1} dispatchdeatils on dispatch.Id = dispatchdeatils.DispatchId" +
                                     " left join {2} Prod on Prod.Id = dispatchdeatils.ProductId" +
@@ -156,15 +200,13 @@ namespace DigitalPal.DataAccess
             return Dispatchs;
         }
 
-        public Dispatch[] DeleteDispatch(string id)
+        public void DeleteDispatch(string id)
         {
             if (id != null)
             {
                 string[] ids = { id };
                 base.DeleteByDbId(ids);
             }
-
-            return null;
         }
     }
 }

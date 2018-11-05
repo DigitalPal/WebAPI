@@ -31,13 +31,34 @@ namespace DigitalPal.DataAccess
             return base.Add(Invoices);
         }
 
+        public InvoiceDetailInfo GetInvoiceDetailInformationByInvoiceId(string invoiceId)
+        {
+            List<InvoiceDetailInfo> _InvoiceDetailInfo = new List<InvoiceDetailInfo>();
+            var sql = String.Format("SELECT Inv.Id AS Id, Ord.[CustomerId], Cust.[Name] AS [CustomerName], Cust.[Address] AS [Address], Cust.[GSTNumber] AS [CustomerGST], Ord.[CustomerPONumber], Inv.[InvoiceNumber] AS [InvoiceNumber], " +
+                                    " Dispatch.[DispatchDate], Dispatch.[Id] AS DispatchId, Dispatch.[DispatchNumber], DispatchDetails.[Quantity] AS Products_Quantity, Dispatch.[Remark]," +
+                                    " Ord.[Id] AS OrderId, Ord.[OrderNumber], Ord.[OrderDate], Inv.[Amount] AS Price, DispatchDetails.ProductId AS Products_ProductId, Prod.[Name] AS Products_ProductName, Prod.[Size] AS Products_Size, Prod.[Height] AS Products_Height , Prod.[Width] AS Products_Width , Prod.[Length] AS Products_Length , Inv.TenantId, Inv.PlantId, Inv.IsActive FROM {0} Inv" +
+                                    " LEFT JOIN {1} Ord ON Inv.OrderId = Ord.Id" +
+                                    " LEFT JOIN {2} Dispatch  ON Inv.DispatchId = Dispatch.Id" +
+                                    " LEFT JOIN {3} DispatchDetails ON DispatchDetails.DispatchId = Dispatch.Id" +
+                                    " LEFT JOIN {4} Prod ON Prod.Id = DispatchDetails.ProductId" +
+                                    " LEFT JOIN {5} Cust ON Cust.Id = Ord.CustomerId" +
+                                    " WHERE Ord.IsActive = 1 AND Prod.IsActive = 1 AND Cust.IsActive = 1 AND Dispatch.IsActive = 1 AND Inv.IsActive = 1 AND Inv.[Id] = '{6}'",
+            TableNameConstants.dp_Invoice, TableNameConstants.dp_Order, TableNameConstants.dp_Dispatch, TableNameConstants.dp_DispatchDetails, TableNameConstants.dp_Product, TableNameConstants.dp_Customer, invoiceId);
+
+            var dynamicOrder = base.FindDynamic(sql, new {  });
+            Slapper.AutoMapper.Configuration.AddIdentifiers(typeof(InvoiceDetailInfo), new List<string> { "Id" });
+            Slapper.AutoMapper.Configuration.AddIdentifiers(typeof(DispatchDetails), new List<string> { "ProductId" });
+            _InvoiceDetailInfo = (Slapper.AutoMapper.MapDynamic<InvoiceDetailInfo>(dynamicOrder) as IEnumerable<InvoiceDetailInfo>).ToList();
+            return _InvoiceDetailInfo.FirstOrDefault();
+        }
+
         public Invoice GetInvoice(string id)
         {
             List<Invoice> _Invoice = new List<Invoice>();
-            var sql = String.Format("select Inv.[Id], Inv.[InvoiceNumber], Inv.[InvoiceDate], Inv.[OrderId], Ord.OrderNumber as OrderNumber, Inv.[DispatchId], Dispatch.DispatchNumber as DispatchNumber ,Inv.[TransportCharges], Inv.[LoadingCharges],Inv.[UnloadingCharges], Inv.[Amount], Inv.[InvoiceStatus], Inv.[CreatedOn], Inv.[CreatedBy], Inv.[ModifiedOn], Inv.[ModifiedBy], Inv.[IsActive], Inv.[TenantId], Inv.[PlantId]" +
-                                    " from [dbo].[dp_Invoice] Inv" +
-                                    " inner join [dbo].[dp_Order] Ord on Inv.OrderId = Ord.Id" +
-                                    " inner join [dbo].[dp_Dispatch] Dispatch  on Inv.DispatchId = Dispatch.Id"+
+            var sql = String.Format("select Inv.[Id], Inv.[InvoiceNumber], Inv.[InvoiceDate], Inv.[OrderId], Ord.OrderNumber as OrderNumber, Inv.[DispatchId], Dispatch.DispatchNumber as DispatchNumber ,Inv.[TransportCharges], Inv.[LoadingCharges],Inv.[UnloadingCharges], Inv.[Amount], Inv.[InvoiceStatus], Inv.[CreatedOn], Inv.[CreatedBy], Inv.[ModifiedOn], Inv.[ModifiedBy], Inv.[IsActive], Inv.[TenantId], Inv.[PlantId], Inv.[Remark]" +
+                                    " from {0} Inv" +
+                                    " inner join {1} Ord on Inv.OrderId = Ord.Id" +
+                                    " inner join {2} Dispatch  on Inv.DispatchId = Dispatch.Id"+
                                     " Where dispatch.IsActive = 1 and Ord.IsActive = 1 and Inv.IsActive = 1  and Inv.Id = @id",
                                     GetTableName(), TableNameConstants.dp_Order, TableNameConstants.dp_Dispatch);
 
@@ -60,9 +81,9 @@ namespace DigitalPal.DataAccess
         {
             List<Invoice> _Invoice = new List<Invoice>();
             var sql = String.Format("select Inv.[Id], Inv.[InvoiceNumber], Inv.[InvoiceDate], Inv.[OrderId], Ord.OrderNumber as OrderNumber, Inv.[DispatchId], Dispatch.DispatchNumber as DispatchNumber ,Inv.[TransportCharges], Inv.[LoadingCharges],Inv.[UnloadingCharges], Inv.[Amount], Inv.[InvoiceStatus], Inv.[CreatedOn], Inv.[CreatedBy], Inv.[ModifiedOn], Inv.[ModifiedBy], Inv.[IsActive], Inv.[TenantId], Inv.[PlantId]" +
-                                    " from [dbo].[dp_Invoice] Inv" +
-                                    " inner join [dbo].[dp_Order] Ord on Inv.OrderId = Ord.Id" +
-                                    " inner join [dbo].[dp_Dispatch] Dispatch  on Inv.DispatchId = Dispatch.Id" +
+                                    " from {0} Inv" +
+                                    " inner join {1} Ord on Inv.OrderId = Ord.Id" +
+                                    " inner join {2} Dispatch  on Inv.DispatchId = Dispatch.Id" +
                                     " Where dispatch.IsActive = 1 and Ord.IsActive = 1 and Inv.IsActive = 1  and Inv.Id IN @id",
                                     GetTableName(), TableNameConstants.dp_Order, TableNameConstants.dp_Dispatch);
 
@@ -79,9 +100,9 @@ namespace DigitalPal.DataAccess
         {
             List<Invoice> _Invoice = new List<Invoice>();
             var sql = String.Format("select Inv.[Id], Inv.[InvoiceNumber], Inv.[InvoiceDate], Inv.[OrderId], Ord.OrderNumber as OrderNumber, Inv.[DispatchId], Dispatch.DispatchNumber as DispatchNumber ,Inv.[TransportCharges], Inv.[LoadingCharges],Inv.[UnloadingCharges], Inv.[Amount], Inv.[InvoiceStatus], Inv.[CreatedOn], Inv.[CreatedBy], Inv.[ModifiedOn], Inv.[ModifiedBy], Inv.[IsActive], Inv.[TenantId], Inv.[PlantId]" +
-                                    " from [dbo].[dp_Invoice] Inv" +
-                                    " inner join [dbo].[dp_Order] Ord on Inv.OrderId = Ord.Id" +
-                                    " inner join [dbo].[dp_Dispatch] Dispatch  on Inv.DispatchId = Dispatch.Id" +
+                                    " from {0} Inv" +
+                                    " inner join {1} Ord on Inv.OrderId = Ord.Id" +
+                                    " inner join {2} Dispatch  on Inv.DispatchId = Dispatch.Id" +
                                     " Where dispatch.IsActive = 1 and Ord.IsActive = 1 and Inv.IsActive = 1",
                                     GetTableName(), TableNameConstants.dp_Order, TableNameConstants.dp_Dispatch);
 
@@ -98,9 +119,9 @@ namespace DigitalPal.DataAccess
         {
             List<Invoice> _Invoice = new List<Invoice>();
             var sql = String.Format("select Inv.[Id], Inv.[InvoiceNumber], Inv.[InvoiceDate], Inv.[OrderId], Ord.OrderNumber as OrderNumber, Inv.[DispatchId], Dispatch.DispatchNumber as DispatchNumber ,Inv.[TransportCharges], Inv.[LoadingCharges],Inv.[UnloadingCharges], Inv.[Amount], Inv.[InvoiceStatus], Inv.[CreatedOn], Inv.[CreatedBy], Inv.[ModifiedOn], Inv.[ModifiedBy], Inv.[IsActive], Inv.[TenantId], Inv.[PlantId]" +
-                                    " from [dbo].[dp_Invoice] Inv" +
-                                    " inner join [dbo].[dp_Order] Ord on Inv.OrderId = Ord.Id" +
-                                    " inner join [dbo].[dp_Dispatch] Dispatch  on Inv.DispatchId = Dispatch.Id" +
+                                    " from {0} Inv" +
+                                    " inner join {1} Ord on Inv.OrderId = Ord.Id" +
+                                    " inner join {2} Dispatch  on Inv.DispatchId = Dispatch.Id" +
                                     " Where dispatch.IsActive = 1 and Ord.IsActive = 1 and Inv.IsActive = 1  and Inv.Id IN @id",
                                     GetTableName(), TableNameConstants.dp_Order, TableNameConstants.dp_Dispatch);
 

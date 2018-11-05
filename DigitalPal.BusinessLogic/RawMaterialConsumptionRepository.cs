@@ -60,5 +60,10 @@ namespace DigitalPal.BusinessLogic
         {
             return _RawMaterialConsumptionDA.DeleteRawMaterialConsumptions(id);
         }
+
+        public RawMaterialConsumption[] Search(RawMaterialConsumption RawMaterialConsumption)
+        {
+            return _RawMaterialConsumptionDA.Search(RawMaterialConsumption);
+        }
     }
 }

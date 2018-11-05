@@ -23,5 +23,7 @@ namespace DigitalPal.DataAccess.Interface
         DispatchDetails[] UpdateDispatchDetails(DispatchDetails[] DispatchDetailss);
 
         DispatchDetails[] DeleteDispatchDetails(string id);
+
+        void DeleteOrderDetailsByDispatchId(string id);
     }
 }
