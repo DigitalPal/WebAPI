@@ -37,8 +37,37 @@ namespace DigitalPal.DataAccess
             var sql = String.Format("SELECT ROW_NUMBER() Over (Order by RMI.Id) As [SrNum], RMI.[InwardDate], RMD.Title AS RawMaterial, SUP.SupplierName AS SupplierName, RMI.[VechicalNumber], RMI.[ChallanNumber], RMI.[Quantity], RMI.[UnloadingDetails], RMI.[Remark], RMI.[CreatedOn], RMI.[CreatedBy], RMI.[ModifiedOn], RMI.[ModifiedBy], RMI.[IsActive], RMI.[TenantId], RMI.[PlantId] FROM {0}" +
                                     " RMI LEFT JOIN {1} RMD ON RMD.Id = RMI.[RawMaterialId]" +
                                     " LEFT JOIN {2} SUP ON SUP.Id = RMI.SupplierId" +
-                                    " WHERE RMI.IsActive = 1 AND RMD.IsActive = 1 AND SUP.IsActive = 1 AND SUP.SupplierName like '%{3}%' AND RMI.[ChallanNumber] = '{4}' AND RMD.Title like '%{5}%' AND RMI.[InwardDate] >= '{6}' AND RMI.[InwardDate] <= '{7}'",
-                                    GetTableName(), TableNameConstants.dp_RawMaterialDetails, TableNameConstants.dp_Supplier, RawMaterialInward.SupplierName, RawMaterialInward.ChallanNumber, RawMaterialInward.RawMaterial, RawMaterialInward.StartDate,  RawMaterialInward.EndDate);
+                                    " WHERE RMI.IsActive = 1 AND RMD.IsActive = 1 AND SUP.IsActive = 1 ",
+                                    GetTableName(), TableNameConstants.dp_RawMaterialDetails, TableNameConstants.dp_Supplier);
+
+            #region Filters
+
+            if (!string.IsNullOrEmpty(RawMaterialInward.SupplierName))
+            {
+                sql += " AND SUP.SupplierName like '%" + RawMaterialInward.SupplierName + "%'";
+            }
+
+            if (!string.IsNullOrEmpty(RawMaterialInward.ChallanNumber))
+            {
+                sql += " AND RMI.[ChallanNumber] = '" + RawMaterialInward.ChallanNumber + "'";
+            }
+
+            if (!string.IsNullOrEmpty(RawMaterialInward.RawMaterial))
+            {
+                sql += " AND RMD.Title like '%" + RawMaterialInward.RawMaterial + "%'";
+            }
+
+            if (RawMaterialInward.StartDate != null)
+            {
+                sql += " AND RMI.[InwardDate] >= '" + RawMaterialInward.StartDate + "'";
+            }
+
+            if (RawMaterialInward.EndDate != null)
+            {
+                sql += " AND RMI.[InwardDate] <= '" + RawMaterialInward.EndDate + "'";
+            }
+
+            #endregion Filters
 
             var dynamicInvoice = base.FindDynamic(sql, new {  });
 

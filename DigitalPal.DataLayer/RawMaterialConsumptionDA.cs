@@ -83,8 +83,27 @@ namespace DigitalPal.DataAccess
             List<RawMaterialConsumption> _RawMaterialInward = new List<RawMaterialConsumption>();
             var sql = String.Format("SELECT ROW_NUMBER() Over (Order by RMD.Id) As [SrNum], RMC.[ConsumptionDate], RMD.[Title] AS [RawMaterial], RMC.[Quantity] FROM {0} RMC" +
                                     " LEFT JOIN {1} RMD ON RMC.RawMaterialId = RMD.Id" +
-                                    " WHERE RMC.IsActive = 1 AND RMD.IsActive = 1 AND RMD.[Title] like '%{2}%' AND RMC.[ConsumptionDate] >= '{3}' AND RMC.[ConsumptionDate] <= '{4}'",
-                                    GetTableName(), TableNameConstants.dp_RawMaterialDetails, RawMaterialConsumption.RawMaterial, RawMaterialConsumption.StartDate, RawMaterialConsumption.EndDate);
+                                    " WHERE RMC.IsActive = 1 AND RMD.IsActive = 1 ",
+                                    GetTableName(), TableNameConstants.dp_RawMaterialDetails);
+
+            #region Filters
+            
+            if (!string.IsNullOrEmpty(RawMaterialConsumption.RawMaterial))
+            {
+                sql += " AND RMD.[Title] like '%" + RawMaterialConsumption.RawMaterial + "%'";
+            }
+
+            if (RawMaterialConsumption.StartDate != null)
+            {
+                sql += " AND RMC.[ConsumptionDate] >= '" + RawMaterialConsumption.StartDate + "'";
+            }
+
+            if (RawMaterialConsumption.EndDate != null)
+            {
+                sql += " AND RMC.[ConsumptionDate] <= '" + RawMaterialConsumption.EndDate + "'";
+            }
+
+            #endregion Filters
 
             var dynamicInvoice = base.FindDynamic(sql, new { });
 

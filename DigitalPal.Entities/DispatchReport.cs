@@ -7,7 +7,6 @@ namespace DigitalPal.Entities
     {
         public string ChallanNumber { get; set; } = "";
         public string OrderNumber { get; set; }
-        [Required]
         public DateTime DispatchDate { get; set; }
         public int DispatchQuantity { get; set; }
         public int OrderQuantity { get; set; }

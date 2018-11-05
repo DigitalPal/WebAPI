@@ -133,8 +133,32 @@ namespace DigitalPal.DataAccess
                                     " LEFT JOIN {1} orddeatils ON ord.Id = orddeatils.SupplierOrderId" +
                                     " LEFT JOIN {2} Raw ON Raw.Id = orddeatils.RawMaterialId" +
                                     " LEFT JOIN {3} Sup ON Sup.Id = ord.SupplierId" +
-                                    " WHERE ord.IsActive = 1 AND orddeatils.IsActive = 1 AND Raw.IsActive = 1 AND Sup.IsActive = 1 AND Sup.[SupplierName] like '%{4}%' AND ord.[SupplierOrderNumber] = '{5}' AND ord.[SupplierOrderDate] >= '{6}' AND ord.[SupplierOrderDate] <= '{7}'",
-                                    GetTableName(), TableNameConstants.dp_SupplierOrderDetails, TableNameConstants.dp_RawMaterialDetails, TableNameConstants.dp_Supplier, SupplierOrder.SupplierName, SupplierOrder.SupplierOrderNumber, SupplierOrder.StartDate, SupplierOrder.EndDate);
+                                    " WHERE ord.IsActive = 1 AND orddeatils.IsActive = 1 AND Raw.IsActive = 1 AND Sup.IsActive = 1 ",
+                                    GetTableName(), TableNameConstants.dp_SupplierOrderDetails, TableNameConstants.dp_RawMaterialDetails, TableNameConstants.dp_Supplier);
+
+            #region Filters
+
+            if (!string.IsNullOrEmpty(SupplierOrder.SupplierName))
+            {
+                sql += " AND Sup.[SupplierName] like '%" + SupplierOrder.SupplierName + "%'";
+            }
+
+            if (!string.IsNullOrEmpty(SupplierOrder.SupplierOrderNumber))
+            {
+                sql += " AND ord.[SupplierOrderNumber] = '" + SupplierOrder.SupplierOrderNumber + "'";
+            }
+
+            if (SupplierOrder.StartDate != null)
+            {
+                sql += " AND ord.[SupplierOrderDate] >= '" + SupplierOrder.StartDate + "'";
+            }
+
+            if (SupplierOrder.EndDate != null)
+            {
+                sql += " AND ord.[SupplierOrderDate] <= '" + SupplierOrder.EndDate + "'";
+            }
+
+            #endregion Filters
 
             var dynamicSupplierOrder = base.FindDynamic(sql, new { });
 
