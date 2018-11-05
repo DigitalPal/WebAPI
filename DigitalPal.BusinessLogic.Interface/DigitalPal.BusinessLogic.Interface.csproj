@@ -43,6 +43,7 @@
     <Compile Include="ICustomerRepository.cs" />
     <Compile Include="IDispatchRepository.cs" />
     <Compile Include="IInvoiceRepository.cs" />
+    <Compile Include="ISupplierOrderRepository.cs" />
     <Compile Include="IPaymentRepository.cs" />
     <Compile Include="IPlantRepository.cs" />
     <Compile Include="IPriceDetailsRepository.cs" />

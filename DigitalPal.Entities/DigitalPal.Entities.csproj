@@ -66,6 +66,8 @@
     <Compile Include="DispatchDetails.cs" />
     <Compile Include="Invoice.cs" />
     <Compile Include="InvoiceDetailInfo.cs" />
+    <Compile Include="SupplierOrder.cs" />
+    <Compile Include="SupplierOrderDetails.cs" />
     <Compile Include="Payment.cs" />
     <Compile Include="Plant.cs" />
     <Compile Include="PriceDetails.cs" />

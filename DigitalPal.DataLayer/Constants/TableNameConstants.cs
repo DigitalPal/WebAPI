@@ -19,5 +19,7 @@
         public const string dp_Order = "dbo.dp_Order";
         public const string dp_OrderDetails = "dbo.dp_OrderDetails";
         public const string dp_Product = "dbo.dp_Product";
+        public const string dp_SupplierOrder = "dbo.dp_SupplierOrder";
+        public const string dp_SupplierOrderDetails = "dbo.dp_SupplierOrderDetails";
     }
 }
