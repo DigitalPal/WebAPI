@@ -24,7 +24,7 @@ namespace DigitalPal.WebAPI.Controllers
 
         [Route("Search")]
         [ResponseType(typeof(Dispatch))]
-        [HttpGet]
+        [HttpPost]
         public IHttpActionResult Search(DispatchReport Dispatch)
         {
             return Ok(DispatchRepository.Search(Dispatch));

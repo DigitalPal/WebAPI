@@ -9,7 +9,7 @@ namespace DigitalPal.DataAccess.Interface
     {
         Task AddSupplierOrderAsync(SupplierOrder[] SupplierOrder);
         SupplierOrder[] AddSupplierOrder(SupplierOrder[] SupplierOrder);
-        SupplierOrder[] Search(SupplierOrder SupplierOrder);
+        SupplierOrderReport[] Search(SupplierOrder SupplierOrder);
         SupplierOrder GetSupplierOrder(string id);
 
         SupplierOrder GetSupplierOrderInformation(string id);
