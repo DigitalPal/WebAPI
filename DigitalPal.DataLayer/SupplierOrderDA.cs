@@ -37,13 +37,13 @@ namespace DigitalPal.DataAccess
             using (IDbConnection dbConnection = _sqlConnection)
             {
                 var query = string.Format(@"SELECT 'SupplierOrderNumber' AS [Key], [SupplierOrderNumber] AS [Value] FROM" +
-                                           " (SELECT TOP 1 [SupplierOrderNumber] FROM {0} SupplierOrder BY CreatedOn DESC) a" +
+                                           " (SELECT TOP 1 [SupplierOrderNumber] FROM {0} ORDER BY CreatedOn DESC) a" +
                                            " UNION" +
                                            " SELECT 'DispatchNumber' AS [Key], [DispatchNumber] AS [Value] FROM" +
-                                            " (SELECT TOP 1 [DispatchNumber] FROM {1} SupplierOrder BY CreatedOn DESC) b" +
+                                            " (SELECT TOP 1 [DispatchNumber] FROM {1} ORDER BY CreatedOn DESC) b" +
                                             " UNION" +
                                             " SELECT 'InvoiceNumber' AS [Key],[InvoiceNumber] AS [Value] FROM" +
-                                           "  (SELECT TOP 1 [InvoiceNumber] FROM {2} SupplierOrder BY CreatedOn DESC) c" , GetTableName(), TableNameConstants.dp_Dispatch, TableNameConstants.dp_Invoice);
+                                           "  (SELECT TOP 1 [InvoiceNumber] FROM {2} ORDER BY CreatedOn DESC) c", GetTableName(), TableNameConstants.dp_Dispatch, TableNameConstants.dp_Invoice);
                 return dbConnection.Query<KeyValuePair<string, string>>(query).ToDictionary(pair => pair.Key, pair => pair.Value);
             }
         }
