@@ -28,6 +28,7 @@ namespace DigitalPal.DataAccess.WireUp
             builder.RegisterType<DispatchDA>().As<IDispatchDA>();
             builder.RegisterType<InvoiceDA>().As<IInvoiceDA>();
             builder.RegisterType<PaymentDA>().As<IPaymentDA>();
+            builder.RegisterType<SupplierPaymentDA>().As<ISupplierPaymentDA>();
             builder.RegisterType<ProductDA>().As<IProductDA>();
             builder.RegisterType<OrderDA>().As<IOrderDA>();
             builder.RegisterType<OrderDetailsDA>().As<IOrderDetailsDA>();

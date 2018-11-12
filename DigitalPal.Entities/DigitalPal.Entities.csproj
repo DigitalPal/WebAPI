@@ -81,6 +81,7 @@
     <Compile Include="RawMaterialInward.cs" />
     <Compile Include="SizeDetails.cs" />
     <Compile Include="Supplier.cs" />
+    <Compile Include="SupplierPayment.cs" />
     <Compile Include="Tenant.cs" />
   </ItemGroup>
   <ItemGroup>

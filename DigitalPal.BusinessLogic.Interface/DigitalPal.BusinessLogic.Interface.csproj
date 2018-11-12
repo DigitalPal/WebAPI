@@ -54,6 +54,7 @@
     <Compile Include="IRawMaterialDetailsRepository.cs" />
     <Compile Include="IRawMaterialInwardRepository.cs" />
     <Compile Include="ISizeDetailsRepository.cs" />
+    <Compile Include="ISupplierPaymentRepository.cs" />
     <Compile Include="ISupplierRepository.cs" />
     <Compile Include="ITenantRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -68,6 +68,7 @@
     <Compile Include="RawMaterialDetailsRepository.cs" />
     <Compile Include="RawMaterialInwardRepository.cs" />
     <Compile Include="SizeDetailsRepository.cs" />
+    <Compile Include="SupplierPaymentRepository.cs" />
     <Compile Include="SupplierRepository.cs" />
     <Compile Include="TenantRepository.cs" />
     <Compile Include="WireUp\RepositoryMapper.cs" />
