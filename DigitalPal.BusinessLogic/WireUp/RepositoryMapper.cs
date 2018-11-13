@@ -28,6 +28,7 @@ namespace DigitalPal.BusinessLogic.WireUp
             builder.RegisterType<ProductRepository>().As<IProductRepository>();
             builder.RegisterType<OrderRepository>().As<IOrderRepository>();
             builder.RegisterType<SupplierOrderRepository>().As<ISupplierOrderRepository>();
+            builder.RegisterType<ProductionRepository>().As<IProductionRepository>();
         }
 
     }
