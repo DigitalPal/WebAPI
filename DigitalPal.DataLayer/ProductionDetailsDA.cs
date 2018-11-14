@@ -52,11 +52,6 @@ namespace DigitalPal.DataAccess
         {
             return base.FindAll().ToArray();
         }
-        public ProductionDetails[] Search(ProductionDetails ProductionDetails)
-        {
-            return base.FindAll().ToArray();
-        }
-
 
         public ProductionDetails[] GetByIds(IEnumerable<Guid> Ids)
         {
@@ -80,15 +75,13 @@ namespace DigitalPal.DataAccess
             return new
             {
                 item.Id,
+                item.ProductionId,
+                item.ProductId,
+                item.Quantity,
                 item.Breakage,
                 item.CreatedOn,
                 item.ModifiedOn,
                 item.IsActive,
-                item.NoOfMouldsCasted,
-                item.ProductionDate,
-                item.Quantity,
-                item.Remark,
-                item.Size,
                 item.CreatedBy,
                 item.ModifiedBy,
                 item.TenantId,

@@ -82,6 +82,10 @@ namespace DigitalPal.WebAPI.WireUp
             {
                 e.Instance.ProductRepository = e.Context.Resolve<IProductRepository>();
             });
+            builder.RegisterType<ProductionController>().InstancePerRequest().OnActivated(e =>
+            {
+                e.Instance.ProductionRepository = e.Context.Resolve<IProductionRepository>();
+            });
         }
     }
 }

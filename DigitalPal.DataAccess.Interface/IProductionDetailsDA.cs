@@ -9,7 +9,7 @@ namespace DigitalPal.DataAccess.Interface
     {
         Task AddProductionDetailsAsync(ProductionDetails[] ProductionDetailss);
         ProductionDetails[] AddProductionDetails(ProductionDetails[] ProductionDetailss);
-        ProductionDetails[] Search(ProductionDetails ProductionDetails);
+
         ProductionDetails GetProductionDetails(string id);
 
         Dictionary<string, ProductionDetails> GetProductionDetails(string[] ids);

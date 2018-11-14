@@ -4,11 +4,14 @@ namespace DigitalPal.Entities
 {
     public class ProductionDetails: BaseEntity
     {
-        public DateTime ProductionDate { get; set; }
-        public string Breakage { get; set; } = "";
-        public int NoOfMouldsCasted { get; set; }
-        public string Size { get; set; } = "";
+        public Guid? ProductionId { get; set; }
+
+        public Guid? ProductId { get; set; }
+
+        public string ProductName { get; set; }
+
         public int Quantity { get; set; }
-        public string Remark { get; set; } = "";
+
+        public int Breakage { get; set; }
     }
 }

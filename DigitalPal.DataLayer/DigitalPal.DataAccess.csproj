@@ -63,6 +63,7 @@
     <Compile Include="DispatchDA.cs" />
     <Compile Include="DispatchDetailsDA.cs" />
     <Compile Include="InvoiceDA.cs" />
+    <Compile Include="ProductionDA.cs" />
     <Compile Include="SupplierOrderDA.cs" />
     <Compile Include="SupplierOrderDetailsDA.cs" />
     <Compile Include="PaymentDA.cs" />
