@@ -79,6 +79,7 @@
     <Compile Include="RawMaterialInwardDA.cs" />
     <Compile Include="SizeDetailsDA.cs" />
     <Compile Include="SupplierDA.cs" />
+    <Compile Include="SupplierPaymentDA.cs" />
     <Compile Include="TenantDA.cs" />
     <Compile Include="Util\DapperExtensions.cs" />
     <Compile Include="Util\DataAccessBase.cs" />

@@ -15,4 +15,14 @@ namespace DigitalPal.Entities
         public string OrderStatus { get; set; }
         public List<SupplierOrderDetails> RawMaterial { get; set; }
     }
+
+    public class SupplierOrderReport : BaseEntity
+    {
+        public string SupplierOrderNumber { get; set; }
+        public string SupplierName { get; set; }
+        public DateTime SupplierOrderDate { get; set; }
+        public int Quantity { get; set; }
+        public string RawMaterialName { get; set; }
+        public string OrderStatus { get; set; }
+    }
 }

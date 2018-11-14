@@ -37,13 +37,13 @@ namespace DigitalPal.DataAccess
             using (IDbConnection dbConnection = _sqlConnection)
             {
                 var query = string.Format(@"SELECT 'SupplierOrderNumber' AS [Key], [SupplierOrderNumber] AS [Value] FROM" +
-                                           " (SELECT TOP 1 [SupplierOrderNumber] FROM {0} SupplierOrder BY CreatedOn DESC) a" +
+                                           " (SELECT TOP 1 [SupplierOrderNumber] FROM {0} ORDER BY CreatedOn DESC) a" +
                                            " UNION" +
                                            " SELECT 'DispatchNumber' AS [Key], [DispatchNumber] AS [Value] FROM" +
-                                            " (SELECT TOP 1 [DispatchNumber] FROM {1} SupplierOrder BY CreatedOn DESC) b" +
+                                            " (SELECT TOP 1 [DispatchNumber] FROM {1} ORDER BY CreatedOn DESC) b" +
                                             " UNION" +
                                             " SELECT 'InvoiceNumber' AS [Key],[InvoiceNumber] AS [Value] FROM" +
-                                           "  (SELECT TOP 1 [InvoiceNumber] FROM {2} SupplierOrder BY CreatedOn DESC) c" , GetTableName(), TableNameConstants.dp_Dispatch, TableNameConstants.dp_Invoice);
+                                           "  (SELECT TOP 1 [InvoiceNumber] FROM {2} ORDER BY CreatedOn DESC) c", GetTableName(), TableNameConstants.dp_Dispatch, TableNameConstants.dp_Invoice);
                 return dbConnection.Query<KeyValuePair<string, string>>(query).ToDictionary(pair => pair.Key, pair => pair.Value);
             }
         }
@@ -69,7 +69,7 @@ namespace DigitalPal.DataAccess
         public SupplierOrder GetSupplierOrderInformation(string id)
         {
             List<SupplierOrder> _SupplierOrder = new List<SupplierOrder>();
-            var sql = String.Format("select ord.[Id], ord.[SupplierOrderNumber], ord.[SupplierPONumber], ord.[SupplierId], Sup.[SupplierName] as [SupplierName], ord.[SupplierOrderDate], ord.[Price], ord.[Remark], ord.[OrderStatus], ord.[CreatedOn], ord.[CreatedBy], ord.[ModifiedOn], ord.[ModifiedBy], ord.[IsActive], ord.[TenantId], ord.[PlantId], orddeatils.[RawMaterialId] as RawMaterial_RawMaterialId, Raw.[Title] as RawMaterial_RawMaterialName, Raw.[MeasureType] as RawMaterial_MeasureType  from {0} ord " +
+            var sql = String.Format("select ord.[Id], ord.[SupplierOrderNumber], ord.[SupplierPONumber], ord.[SupplierId], Sup.[SupplierName] as [SupplierName], ord.[SupplierOrderDate], ord.[Price], ord.[Remark], ord.[OrderStatus], ord.[CreatedOn], ord.[CreatedBy], ord.[ModifiedOn], ord.[ModifiedBy], ord.[IsActive], ord.[TenantId], ord.[PlantId], orddeatils.[RawMaterialId] as RawMaterial_RawMaterialId, Raw.[Title] as RawMaterial_RawMaterialName, Raw.[MeasureType] as RawMaterial_MeasureType, orddeatils.Quantity as RawMaterial_Quantity  from {0} ord " +
                                     " left join {1} orddeatils on ord.Id = orddeatils.SupplierOrderId" +
                                     " left join {2} Raw on Raw.Id = orddeatils.RawMaterialId"+
                                     " left join {3} Sup on Sup.Id = ord.SupplierId" +
@@ -126,9 +126,9 @@ namespace DigitalPal.DataAccess
             return _SupplierOrder.ToArray();
         }
 
-        public SupplierOrder[] Search(SupplierOrder SupplierOrder)
+        public SupplierOrderReport[] Search(SupplierOrder SupplierOrder)
         {
-            List<SupplierOrder> _SupplierOrder = new List<SupplierOrder>();
+            List<SupplierOrderReport> _SupplierOrder = new List<SupplierOrderReport>();
             var sql = String.Format("SELECT ROW_NUMBER() Over (Order by ord.Id) As [SrNum], ord.[SupplierOrderNumber], Sup.[SupplierName], ord.[SupplierOrderDate], orddeatils.[Quantity], Raw.[Title] as RawMaterialName FROM {0} ord " +
                                     " LEFT JOIN {1} orddeatils ON ord.Id = orddeatils.SupplierOrderId" +
                                     " LEFT JOIN {2} Raw ON Raw.Id = orddeatils.RawMaterialId" +
@@ -137,33 +137,34 @@ namespace DigitalPal.DataAccess
                                     GetTableName(), TableNameConstants.dp_SupplierOrderDetails, TableNameConstants.dp_RawMaterialDetails, TableNameConstants.dp_Supplier);
 
             #region Filters
-
-            if (!string.IsNullOrEmpty(SupplierOrder.SupplierName))
+            if (SupplierOrder != null)
             {
-                sql += " AND Sup.[SupplierName] like '%" + SupplierOrder.SupplierName + "%'";
-            }
+                if (!string.IsNullOrEmpty(SupplierOrder.SupplierName))
+                {
+                    sql += " AND Sup.[SupplierName] like '%" + SupplierOrder.SupplierName + "%'";
+                }
 
-            if (!string.IsNullOrEmpty(SupplierOrder.SupplierOrderNumber))
-            {
-                sql += " AND ord.[SupplierOrderNumber] = '" + SupplierOrder.SupplierOrderNumber + "'";
-            }
+                if (!string.IsNullOrEmpty(SupplierOrder.SupplierOrderNumber))
+                {
+                    sql += " AND ord.[SupplierOrderNumber] = '" + SupplierOrder.SupplierOrderNumber + "'";
+                }
 
-            if (SupplierOrder.StartDate != null)
-            {
-                sql += " AND ord.[SupplierOrderDate] >= '" + SupplierOrder.StartDate + "'";
-            }
+                if (SupplierOrder.StartDate != null)
+                {
+                    sql += " AND ord.[SupplierOrderDate] >= '" + SupplierOrder.StartDate + "'";
+                }
 
-            if (SupplierOrder.EndDate != null)
-            {
-                sql += " AND ord.[SupplierOrderDate] <= '" + SupplierOrder.EndDate + "'";
+                if (SupplierOrder.EndDate != null)
+                {
+                    sql += " AND ord.[SupplierOrderDate] <= '" + SupplierOrder.EndDate + "'";
+                }
             }
-
             #endregion Filters
 
             var dynamicSupplierOrder = base.FindDynamic(sql, new { });
 
-            Slapper.AutoMapper.Configuration.AddIdentifiers(typeof(SupplierOrder), new List<string> { "Id" });
-            _SupplierOrder = (Slapper.AutoMapper.MapDynamic<SupplierOrder>(dynamicSupplierOrder) as IEnumerable<SupplierOrder>).ToList();
+            Slapper.AutoMapper.Configuration.AddIdentifiers(typeof(SupplierOrderReport), new List<string> { "SrNum" });
+            _SupplierOrder = (Slapper.AutoMapper.MapDynamic<SupplierOrderReport>(dynamicSupplierOrder) as IEnumerable<SupplierOrderReport>).ToList();
             return _SupplierOrder.ToArray();
         }
         public SupplierOrder[] GetByIds(IEnumerable<Guid> Ids)

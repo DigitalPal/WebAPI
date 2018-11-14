@@ -22,7 +22,7 @@ namespace DigitalPal.BusinessLogic
         {
             await _SupplierOrderDA.AddSupplierOrderAsync(SupplierOrders);
         }
-        public SupplierOrder[] Search(SupplierOrder SupplierOrder)
+        public SupplierOrderReport[] Search(SupplierOrder SupplierOrder)
         {
             return _SupplierOrderDA.Search(SupplierOrder);
         }

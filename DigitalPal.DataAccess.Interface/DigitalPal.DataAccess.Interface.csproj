@@ -59,6 +59,7 @@
     <Compile Include="IRawMaterialInwardDA.cs" />
     <Compile Include="ISizeDetailsDA.cs" />
     <Compile Include="ISupplierDA.cs" />
+    <Compile Include="ISupplierPaymentDA.cs" />
     <Compile Include="ITenantDA.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util\IDataAccessBase.cs" />

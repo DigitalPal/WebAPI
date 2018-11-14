@@ -95,42 +95,45 @@ namespace DigitalPal.DataAccess
         public DispatchReport[] Search(DispatchReport Dispatch)
         {
             List<DispatchReport> _dispatch = new List<DispatchReport>();
-            var sql = String.Format("SELECT ROW_NUMBER() Over (Order by dispatch.Id) As [SrNum], Ord.[OrderNumber], Cust.[Name] AS CustomerName, dispatch.[DispatchDate], prod.[Name] AS ProductName, dispatch.[Quantity], dispatch.[TransportName], dispatch.[Loading], dispatch.[Unloading] " +
+            var sql = String.Format("SELECT ROW_NUMBER() Over (Order by dispatch.Id) As [SrNum], Ord.[OrderNumber], Cust.[Name] AS CustomerName, dispatch.[DispatchDate], prod.[Name] AS ProductName, OrdDetails.[Quantity] AS OrderQuantity, dispatchdeatils.[Quantity] AS DispatchQuantity, dispatch.[TransportName], dispatch.[Loading], dispatch.[Unloading] " +
                                     " FROM {0} dispatch" +
                                     " LEFT JOIN {1} dispatchdeatils ON dispatch.Id = dispatchdeatils.DispatchId" +
                                     " LEFT JOIN {2} Prod ON Prod.Id = dispatchdeatils.ProductId" +
                                     " LEFT JOIN {3} Ord ON Ord.Id = dispatch.OrderId" +
+                                    " LEFT JOIN {5} OrdDetails ON(Ord.Id = OrdDetails.OrderId AND OrdDetails.ProductId = Prod.Id)" +
                                     " LEFT JOIN {4} Cust ON Cust.Id = Ord.CustomerId" +
                                     " WHERE dispatch.IsActive = 1 AND dispatchdeatils.IsActive = 1 AND Prod.IsActive = 1 AND Cust.IsActive = 1 ",
-                                    GetTableName(), TableNameConstants.dp_DispatchDetails, TableNameConstants.dp_Product, TableNameConstants.dp_Order, TableNameConstants.dp_Customer);
+                                    GetTableName(), TableNameConstants.dp_DispatchDetails, TableNameConstants.dp_Product, TableNameConstants.dp_Order, TableNameConstants.dp_Customer, TableNameConstants.dp_OrderDetails);
 
             #region Filters
-
-            if (!string.IsNullOrEmpty(Dispatch.CustomerName))
+            if (Dispatch != null)
             {
-                sql += " AND Cust.[Name] like '%" + Dispatch.CustomerName + "%'";
-            }
+                if (!string.IsNullOrEmpty(Dispatch.CustomerName))
+                {
+                    sql += " AND Cust.[Name] like '%" + Dispatch.CustomerName + "%'";
+                }
 
-            if (!string.IsNullOrEmpty(Dispatch.OrderNumber))
-            {
-                sql += " AND Ord.[OrderNumber] = '" + Dispatch.OrderNumber + "'";
-            }
+                if (!string.IsNullOrEmpty(Dispatch.OrderNumber))
+                {
+                    sql += " AND Ord.[OrderNumber] = '" + Dispatch.OrderNumber + "'";
+                }
 
-            if (Dispatch.StartDate != null)
-            {
-                sql += " AND dispatch.[DispatchDate] >= '" + Dispatch.StartDate + "'";
-            }
+                if (Dispatch.StartDate != null)
+                {
+                    sql += " AND dispatch.[DispatchDate] >= '" + Dispatch.StartDate + "'";
+                }
 
-            if (Dispatch.EndDate != null)
-            {
-                sql += " AND dispatch.[DispatchDate] <= '" + Dispatch.EndDate + "'";
+                if (Dispatch.EndDate != null)
+                {
+                    sql += " AND dispatch.[DispatchDate] <= '" + Dispatch.EndDate + "'";
+                }
             }
 
             #endregion Filters
 
             var dynamicDispatch = base.FindDynamic(sql, new { });
 
-            Slapper.AutoMapper.Configuration.AddIdentifiers(typeof(DispatchReport), new List<string> { "Id" });
+            Slapper.AutoMapper.Configuration.AddIdentifiers(typeof(DispatchReport), new List<string> { "SrNum" });
             _dispatch = (Slapper.AutoMapper.MapDynamic<DispatchReport>(dynamicDispatch) as IEnumerable<DispatchReport>).ToList();
             return _dispatch.ToArray();
         }

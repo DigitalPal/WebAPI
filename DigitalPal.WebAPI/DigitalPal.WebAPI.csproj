@@ -266,6 +266,7 @@
     <Compile Include="Controllers\RawMaterialInwardController.cs" />
     <Compile Include="Controllers\SizeDetailsController.cs" />
     <Compile Include="Controllers\SupplierController.cs" />
+    <Compile Include="Controllers\SupplierPaymentController.cs" />
     <Compile Include="Controllers\TenantController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="ExLogger\LogActionWebApiFilter.cs" />

@@ -22,5 +22,6 @@
         public const string dp_SupplierOrder = "dbo.dp_SupplierOrder";
         public const string dp_SupplierOrderDetails = "dbo.dp_SupplierOrderDetails";
         public const string dp_Production = "dbo.dp_Production";
+        public const string dp_SupplierPayment = "dbo.dp_SupplierPayment";
     }
 }
