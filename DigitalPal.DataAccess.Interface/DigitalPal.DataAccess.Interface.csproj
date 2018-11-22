@@ -44,6 +44,7 @@
     <Compile Include="ICustomerDA.cs" />
     <Compile Include="IDispatchDetailsDA.cs" />
     <Compile Include="IInvoiceDA.cs" />
+    <Compile Include="IConsumptionDA.cs" />
     <Compile Include="IProductionDA.cs" />
     <Compile Include="ISupplierOrderDA.cs" />
     <Compile Include="ISupplierOrderDetailsDA.cs" />

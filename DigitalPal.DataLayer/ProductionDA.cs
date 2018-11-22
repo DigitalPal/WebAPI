@@ -92,7 +92,7 @@ namespace DigitalPal.DataAccess
             var sql = String.Format("SELECT ROW_NUMBER() Over (Order by Production.Id) As [SrNum], Production.[Id], Production.[ProductionNumber], Production.[ProductionDate], Production.[NoOfMouldsCasted], " +
                                     " Production.[Remark], ProductionDetails.[Breakage], Production.[CreatedOn], Production.[CreatedBy], Production.[ModifiedOn], Production.[ModifiedBy], " +
                                     " Production.[IsActive], ProductionDetails.ProductId AS ProductionDetails_ProductId, ProductionDetails.Quantity AS ProductionDetails_Quantity, " +
-                                    " Product.Name AS ProductionDetails_ProductName, ProductionDetails.Breakage AS ProductionDetails_Breakage FROM {0} Production " +
+                                    " Product.Name AS ProductName, ProductionDetails.Breakage AS ProductionDetails_Breakage FROM {0} Production " +
                                     " INNER JOIN {1} ProductionDetails ON Production.Id = ProductionDetails.ProductionId LEFT OUTER JOIN {2} Product ON " +
                                     " Product.Id = ProductionDetails.ProductID WHERE " +
                                     " ProductionDetails.IsActive = 1 AND Production.IsActive = 1 ",

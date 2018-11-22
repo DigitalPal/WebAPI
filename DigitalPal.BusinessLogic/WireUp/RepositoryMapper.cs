@@ -30,6 +30,7 @@ namespace DigitalPal.BusinessLogic.WireUp
             builder.RegisterType<OrderRepository>().As<IOrderRepository>();
             builder.RegisterType<SupplierOrderRepository>().As<ISupplierOrderRepository>();
             builder.RegisterType<ProductionRepository>().As<IProductionRepository>();
+            builder.RegisterType<ConsumptionRepository>().As<IConsumptionRepository>();
         }
 
     }
