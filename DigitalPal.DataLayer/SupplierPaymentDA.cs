@@ -34,12 +34,11 @@ namespace DigitalPal.DataAccess
         public SupplierPayment GetSupplierPayment(string id)
         {
             List<SupplierPayment> _SupplierPayment = new List<SupplierPayment>();
-            var sql = String.Format("SELECT Pay.Id, Pay.[PaymentDate],Pay.[InvoiceId] AS InvoiceId, Inv.[InvoiceNumber] AS [InvoiceNumber], Pay.[SupplierId], Ord.SupplierOrderNumber, Sup.SupplierName AS [SupplierName], Pay.[Amount], Pay.[PaymentStatus], Pay.[CreatedOn], Pay.[CreatedBy], Pay.[ModifiedOn], Pay.[ModifiedBy], Pay.[IsActive], Pay.[TenantId], Pay.[PlantId], Pay.ModeOfPayment, Pay.ChequeNumber, Pay.ChequeDate  FROM {0} Pay" +
-                                    " LEFT JOIN {1} Inv ON Pay.InvoiceId = Inv.Id" +
-                                    " LEFT JOIN {2} Ord ON Pay.SupplierOrderId = Ord.Id" +
-                                    " LEFT JOIN {3} Sup ON Ord.SupplierId = Sup.Id" +
-                                    " WHERE Pay.IsActive = 1 AND Inv.IsActive = 1 AND Ord.IsActive = 1 AND Sup.IsActive = 1 AND Pay.Id = @id",
-                                    GetTableName(), TableNameConstants.dp_Invoice, TableNameConstants.dp_SupplierOrder, TableNameConstants.dp_Supplier);
+            var sql = String.Format("SELECT Pay.Id, Pay.[PaymentDate],  Pay.[SupplierId], Ord.SupplierOrderNumber, Sup.SupplierName AS [SupplierName], Pay.[Amount], Pay.[PaymentStatus], Pay.[CreatedOn], Pay.[CreatedBy], Pay.[ModifiedOn], Pay.[ModifiedBy], Pay.[IsActive], Pay.[TenantId], Pay.[PlantId], Pay.ModeOfPayment, Pay.ChequeNumber, Pay.BankName, Pay.ChequeDate  FROM {0} Pay" +
+                                    " LEFT JOIN {1} Ord ON Pay.SupplierOrderId = Ord.Id" +
+                                    " LEFT JOIN {2} Sup ON Ord.SupplierId = Sup.Id" +
+                                    " WHERE Pay.IsActive = 1  AND Ord.IsActive = 1 AND Sup.IsActive = 1 AND Pay.Id = @id",
+                                    GetTableName(), TableNameConstants.dp_SupplierOrder, TableNameConstants.dp_Supplier);
 
             var dynamicSupplierPayment = base.FindDynamic(sql, new { id });
 
@@ -59,12 +58,11 @@ namespace DigitalPal.DataAccess
         public SupplierPayment[] GetSupplierPayments(IEnumerable<Guid?> ids)
         {
             List<SupplierPayment> _SupplierPayment = new List<SupplierPayment>();
-            var sql = String.Format("SELECT Pay.[Id], Pay.[PaymentDate],Pay.[InvoiceId] AS InvoiceId, Inv.[InvoiceNumber] AS [InvoiceNumber], Pay.[SupplierOrderId], Ord.SupplierOrderNumber AS SupplierOrderNumber, Pay.[SupplierId], Sup.SupplierName AS [SupplierName], Pay.[Amount], Pay.[PaymentStatus], Pay.[CreatedOn], Pay.[CreatedBy], Pay.[ModifiedOn], Pay.[ModifiedBy], Pay.[IsActive], Pay.[TenantId], Pay.[PlantId], Pay.ModeOfPayment, Pay.ChequeNumber, Pay.ChequeDate  FROM {0} Pay" +
-                                    " LEFT JOIN {1} Inv ON Pay.InvoiceId = Inv.Id" +
-                                    " LEFT JOIN {2} Ord ON Pay.SupplierOrderId = Ord.Id" +
-                                    " LEFT JOIN {3} Sup ON Pay.SupplierId = Sup.Id" +
-                                    " WHERE Pay.IsActive = 1 AND Inv.IsActive = 1 AND Ord.IsActive = 1 AND Sup.IsActive = 1 AND Pay.Id In @id",
-                                    GetTableName(), TableNameConstants.dp_Invoice, TableNameConstants.dp_SupplierOrder, TableNameConstants.dp_Supplier);
+            var sql = String.Format("SELECT Pay.[Id], Pay.[PaymentDate],  Pay.[SupplierOrderId], Ord.SupplierOrderNumber AS SupplierOrderNumber, Pay.[SupplierId], Sup.SupplierName AS [SupplierName], Pay.[Amount], Pay.[PaymentStatus], Pay.[CreatedOn], Pay.[CreatedBy], Pay.[ModifiedOn], Pay.[ModifiedBy], Pay.[IsActive], Pay.[TenantId], Pay.[PlantId], Pay.ModeOfPayment, Pay.ChequeNumber, Pay.BankName, Pay.ChequeDate  FROM {0} Pay" +
+                                    " LEFT JOIN {1} Ord ON Pay.SupplierOrderId = Ord.Id" +
+                                    " LEFT JOIN {2} Sup ON Pay.SupplierId = Sup.Id" +
+                                    " WHERE Pay.IsActive = 1  AND Ord.IsActive = 1 AND Sup.IsActive = 1 AND Pay.Id In @id",
+                                    GetTableName(), TableNameConstants.dp_SupplierOrder, TableNameConstants.dp_Supplier);
 
             var dynamicSupplierPayment = base.FindDynamic(sql, new { ids });
 
@@ -78,12 +76,11 @@ namespace DigitalPal.DataAccess
         public SupplierPayment[] GetAll()
         {
             List<SupplierPayment> _SupplierPayment = new List<SupplierPayment>();
-            var sql = String.Format("SELECT Pay.[Id], Pay.[PaymentDate],Pay.[InvoiceId] AS InvoiceId, Inv.[InvoiceNumber] AS [InvoiceNumber], Pay.[SupplierOrderId], Ord.SupplierOrderNumber AS SupplierOrderNumber, Pay.[SupplierId], Sup.SupplierName AS [SupplierName], Pay.[Amount], Pay.[PaymentStatus], Pay.[CreatedOn], Pay.[CreatedBy], Pay.[ModifiedOn], Pay.[ModifiedBy], Pay.[IsActive], Pay.[TenantId], Pay.[PlantId], Pay.ModeOfPayment, Pay.ChequeNumber, Pay.ChequeDate  FROM {0} Pay" +
-                                    " LEFT JOIN {1} Inv ON Pay.InvoiceId = Inv.Id" +
-                                    " LEFT JOIN {2} Ord ON Pay.SupplierOrderId = Ord.Id" +
-                                    " LEFT JOIN {3} Sup ON Pay.SupplierId = Sup.Id" +
-                                    " WHERE Pay.IsActive = 1 AND Inv.IsActive = 1 AND Ord.IsActive = 1 AND Sup.IsActive = 1",
-                                    GetTableName(), TableNameConstants.dp_Invoice, TableNameConstants.dp_SupplierOrder, TableNameConstants.dp_Supplier);
+            var sql = String.Format("SELECT Pay.[Id], Pay.[PaymentDate],  Pay.[SupplierOrderId], Ord.SupplierOrderNumber AS SupplierOrderNumber, Pay.[SupplierId], Sup.SupplierName AS [SupplierName], Pay.[Amount], Pay.[PaymentStatus], Pay.[CreatedOn], Pay.[CreatedBy], Pay.[ModifiedOn], Pay.[ModifiedBy], Pay.[IsActive], Pay.[TenantId], Pay.[PlantId], Pay.ModeOfPayment, Pay.ChequeNumber, Pay.BankName, Pay.ChequeDate  FROM {0} Pay" +
+                                    " LEFT JOIN {1} Ord ON Pay.SupplierOrderId = Ord.Id" +
+                                    " LEFT JOIN {2} Sup ON Ord.SupplierId = Sup.Id" +
+                                    " WHERE Pay.IsActive = 1  AND Ord.IsActive = 1 AND Sup.IsActive = 1",
+                                    GetTableName(), TableNameConstants.dp_SupplierOrder, TableNameConstants.dp_Supplier);
 
             var dynamicSupplierPayment = base.FindDynamic(sql, new {  });
 
@@ -97,12 +94,11 @@ namespace DigitalPal.DataAccess
         public SupplierPayment[] Search(SupplierPayment SupplierPayment)
         {
             List<SupplierPayment> _SupplierPayment = new List<SupplierPayment>();
-            var sql = String.Format("SELECT Pay.[Id], Pay.[PaymentDate],Pay.[InvoiceId] AS InvoiceId, Inv.[InvoiceNumber] AS [InvoiceNumber], Pay.[SupplierOrderId], Ord.SupplierOrderNumber AS SupplierOrderNumber, Pay.[SupplierId], Sup.SupplierName AS [SupplierName], Pay.[Amount], Pay.[PaymentStatus], Pay.[CreatedOn], Pay.[CreatedBy], Pay.[ModifiedOn], Pay.[ModifiedBy], Pay.[IsActive], Pay.[TenantId], Pay.[PlantId], Pay.ModeOfPayment, Pay.ChequeNumber, Pay.ChequeDate  FROM {0} Pay" +
-                                    " LEFT JOIN {1} Inv ON Pay.InvoiceId = Inv.Id" +
-                                    " LEFT JOIN {2} Ord ON Pay.SupplierOrderId = Ord.Id" +
-                                    " LEFT JOIN {3} Sup ON Pay.SupplierId = Sup.Id" +
-                                    " WHERE Pay.IsActive = 1 AND Inv.IsActive = 1 AND Ord.IsActive = 1 AND Sup.IsActive = 1",
-                                    GetTableName(), TableNameConstants.dp_Invoice, TableNameConstants.dp_SupplierOrder, TableNameConstants.dp_Supplier);
+            var sql = String.Format("SELECT Pay.[Id], Pay.[PaymentDate],  Pay.[SupplierOrderId], Ord.SupplierOrderNumber AS SupplierOrderNumber, Pay.[SupplierId], Sup.SupplierName AS [SupplierName], Pay.[Amount], Pay.[PaymentStatus], Pay.[CreatedOn], Pay.[CreatedBy], Pay.[ModifiedOn], Pay.[ModifiedBy], Pay.[IsActive], Pay.[TenantId], Pay.[PlantId], Pay.ModeOfPayment, Pay.ChequeNumber, Pay.BankName, Pay.ChequeDate  FROM {0} Pay" +
+                                    " LEFT JOIN {1} Ord ON Pay.SupplierOrderId = Ord.Id" +
+                                    " LEFT JOIN {2} Sup ON Pay.SupplierId = Sup.Id" +
+                                    " WHERE Pay.IsActive = 1  AND Ord.IsActive = 1 AND Sup.IsActive = 1",
+                                    GetTableName(), TableNameConstants.dp_SupplierOrder, TableNameConstants.dp_Supplier);
 
             var dynamicSupplierPayment = base.FindDynamic(sql, new { });
 
@@ -116,12 +112,11 @@ namespace DigitalPal.DataAccess
         public SupplierPayment[] GetByIds(IEnumerable<Guid> Ids)
         {
             List<SupplierPayment> _SupplierPayment = new List<SupplierPayment>();
-            var sql = String.Format("SELECT Pay.[Id], Pay.[PaymentDate], Pay.[InvoiceId] AS InvoiceId, Inv.[InvoiceNumber] AS [InvoiceNumber], Pay.[SupplierOrderId] AS SupplierOrderNumber, Ord.SupplierOrderNumber AS SupplierOrderNumber, Pay.[SupplierId], Sup.SupplierName AS [SupplierName], Pay.[Amount], Pay.[PaymentStatus], Pay.[CreatedOn], Pay.[CreatedBy], Pay.[ModifiedOn], Pay.[ModifiedBy], Pay.[IsActive], Pay.[TenantId], Pay.[PlantId], Pay.ModeOfPayment, Pay.ChequeNumber, Pay.ChequeDate  FROM {0} Pay" +
-                                    " LEFT JOIN {1} Inv ON Pay.InvoiceId = Inv.Id" +
-                                    " LEFT JOIN {2} Ord ON Pay.SupplierOrderId = Ord.Id" +
-                                    " LEFT JOIN {3} Sup ON Pay.SupplierId = Sup.Id" +
-                                    " WHERE Pay.IsActive = 1 AND Inv.IsActive = 1 AND Ord.IsActive = 1 AND Sup.IsActive = 1 AND Pay.Id In @id",
-                                    GetTableName(), TableNameConstants.dp_Invoice, TableNameConstants.dp_SupplierOrder, TableNameConstants.dp_Supplier);
+            var sql = String.Format("SELECT Pay.[Id], Pay.[PaymentDate],   Pay.[SupplierOrderId] AS SupplierOrderNumber, Ord.SupplierOrderNumber AS SupplierOrderNumber, Pay.[SupplierId], Sup.SupplierName AS [SupplierName], Pay.[Amount], Pay.[PaymentStatus], Pay.[CreatedOn], Pay.[CreatedBy], Pay.[ModifiedOn], Pay.[ModifiedBy], Pay.[IsActive], Pay.[TenantId], Pay.[PlantId], Pay.ModeOfPayment, Pay.ChequeNumber, Pay.BankName, Pay.ChequeDate  FROM {0} Pay" +
+                                    " LEFT JOIN {1} Ord ON Pay.SupplierOrderId = Ord.Id" +
+                                    " LEFT JOIN {2} Sup ON Pay.SupplierId = Sup.Id" +
+                                    " WHERE Pay.IsActive = 1  AND Ord.IsActive = 1 AND Sup.IsActive = 1 AND Pay.Id In @id",
+                                    GetTableName(), TableNameConstants.dp_SupplierOrder, TableNameConstants.dp_Supplier);
 
             var dynamicSupplierPayment = base.FindDynamic(sql, new { Ids });
 
@@ -157,13 +152,13 @@ namespace DigitalPal.DataAccess
                 item.Amount,
                 item.SupplierId,
                 item.SupplierOrderId,
-                item.InvoiceId,
                 item.PaymentDate,
                 item.PaymentStatus,
                 item.PlantId,
                 item.ModeOfPayment,
                 item.ChequeDate,
-                item.ChequeNumber
+                item.ChequeNumber,
+                item.BankName
             };
         }
 
