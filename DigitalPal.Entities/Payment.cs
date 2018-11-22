@@ -16,5 +16,7 @@ namespace DigitalPal.Entities
         public string ModeOfPayment { get; set; }
         public string ChequeNumber { get; set; } = "";
         public DateTime? ChequeDate { get; set; }
+        public string BankName { get; set; } = "";
+
     }
 }

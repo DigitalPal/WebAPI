@@ -34,7 +34,7 @@ namespace DigitalPal.DataAccess
         public SupplierPayment GetSupplierPayment(string id)
         {
             List<SupplierPayment> _SupplierPayment = new List<SupplierPayment>();
-            var sql = String.Format("SELECT Pay.Id, Pay.[PaymentDate],Pay.[InvoiceId] AS InvoiceId, Inv.[InvoiceNumber] AS [InvoiceNumber], Pay.[SupplierId], Ord.SupplierOrderNumber, Sup.SupplierName AS [SupplierName], Pay.[Amount], Pay.[PaymentStatus], Pay.[CreatedOn], Pay.[CreatedBy], Pay.[ModifiedOn], Pay.[ModifiedBy], Pay.[IsActive], Pay.[TenantId], Pay.[PlantId], Pay.ModeOfPayment, Pay.ChequeNumber, Pay.ChequeDate  FROM {0} Pay" +
+            var sql = String.Format("SELECT Pay.Id, Pay.[PaymentDate],Pay.[InvoiceId] AS InvoiceId, Inv.[InvoiceNumber] AS [InvoiceNumber], Pay.[SupplierId], Ord.SupplierOrderNumber, Sup.SupplierName AS [SupplierName], Pay.[Amount], Pay.[PaymentStatus], Pay.[CreatedOn], Pay.[CreatedBy], Pay.[ModifiedOn], Pay.[ModifiedBy], Pay.[IsActive], Pay.[TenantId], Pay.[PlantId], Pay.ModeOfPayment, Pay.ChequeNumber, Pay.BankName, Pay.ChequeDate  FROM {0} Pay" +
                                     " LEFT JOIN {1} Inv ON Pay.InvoiceId = Inv.Id" +
                                     " LEFT JOIN {2} Ord ON Pay.SupplierOrderId = Ord.Id" +
                                     " LEFT JOIN {3} Sup ON Ord.SupplierId = Sup.Id" +
@@ -59,7 +59,7 @@ namespace DigitalPal.DataAccess
         public SupplierPayment[] GetSupplierPayments(IEnumerable<Guid?> ids)
         {
             List<SupplierPayment> _SupplierPayment = new List<SupplierPayment>();
-            var sql = String.Format("SELECT Pay.[Id], Pay.[PaymentDate],Pay.[InvoiceId] AS InvoiceId, Inv.[InvoiceNumber] AS [InvoiceNumber], Pay.[SupplierOrderId], Ord.SupplierOrderNumber AS SupplierOrderNumber, Pay.[SupplierId], Sup.SupplierName AS [SupplierName], Pay.[Amount], Pay.[PaymentStatus], Pay.[CreatedOn], Pay.[CreatedBy], Pay.[ModifiedOn], Pay.[ModifiedBy], Pay.[IsActive], Pay.[TenantId], Pay.[PlantId], Pay.ModeOfPayment, Pay.ChequeNumber, Pay.ChequeDate  FROM {0} Pay" +
+            var sql = String.Format("SELECT Pay.[Id], Pay.[PaymentDate],Pay.[InvoiceId] AS InvoiceId, Inv.[InvoiceNumber] AS [InvoiceNumber], Pay.[SupplierOrderId], Ord.SupplierOrderNumber AS SupplierOrderNumber, Pay.[SupplierId], Sup.SupplierName AS [SupplierName], Pay.[Amount], Pay.[PaymentStatus], Pay.[CreatedOn], Pay.[CreatedBy], Pay.[ModifiedOn], Pay.[ModifiedBy], Pay.[IsActive], Pay.[TenantId], Pay.[PlantId], Pay.ModeOfPayment, Pay.ChequeNumber, Pay.BankName, Pay.ChequeDate  FROM {0} Pay" +
                                     " LEFT JOIN {1} Inv ON Pay.InvoiceId = Inv.Id" +
                                     " LEFT JOIN {2} Ord ON Pay.SupplierOrderId = Ord.Id" +
                                     " LEFT JOIN {3} Sup ON Pay.SupplierId = Sup.Id" +
@@ -78,10 +78,10 @@ namespace DigitalPal.DataAccess
         public SupplierPayment[] GetAll()
         {
             List<SupplierPayment> _SupplierPayment = new List<SupplierPayment>();
-            var sql = String.Format("SELECT Pay.[Id], Pay.[PaymentDate],Pay.[InvoiceId] AS InvoiceId, Inv.[InvoiceNumber] AS [InvoiceNumber], Pay.[SupplierOrderId], Ord.SupplierOrderNumber AS SupplierOrderNumber, Pay.[SupplierId], Sup.SupplierName AS [SupplierName], Pay.[Amount], Pay.[PaymentStatus], Pay.[CreatedOn], Pay.[CreatedBy], Pay.[ModifiedOn], Pay.[ModifiedBy], Pay.[IsActive], Pay.[TenantId], Pay.[PlantId], Pay.ModeOfPayment, Pay.ChequeNumber, Pay.ChequeDate  FROM {0} Pay" +
+            var sql = String.Format("SELECT Pay.[Id], Pay.[PaymentDate],Pay.[InvoiceId] AS InvoiceId, Inv.[InvoiceNumber] AS [InvoiceNumber], Pay.[SupplierOrderId], Ord.SupplierOrderNumber AS SupplierOrderNumber, Pay.[SupplierId], Sup.SupplierName AS [SupplierName], Pay.[Amount], Pay.[PaymentStatus], Pay.[CreatedOn], Pay.[CreatedBy], Pay.[ModifiedOn], Pay.[ModifiedBy], Pay.[IsActive], Pay.[TenantId], Pay.[PlantId], Pay.ModeOfPayment, Pay.ChequeNumber, Pay.BankName, Pay.ChequeDate  FROM {0} Pay" +
                                     " LEFT JOIN {1} Inv ON Pay.InvoiceId = Inv.Id" +
                                     " LEFT JOIN {2} Ord ON Pay.SupplierOrderId = Ord.Id" +
-                                    " LEFT JOIN {3} Sup ON Pay.SupplierId = Sup.Id" +
+                                    " LEFT JOIN {3} Sup ON Ord.SupplierId = Sup.Id" +
                                     " WHERE Pay.IsActive = 1 AND Inv.IsActive = 1 AND Ord.IsActive = 1 AND Sup.IsActive = 1",
                                     GetTableName(), TableNameConstants.dp_Invoice, TableNameConstants.dp_SupplierOrder, TableNameConstants.dp_Supplier);
 
@@ -97,7 +97,7 @@ namespace DigitalPal.DataAccess
         public SupplierPayment[] Search(SupplierPayment SupplierPayment)
         {
             List<SupplierPayment> _SupplierPayment = new List<SupplierPayment>();
-            var sql = String.Format("SELECT Pay.[Id], Pay.[PaymentDate],Pay.[InvoiceId] AS InvoiceId, Inv.[InvoiceNumber] AS [InvoiceNumber], Pay.[SupplierOrderId], Ord.SupplierOrderNumber AS SupplierOrderNumber, Pay.[SupplierId], Sup.SupplierName AS [SupplierName], Pay.[Amount], Pay.[PaymentStatus], Pay.[CreatedOn], Pay.[CreatedBy], Pay.[ModifiedOn], Pay.[ModifiedBy], Pay.[IsActive], Pay.[TenantId], Pay.[PlantId], Pay.ModeOfPayment, Pay.ChequeNumber, Pay.ChequeDate  FROM {0} Pay" +
+            var sql = String.Format("SELECT Pay.[Id], Pay.[PaymentDate],Pay.[InvoiceId] AS InvoiceId, Inv.[InvoiceNumber] AS [InvoiceNumber], Pay.[SupplierOrderId], Ord.SupplierOrderNumber AS SupplierOrderNumber, Pay.[SupplierId], Sup.SupplierName AS [SupplierName], Pay.[Amount], Pay.[PaymentStatus], Pay.[CreatedOn], Pay.[CreatedBy], Pay.[ModifiedOn], Pay.[ModifiedBy], Pay.[IsActive], Pay.[TenantId], Pay.[PlantId], Pay.ModeOfPayment, Pay.ChequeNumber, Pay.BankName, Pay.ChequeDate  FROM {0} Pay" +
                                     " LEFT JOIN {1} Inv ON Pay.InvoiceId = Inv.Id" +
                                     " LEFT JOIN {2} Ord ON Pay.SupplierOrderId = Ord.Id" +
                                     " LEFT JOIN {3} Sup ON Pay.SupplierId = Sup.Id" +
@@ -116,7 +116,7 @@ namespace DigitalPal.DataAccess
         public SupplierPayment[] GetByIds(IEnumerable<Guid> Ids)
         {
             List<SupplierPayment> _SupplierPayment = new List<SupplierPayment>();
-            var sql = String.Format("SELECT Pay.[Id], Pay.[PaymentDate], Pay.[InvoiceId] AS InvoiceId, Inv.[InvoiceNumber] AS [InvoiceNumber], Pay.[SupplierOrderId] AS SupplierOrderNumber, Ord.SupplierOrderNumber AS SupplierOrderNumber, Pay.[SupplierId], Sup.SupplierName AS [SupplierName], Pay.[Amount], Pay.[PaymentStatus], Pay.[CreatedOn], Pay.[CreatedBy], Pay.[ModifiedOn], Pay.[ModifiedBy], Pay.[IsActive], Pay.[TenantId], Pay.[PlantId], Pay.ModeOfPayment, Pay.ChequeNumber, Pay.ChequeDate  FROM {0} Pay" +
+            var sql = String.Format("SELECT Pay.[Id], Pay.[PaymentDate], Pay.[InvoiceId] AS InvoiceId, Inv.[InvoiceNumber] AS [InvoiceNumber], Pay.[SupplierOrderId] AS SupplierOrderNumber, Ord.SupplierOrderNumber AS SupplierOrderNumber, Pay.[SupplierId], Sup.SupplierName AS [SupplierName], Pay.[Amount], Pay.[PaymentStatus], Pay.[CreatedOn], Pay.[CreatedBy], Pay.[ModifiedOn], Pay.[ModifiedBy], Pay.[IsActive], Pay.[TenantId], Pay.[PlantId], Pay.ModeOfPayment, Pay.ChequeNumber, Pay.BankName, Pay.ChequeDate  FROM {0} Pay" +
                                     " LEFT JOIN {1} Inv ON Pay.InvoiceId = Inv.Id" +
                                     " LEFT JOIN {2} Ord ON Pay.SupplierOrderId = Ord.Id" +
                                     " LEFT JOIN {3} Sup ON Pay.SupplierId = Sup.Id" +
@@ -163,7 +163,7 @@ namespace DigitalPal.DataAccess
                 item.PlantId,
                 item.ModeOfPayment,
                 item.ChequeDate,
-                item.ChequeNumber
+                item.ChequeNumber, item.BankName
             };
         }
 
