@@ -55,7 +55,7 @@ namespace DigitalPal.DataAccess
         public Invoice GetInvoice(string id)
         {
             List<Invoice> _Invoice = new List<Invoice>();
-            var sql = String.Format("select Inv.[Id], Inv.[InvoiceNumber], Inv.[InvoiceDate], Inv.[OrderId], Ord.OrderNumber as OrderNumber, Inv.[DispatchId], Dispatch.DispatchNumber as DispatchNumber ,Inv.[TransportCharges], Inv.[LoadingCharges],Inv.[UnloadingCharges], Inv.[Amount], Inv.[InvoiceStatus], Inv.[CreatedOn], Inv.[CreatedBy], Inv.[ModifiedOn], Inv.[ModifiedBy], Inv.[IsActive], Inv.[TenantId], Inv.[PlantId], Inv.[Remark]" +
+            var sql = String.Format("select Inv.[Id],Inv.[CanEdit],Inv.[CanDelete], Inv.[InvoiceNumber], Inv.[InvoiceDate], Inv.[OrderId], Ord.OrderNumber as OrderNumber, Inv.[DispatchId], Dispatch.DispatchNumber as DispatchNumber ,Inv.[TransportCharges], Inv.[LoadingCharges],Inv.[UnloadingCharges], Inv.[Amount], Inv.[InvoiceStatus], Inv.[CreatedOn], Inv.[CreatedBy], Inv.[ModifiedOn], Inv.[ModifiedBy], Inv.[IsActive], Inv.[TenantId], Inv.[PlantId], Inv.[Remark]" +
                                     " from {0} Inv" +
                                     " inner join {1} Ord on Inv.OrderId = Ord.Id" +
                                     " inner join {2} Dispatch  on Inv.DispatchId = Dispatch.Id"+
@@ -80,7 +80,7 @@ namespace DigitalPal.DataAccess
         public Invoice[] GetInvoices(IEnumerable<Guid?> ids)
         {
             List<Invoice> _Invoice = new List<Invoice>();
-            var sql = String.Format("select Inv.[Id], Inv.[InvoiceNumber], Inv.[InvoiceDate], Inv.[OrderId], Ord.OrderNumber as OrderNumber, Inv.[DispatchId], Dispatch.DispatchNumber as DispatchNumber ,Inv.[TransportCharges], Inv.[LoadingCharges],Inv.[UnloadingCharges], Inv.[Amount], Inv.[InvoiceStatus], Inv.[CreatedOn], Inv.[CreatedBy], Inv.[ModifiedOn], Inv.[ModifiedBy], Inv.[IsActive], Inv.[TenantId], Inv.[PlantId]" +
+            var sql = String.Format("select Inv.[Id],Inv.[CanEdit],Inv.[CanDelete], Inv.[InvoiceNumber], Inv.[InvoiceDate], Inv.[OrderId], Ord.OrderNumber as OrderNumber, Inv.[DispatchId], Dispatch.DispatchNumber as DispatchNumber ,Inv.[TransportCharges], Inv.[LoadingCharges],Inv.[UnloadingCharges], Inv.[Amount], Inv.[InvoiceStatus], Inv.[CreatedOn], Inv.[CreatedBy], Inv.[ModifiedOn], Inv.[ModifiedBy], Inv.[IsActive], Inv.[TenantId], Inv.[PlantId]" +
                                     " from {0} Inv" +
                                     " inner join {1} Ord on Inv.OrderId = Ord.Id" +
                                     " inner join {2} Dispatch  on Inv.DispatchId = Dispatch.Id" +
@@ -99,7 +99,7 @@ namespace DigitalPal.DataAccess
         public Invoice[] GetAll()
         {
             List<Invoice> _Invoice = new List<Invoice>();
-            var sql = String.Format("select Inv.[Id], Inv.[InvoiceNumber], Inv.[InvoiceDate], Inv.[OrderId], Ord.OrderNumber as OrderNumber, Inv.[DispatchId], Dispatch.DispatchNumber as DispatchNumber ,Inv.[TransportCharges], Inv.[LoadingCharges],Inv.[UnloadingCharges], Inv.[Amount], Inv.[InvoiceStatus], Inv.[CreatedOn], Inv.[CreatedBy], Inv.[ModifiedOn], Inv.[ModifiedBy], Inv.[IsActive], Inv.[TenantId], Inv.[PlantId]" +
+            var sql = String.Format("select Inv.[Id],Inv.[CanEdit],Inv.[CanDelete], Inv.[InvoiceNumber], Inv.[InvoiceDate], Inv.[OrderId], Ord.OrderNumber as OrderNumber, Inv.[DispatchId], Dispatch.DispatchNumber as DispatchNumber ,Inv.[TransportCharges], Inv.[LoadingCharges],Inv.[UnloadingCharges], Inv.[Amount], Inv.[InvoiceStatus], Inv.[CreatedOn], Inv.[CreatedBy], Inv.[ModifiedOn], Inv.[ModifiedBy], Inv.[IsActive], Inv.[TenantId], Inv.[PlantId]" +
                                     " from {0} Inv" +
                                     " inner join {1} Ord on Inv.OrderId = Ord.Id" +
                                     " inner join {2} Dispatch  on Inv.DispatchId = Dispatch.Id" +
@@ -118,7 +118,7 @@ namespace DigitalPal.DataAccess
         public Invoice[] GetByIds(IEnumerable<Guid> Ids)
         {
             List<Invoice> _Invoice = new List<Invoice>();
-            var sql = String.Format("select Inv.[Id], Inv.[InvoiceNumber], Inv.[InvoiceDate], Inv.[OrderId], Ord.OrderNumber as OrderNumber, Inv.[DispatchId], Dispatch.DispatchNumber as DispatchNumber ,Inv.[TransportCharges], Inv.[LoadingCharges],Inv.[UnloadingCharges], Inv.[Amount], Inv.[InvoiceStatus], Inv.[CreatedOn], Inv.[CreatedBy], Inv.[ModifiedOn], Inv.[ModifiedBy], Inv.[IsActive], Inv.[TenantId], Inv.[PlantId]" +
+            var sql = String.Format("select Inv.[Id],Inv.[CanEdit],Inv.[CanDelete], Inv.[InvoiceNumber], Inv.[InvoiceDate], Inv.[OrderId], Ord.OrderNumber as OrderNumber, Inv.[DispatchId], Dispatch.DispatchNumber as DispatchNumber ,Inv.[TransportCharges], Inv.[LoadingCharges],Inv.[UnloadingCharges], Inv.[Amount], Inv.[InvoiceStatus], Inv.[CreatedOn], Inv.[CreatedBy], Inv.[ModifiedOn], Inv.[ModifiedBy], Inv.[IsActive], Inv.[TenantId], Inv.[PlantId]" +
                                     " from {0} Inv" +
                                     " inner join {1} Ord on Inv.OrderId = Ord.Id" +
                                     " inner join {2} Dispatch  on Inv.DispatchId = Dispatch.Id" +
@@ -166,7 +166,9 @@ namespace DigitalPal.DataAccess
                 item.LoadingCharges,
                 item.UnloadingCharges,
                 item.Remark,
-                item.TransportCharges
+                item.TransportCharges,
+                item.CanEdit,
+                item.CanDelete
             };
         }
 

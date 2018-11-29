@@ -14,5 +14,7 @@ namespace DigitalPal.Entities
         public string Remark { get; set; }
         public string OrderStatus { get; set; }
         public List<OrderDetails> Products { get; set; }
+        public bool CanEdit { get; set; } = true;
+        public bool CanDelete { get; set; } = true;
     }
 }

@@ -3,6 +3,7 @@ using DigitalPal.DataAccess.Interface;
 using DigitalPal.Entities;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace DigitalPal.BusinessLogic
@@ -10,10 +11,12 @@ namespace DigitalPal.BusinessLogic
     public class PaymentRepository : IPaymentRepository
     {
         private IPaymentDA _PaymentDA;
+        private IInvoiceDA _InvoiceDA;
 
-        public PaymentRepository(IPaymentDA PaymentDA)
+        public PaymentRepository(IPaymentDA PaymentDA, IInvoiceDA InvoiceDA)
         {
             _PaymentDA = PaymentDA;
+            _InvoiceDA = InvoiceDA;
         }
         public Payment[] Search(Payment Payment)
         {
@@ -25,8 +28,22 @@ namespace DigitalPal.BusinessLogic
             await _PaymentDA.AddPaymentAsync(Payments);
         }
         public Payment[] AddPayments(Payment[] Payments)
-        {
-            return _PaymentDA.AddPayments(Payments);
+        {   
+            _PaymentDA.AddPayments(Payments);
+            List<Invoice> lstInvoice = new List<Invoice>();
+            foreach (Payment payment in Payments)
+            {
+                Invoice objInvoice = _InvoiceDA.GetInvoice(payment.InvoiceId.ToString());
+                if (objInvoice != null)
+                {
+                    objInvoice.CanDelete = false;
+                    objInvoice.CanEdit = false;
+                    lstInvoice.Add(objInvoice);
+                }
+            }
+            //Update invoice, if entry in payment then set can edit can delete to false
+            _InvoiceDA.UpdateInvoices(lstInvoice.GroupBy(p => p.Id).Select(grp => grp.FirstOrDefault()).ToArray());
+            return Payments;
         }
 
         public Payment GetPayment(string id)

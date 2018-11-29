@@ -3,6 +3,7 @@ using DigitalPal.DataAccess.Interface;
 using DigitalPal.Entities;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace DigitalPal.BusinessLogic
@@ -10,12 +11,14 @@ namespace DigitalPal.BusinessLogic
     public class DispatchRepository : IDispatchRepository
     {
         private IDispatchDA _DispatchDA;
+        private IOrderDA _OrderDA;
         private IDispatchDetailsDA _DispatchDetailsDA;
 
-        public DispatchRepository(IDispatchDA DispatchDA, IDispatchDetailsDA DispatchDetailsDA)
+        public DispatchRepository(IDispatchDA DispatchDA, IDispatchDetailsDA DispatchDetailsDA, IOrderDA OrderDA)
         {
             _DispatchDA = DispatchDA;
             _DispatchDetailsDA = DispatchDetailsDA;
+            _OrderDA = OrderDA;
         }
 
         public async Task AddDispatchAsync(Dispatch[] Dispatchs)
@@ -30,6 +33,7 @@ namespace DigitalPal.BusinessLogic
 
         public Dispatch[] AddDispatch(Dispatch[] Dispatchs)
         {
+            List<Order> lstOrd = new List<Order>();
             foreach (Dispatch dispatch in Dispatchs)
             {
                 dispatch.Id = Guid.NewGuid();
@@ -41,7 +45,18 @@ namespace DigitalPal.BusinessLogic
                     dispatchDetails.PlantId = dispatch.PlantId;
                 }
                 _DispatchDetailsDA.AddDispatchDetails(dispatch.DispatchDetails.ToArray());
+
+                Order ord = _OrderDA.GetOrder(dispatch.OrderId.ToString());
+                if (ord != null)
+                {
+                    ord.Id = dispatch.OrderId;
+                    ord.CanDelete = false;
+                    ord.CanEdit = false;
+                    lstOrd.Add(ord);
+                }
             }
+            //Update order, if entry in dispatch then set can edit can delete to false
+            _OrderDA.UpdateOrder(lstOrd.GroupBy(p => p.Id).Select(grp => grp.FirstOrDefault()).ToArray());
 
             return Dispatchs;
         }

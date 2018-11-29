@@ -24,5 +24,7 @@ namespace DigitalPal.Entities
         public string Remark { get; set; }
         public float Amount { get; set; }
         public string InvoiceStatus { get; set; }
+        public bool CanEdit { get; set; } = true;
+        public bool CanDelete { get; set; } = true;
     }
 }
