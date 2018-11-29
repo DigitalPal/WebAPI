@@ -94,7 +94,8 @@ namespace DigitalPal.DataAccess
                 //item.Unit,
                 item.Length,
                 item.Width,
-                item.Height
+                item.Height,
+                item.HSNCode
             };
         }
 

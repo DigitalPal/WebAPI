@@ -43,7 +43,10 @@ namespace DigitalPal.DataAccess
                                             " (SELECT TOP 1 [DispatchNumber] FROM {1} ORDER BY CreatedOn DESC) b" +
                                             " UNION" +
                                             " SELECT 'InvoiceNumber' AS [Key],[InvoiceNumber] AS [Value] FROM" +
-                                           "  (SELECT TOP 1 [InvoiceNumber] FROM {2} ORDER BY CreatedOn DESC) c" , GetTableName(), TableNameConstants.dp_Dispatch, TableNameConstants.dp_Invoice);
+                                           "  (SELECT TOP 1 [InvoiceNumber] FROM {2} ORDER BY CreatedOn DESC) c" +
+                                           " UNION "+
+                                           " SELECT 'ProductionNumber' AS [Key], [ProductionNumber] AS [Value] FROM"+
+                                           " (SELECT TOP 1 [ProductionNumber] FROM {3} ORDER By CreatedOn DESC) d ", GetTableName(), TableNameConstants.dp_Dispatch, TableNameConstants.dp_Invoice, TableNameConstants.dp_Production);
                 return dbConnection.Query<KeyValuePair<string, string>>(query).ToDictionary(pair => pair.Key, pair => pair.Value);
             }
         }
