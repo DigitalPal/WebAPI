@@ -132,7 +132,7 @@ namespace DigitalPal.DataAccess
         public Order[] Search(Order Order)
         {
             List<Order> _order = new List<Order>();
-            var sql = String.Format("SELECT ROW_NUMBER() Over (Order by ord.Id) As [SrNum], ord.[OrderNumber], cust.[Name] as [CustomerName], ord.[OrderDate], orddeatils.[Quantity] ,prod.[Name] as ProductName FROM {0} ord " +
+            var sql = String.Format("SELECT ROW_NUMBER() Over (Order by ord.Id) As [SrNum], ord.Id as [Id], ord.[OrderNumber], cust.[Name] as [CustomerName], ord.[OrderDate], orddeatils.[Quantity] ,prod.[Name] as ProductName FROM {0} ord " +
                                     " LEFT JOIN {1} orddeatils ON ord.Id = orddeatils.OrderId" +
                                     " LEFT JOIN {2} Prod ON Prod.Id = orddeatils.ProductId" +
                                     " LEFT JOIN {3} cust ON cust.Id = ord.CustomerId" +

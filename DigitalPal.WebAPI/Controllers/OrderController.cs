@@ -22,7 +22,7 @@ namespace DigitalPal.WebAPI.Controllers
 
         [Route("Search")]
         [ResponseType(typeof(Order))]
-        [HttpGet]
+        [HttpPost]
         public IHttpActionResult Search(Order Order)
         {
             return Ok(OrderRepository.Search(Order));

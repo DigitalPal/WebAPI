@@ -25,7 +25,7 @@ namespace DigitalPal.WebAPI.Controllers
 
         [Route("Search")]
         [ResponseType(typeof(RawMaterialInward))]
-        [HttpGet]
+        [HttpPost]
         public IHttpActionResult Search(RawMaterialInward RawMaterialInward)
         {
             return Ok(RawMaterialInwardRepository.Search(RawMaterialInward));
