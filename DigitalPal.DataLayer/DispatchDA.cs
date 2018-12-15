@@ -34,7 +34,7 @@ namespace DigitalPal.DataAccess
         public Dispatch GetDispatch(string id)
         {
             List<Dispatch> _dispatch = new List<Dispatch>();
-            var sql = String.Format("select dispatch.[Id], dispatch.[DispatchNumber], dispatch.[DispatchDate], dispatch.[OrderId], dispatch.[ChallanNumber], dispatch.[Size], dispatch.[Quantity], dispatch.[TransportName], dispatch.[Loading], dispatch.[Unloading], dispatch.[Rate], dispatch.[Remark], dispatch.[DispatchStatus], dispatch.[CreatedOn], dispatch.[CreatedBy], dispatch.[ModifiedOn], dispatch.[ModifiedBy], dispatch.[IsActive], dispatch.[TenantId], dispatch.[PlantId], dispatchdeatils.[ProductId] AS DispatchDetails_ProductId, Prod.[Size] AS DispatchDetails_Size, Prod.[Height] AS DispatchDetails_Height , Prod.[Width] AS DispatchDetails_Width , Prod.[Length] AS DispatchDetails_Length, dispatchdeatils.[Quantity] AS DispatchDetails_Quantity, dispatchdeatils.[Rate] AS DispatchDetails_Rate, prod.[Name] AS DispatchDetails_ProductName" +
+            var sql = String.Format("select dispatch.[Id],dispatch.[CanEdit],dispatch.[CanDelete], dispatch.[DispatchNumber], dispatch.[DispatchDate], dispatch.[OrderId], dispatch.[ChallanNumber], dispatch.[Size], dispatch.[Quantity], dispatch.[TransportName], dispatch.[Loading], dispatch.[Unloading], dispatch.[Rate], dispatch.[Remark], dispatch.[DispatchStatus], dispatch.[CreatedOn], dispatch.[CreatedBy], dispatch.[ModifiedOn], dispatch.[ModifiedBy], dispatch.[IsActive], dispatch.[TenantId], dispatch.[PlantId], dispatchdeatils.[ProductId] AS DispatchDetails_ProductId, Prod.[Size] AS DispatchDetails_Size, Prod.[Height] AS DispatchDetails_Height , Prod.[Width] AS DispatchDetails_Width , Prod.[Length] AS DispatchDetails_Length, dispatchdeatils.[Quantity] AS DispatchDetails_Quantity, dispatchdeatils.[Rate] AS DispatchDetails_Rate, prod.[Name] AS DispatchDetails_ProductName" +
                                     " from {0} dispatch" +
                                     " left join {1} dispatchdeatils on dispatch.Id = dispatchdeatils.DispatchId" +
                                     " left join {2} Prod on Prod.Id = dispatchdeatils.ProductId" +
@@ -58,7 +58,7 @@ namespace DigitalPal.DataAccess
         public Dispatch[] GetDispatch(IEnumerable<Guid?> ids)
         {
             List<Dispatch> _dispatch = new List<Dispatch>();
-            var sql = String.Format("select dispatch.[Id], dispatch.[DispatchNumber], dispatch.[DispatchDate], dispatch.[OrderId], dispatch.[ChallanNumber], dispatch.[Size], dispatch.[Quantity], dispatch.[TransportName], dispatch.[Loading], dispatch.[Unloading], dispatch.[Rate], dispatch.[Remark], dispatch.[DispatchStatus], dispatch.[CreatedOn], dispatch.[CreatedBy], dispatch.[ModifiedOn], dispatch.[ModifiedBy], dispatch.[IsActive], dispatch.[TenantId], dispatch.[PlantId], dispatchdeatils.[ProductId] AS DispatchDetails_ProductId, dispatchdeatils.[Quantity] AS DispatchDetails_Quantity, dispatchdeatils.[Rate] AS DispatchDetails_Rate, prod.[Name] AS DispatchDetails_ProductName, Prod.[Size] AS DispatchDetails_Size, Prod.[Height] AS DispatchDetails_Height , Prod.[Width] AS DispatchDetails_Width , Prod.[Length] AS DispatchDetails_Length" +
+            var sql = String.Format("select dispatch.[Id],dispatch.[CanEdit],dispatch.[CanDelete], dispatch.[DispatchNumber], dispatch.[DispatchDate], dispatch.[OrderId], dispatch.[ChallanNumber], dispatch.[Size], dispatch.[Quantity], dispatch.[TransportName], dispatch.[Loading], dispatch.[Unloading], dispatch.[Rate], dispatch.[Remark], dispatch.[DispatchStatus], dispatch.[CreatedOn], dispatch.[CreatedBy], dispatch.[ModifiedOn], dispatch.[ModifiedBy], dispatch.[IsActive], dispatch.[TenantId], dispatch.[PlantId], dispatchdeatils.[ProductId] AS DispatchDetails_ProductId, dispatchdeatils.[Quantity] AS DispatchDetails_Quantity, dispatchdeatils.[Rate] AS DispatchDetails_Rate, prod.[Name] AS DispatchDetails_ProductName, Prod.[Size] AS DispatchDetails_Size, Prod.[Height] AS DispatchDetails_Height , Prod.[Width] AS DispatchDetails_Width , Prod.[Length] AS DispatchDetails_Length" +
                                     " from {0} dispatch" +
                                     " left join {1} dispatchdeatils on dispatch.Id = dispatchdeatils.DispatchId" +
                                     " left join {2} Prod on Prod.Id = dispatchdeatils.ProductId" +
@@ -76,7 +76,7 @@ namespace DigitalPal.DataAccess
         public Dispatch[] GetAll()
         {
             List<Dispatch> _dispatch = new List<Dispatch>();
-            var sql = String.Format("select dispatch.[Id], Ord.[OrderNumber], dispatch.[DispatchNumber], dispatch.[DispatchDate], dispatch.[OrderId], dispatch.[ChallanNumber], dispatch.[Size], dispatch.[Quantity], dispatch.[TransportName], dispatch.[Loading], dispatch.[Unloading], dispatch.[Rate], dispatch.[Remark], dispatch.[DispatchStatus], dispatch.[CreatedOn], dispatch.[CreatedBy], dispatch.[ModifiedOn], dispatch.[ModifiedBy], dispatch.[IsActive], dispatch.[TenantId], dispatch.[PlantId], dispatchdeatils.[ProductId] AS DispatchDetails_ProductId, dispatchdeatils.[Quantity] AS DispatchDetails_Quantity, dispatchdeatils.[Rate] AS DispatchDetails_Rate, prod.[Name] AS DispatchDetails_ProductName, Prod.[Size] AS DispatchDetails_Size, Prod.[Height] AS DispatchDetails_Height , Prod.[Width] AS DispatchDetails_Width , Prod.[Length] AS DispatchDetails_Length" +
+            var sql = String.Format("select dispatch.[Id],dispatch.[CanEdit],dispatch.[CanDelete], Ord.[OrderNumber], dispatch.[DispatchNumber], dispatch.[DispatchDate], dispatch.[OrderId], dispatch.[ChallanNumber], dispatch.[Size], dispatch.[Quantity], dispatch.[TransportName], dispatch.[Loading], dispatch.[Unloading], dispatch.[Rate], dispatch.[Remark], dispatch.[DispatchStatus], dispatch.[CreatedOn], dispatch.[CreatedBy], dispatch.[ModifiedOn], dispatch.[ModifiedBy], dispatch.[IsActive], dispatch.[TenantId], dispatch.[PlantId], dispatchdeatils.[ProductId] AS DispatchDetails_ProductId, dispatchdeatils.[Quantity] AS DispatchDetails_Quantity, dispatchdeatils.[Rate] AS DispatchDetails_Rate, prod.[Name] AS DispatchDetails_ProductName, Prod.[Size] AS DispatchDetails_Size, Prod.[Height] AS DispatchDetails_Height , Prod.[Width] AS DispatchDetails_Width , Prod.[Length] AS DispatchDetails_Length" +
                                     " from {0} dispatch" +
                                     " left join {1} dispatchdeatils on dispatch.Id = dispatchdeatils.DispatchId" +
                                     " left join {2} Prod on Prod.Id = dispatchdeatils.ProductId" +
@@ -141,7 +141,7 @@ namespace DigitalPal.DataAccess
         public Dispatch[] GetByIds(IEnumerable<Guid> Ids)
         {
             List<Dispatch> _dispatch = new List<Dispatch>();
-            var sql = String.Format("select dispatch.[Id], dispatch.[DispatchNumber], dispatch.[DispatchDate], dispatch.[OrderId], dispatch.[ChallanNumber], dispatch.[Size], dispatch.[Quantity], dispatch.[TransportName], dispatch.[Loading], dispatch.[Unloading], dispatch.[Rate], dispatch.[Remark], dispatch.[DispatchStatus], dispatch.[CreatedOn], dispatch.[CreatedBy], dispatch.[ModifiedOn], dispatch.[ModifiedBy], dispatch.[IsActive], dispatch.[TenantId], dispatch.[PlantId], dispatchdeatils.[ProductId] AS DispatchDetails_ProductId, dispatchdeatils.[Quantity] AS DispatchDetails_Quantity, dispatchdeatils.[Rate] AS DispatchDetails_Rate, prod.[Name] AS DispatchDetails_ProductName, Prod.[Size] AS DispatchDetails_Size, Prod.[Height] AS DispatchDetails_Height , Prod.[Width] AS DispatchDetails_Width , Prod.[Length] AS DispatchDetails_Length" +
+            var sql = String.Format("select dispatch.[Id],dispatch.[CanEdit],dispatch.[CanDelete], dispatch.[DispatchNumber], dispatch.[DispatchDate], dispatch.[OrderId], dispatch.[ChallanNumber], dispatch.[Size], dispatch.[Quantity], dispatch.[TransportName], dispatch.[Loading], dispatch.[Unloading], dispatch.[Rate], dispatch.[Remark], dispatch.[DispatchStatus], dispatch.[CreatedOn], dispatch.[CreatedBy], dispatch.[ModifiedOn], dispatch.[ModifiedBy], dispatch.[IsActive], dispatch.[TenantId], dispatch.[PlantId], dispatchdeatils.[ProductId] AS DispatchDetails_ProductId, dispatchdeatils.[Quantity] AS DispatchDetails_Quantity, dispatchdeatils.[Rate] AS DispatchDetails_Rate, prod.[Name] AS DispatchDetails_ProductName, Prod.[Size] AS DispatchDetails_Size, Prod.[Height] AS DispatchDetails_Height , Prod.[Width] AS DispatchDetails_Width , Prod.[Length] AS DispatchDetails_Length" +
                                     " from {0} dispatch" +
                                     " left join {1} dispatchdeatils on dispatch.Id = dispatchdeatils.DispatchId" +
                                     " left join {2} Prod on Prod.Id = dispatchdeatils.ProductId" +
@@ -189,7 +189,9 @@ namespace DigitalPal.DataAccess
                 item.CreatedBy,
                 item.ModifiedBy,
                 item.TenantId,
-                item.PlantId
+                item.PlantId,
+                item.CanEdit,
+                item.CanDelete
             };
         }
 

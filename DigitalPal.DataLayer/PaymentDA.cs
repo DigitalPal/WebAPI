@@ -163,7 +163,8 @@ namespace DigitalPal.DataAccess
                 item.PlantId,
                 item.ModeOfPayment,
                 item.ChequeDate,
-                item.ChequeNumber,item.BankName 
+                item.ChequeNumber,
+                item.BankName 
             };
         }
 

@@ -34,7 +34,7 @@ namespace DigitalPal.DataAccess
         public RawMaterialInward[] Search(RawMaterialInward RawMaterialInward)
         {
             List<RawMaterialInward> _RawMaterialInward = new List<RawMaterialInward>();
-            var sql = String.Format("SELECT ROW_NUMBER() Over (Order by RMI.Id) As [SrNum], RMI.[InwardDate], RMD.Title AS RawMaterial, SUP.SupplierName AS SupplierName, RMI.[VechicalNumber], RMI.[ChallanNumber], RMI.[Quantity], RMI.[UnloadingDetails], RMI.[Remark], RMI.[CreatedOn], RMI.[CreatedBy], RMI.[ModifiedOn], RMI.[ModifiedBy], RMI.[IsActive], RMI.[TenantId], RMI.[PlantId] FROM {0}" +
+            var sql = String.Format("SELECT ROW_NUMBER() Over (Order by RMI.Id) As [SrNum], RMI.Id As [Id], RMI.[InwardDate], RMD.Title AS RawMaterial, SUP.SupplierName AS SupplierName, RMI.[VechicalNumber], RMI.[ChallanNumber], RMI.[Quantity], RMI.[UnloadingDetails], RMI.[Remark], RMI.[CreatedOn], RMI.[CreatedBy], RMI.[ModifiedOn], RMI.[ModifiedBy], RMI.[IsActive], RMI.[TenantId], RMI.[PlantId] FROM {0}" +
                                     " RMI LEFT JOIN {1} RMD ON RMD.Id = RMI.[RawMaterialId]" +
                                     " LEFT JOIN {2} SUP ON SUP.Id = RMI.SupplierId" +
                                     " WHERE RMI.IsActive = 1 AND RMD.IsActive = 1 AND SUP.IsActive = 1 ",

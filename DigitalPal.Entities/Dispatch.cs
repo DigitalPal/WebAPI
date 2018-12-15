@@ -22,5 +22,7 @@ namespace DigitalPal.Entities
         public string Remark { get; set; }
         public string DispatchStatus { get; set; }
         public List<DispatchDetails> DispatchDetails { get; set; }
+        public bool CanEdit { get; set; } = true;
+        public bool CanDelete { get; set; } = true;
     }
 }
