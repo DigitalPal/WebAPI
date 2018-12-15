@@ -12,5 +12,6 @@ namespace DigitalPal.Entities
         public float Length { get; set; }
         public Guid? ProductId { get; set; }
         public string ProductName { get; set; } = "";
+        public string HSNCode { get; set; }
     }
 }

@@ -22,6 +22,10 @@ namespace DigitalPal.Entities
         public string CustomerGST { get; set; }
         public string CustomerPONumber { get; set; }
 
+        public float TransportCharges { get; set; }
+        public float LoadingCharges { get; set; }
+        public float UnloadingCharges { get; set; }
+
         public List<DispatchDetails> Products { get; set; }
     }
 }
